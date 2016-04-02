@@ -1,0 +1,67 @@
+
+@contentWidth: 80%;
+@titleColor: #110d0d;
+
+.main {
+  width: 100%;
+  .container {
+    width: @contentWidth;
+    margin: 50px auto 0;
+  }
+  // 开始点名
+  .begin {
+    .form-item {
+      margin-bottom: 30px;
+    }
+    .named-btn {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 30px;
+      border-radius: 50px;
+      background-color: #0099FF;
+      color: #fff;
+      text-align: center;
+      line-height: 100px;
+      font-size: 20px;
+    }
+    .named-recording {
+      width: 100%;
+      text-align: center;
+      display: block;
+      margin: 0 auto;
+      color: #0099FF;
+    }
+    .weui_cell_select {
+      padding: 0 0 0 0;
+
+      .weui_select {
+        width: 80%;
+        padding-left: 12px;
+      }
+    }
+  }
+
+  #actionSheet_wrap {
+    // height: 200px;
+  }
+
+  // 创建成功
+  .success {
+    > .btn-back {
+      margin-top: 30px;
+    }
+  }
+  // 点名记录
+  .record {
+    .weui_panel_bd {
+      border-bottom: 1px solid rgb(206, 206, 206);
+    }
+    .weui_media_title {
+      color: @titleColor;
+    }
+  }
+  // 详细信息
+  .detail {
+  }
+}
+

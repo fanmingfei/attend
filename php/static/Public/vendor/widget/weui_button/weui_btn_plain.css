@@ -1,0 +1,27 @@
+.weui_btn_plain_primary {
+  color: #04be02;
+  border: 1px solid #04be02;
+}
+button.weui_btn_plain_primary,
+input.weui_btn_plain_primary {
+  border-width: 1px;
+  background-color: transparent;
+}
+.weui_btn_plain_primary:active {
+  border-color: #039702;
+}
+.weui_btn_plain_primary:after {
+  border-width: 0;
+}
+.weui_btn_plain_default {
+  color: #5A5A5A;
+  border: 1px solid #5A5A5A;
+}
+button.weui_btn_plain_default,
+input.weui_btn_plain_default {
+  border-width: 1px;
+  background-color: transparent;
+}
+.weui_btn_plain_default:after {
+  border-width: 0;
+}

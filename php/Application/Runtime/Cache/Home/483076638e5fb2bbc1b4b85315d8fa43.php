@@ -1,0 +1,1 @@
+<?php if (!defined('THINK_PATH')) exit();?>已经登陆，请勿重复绑定！

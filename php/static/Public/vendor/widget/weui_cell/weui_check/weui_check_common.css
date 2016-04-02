@@ -1,0 +1,7 @@
+.weui_check_label {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.weui_check {
+  position: absolute;
+  left: -9999em;
+}

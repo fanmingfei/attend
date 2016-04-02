@@ -1,0 +1,20 @@
+.main {
+  width: 100%;
+}
+.main .container {
+  width: 80%;
+  margin: 50px auto 0;
+}
+.main .form-item {
+  margin-bottom: 30px;
+}
+.main .student .weui_cell_select {
+  padding: 0 0 0 0;
+}
+.main .student .weui_cell_select .weui_select {
+  width: 80%;
+  padding-left: 12px;
+}
+.main .student .weui_cells_title {
+  text-align: center;
+}
