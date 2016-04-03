@@ -18,12 +18,12 @@
                     <div class="weui_media_box weui_media_text">
                         <h4 class="weui_media_title">《{$item.title}》，{$item.classes}</h4>
                         <ul class="weui_media_info">
-                            <li class="weui_media_info_meta">时间：{$item.time|date='Y-m-d H:i',###}</li>
+                            <li class="weui_media_info_meta" style="float: none;">时间：{$item.time|date='Y-m-d H:i',###}</li>
                             <li class="weui_media_info_meta">总人数：{$item.signInfo.total}人</li>
                             <li class="weui_media_info_meta">已到：{$item.signInfo.process}人</li>
                             <li class="weui_media_info_meta">请假：{$item.signInfo.leave}人</li>
                             <li class="weui_media_info_meta">缺勤：{$item.signInfo.none}人</li>
-                            <li class="weui_media_info_meta weui_media_info_meta_extra">点击查看详情>></li>
+                            <li class="weui_media_info_meta"  style="clear:both">点击查看详情>></li>
                         </ul>
                     </div>
                 </div>

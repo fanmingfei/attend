@@ -30,20 +30,6 @@ class CallController extends BaseController {
         }
     }
 
-
-    function setSignStatus () {
-        $callid = I('callid');
-        $sid = I('sid');
-        $status = I('status');
-
-        $re = D('Sign')->setSignStatus($callid, $sid, $status);
-        if ($re) 
-            ajax_return(null, 0, '设置成功');
-        else 
-            ajax_return(null, -1, '设置失败');
-    }
-
-
     function getStudentSignList () {
         $page = I('page', '1');
         $size = I('size', '10');
@@ -132,7 +118,7 @@ class CallController extends BaseController {
         }
 
         $re = $signModel->setSignStatus($callid, $sid, $status);
-        if ($re) {
+        if ($re || $re == 0) {
             ajax_return(null, 0, '设置成功');
         } else {
             ajax_return(null, -1, '设置失败');
