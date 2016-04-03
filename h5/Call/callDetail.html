@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>点名详情</title>
+    <link rel="import" href="../Public/html/headContent.html?__inline">
+    <link rel="stylesheet" type="text/css" href="./css/style.less">
+</head>
+
+<body>
+    <div class="main">
+        <div class="detail">
+            <div class="weui_cells">
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>班级</p>
+                    </div>
+                    <div class="weui_cell_ft">{$call['classes']}</div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>课程</p>
+                    </div>
+                    <div class="weui_cell_ft">《{$call['title']}》</div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>时间</p>
+                    </div>
+                    <div class="weui_cell_ft">{$call['time']|date='Y-m-d H:i',###}</div>
+                </div>
+            </div>
+            <div class="tableWrap">
+                <foreach name="signs" item="item">
+                    <table class="table table-condensed" data-id="{$call.id}">
+                        <caption>{$key}出勤情况
+                            <br><small>应到：{$item.total}，已到：{$item.process}，补签：{$item.retroactive}，请假：{$item.leave}，未签到：{$item.none}</small></caption>
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th colspan="2">姓名</th>
+                                <th colspan="1">到</th>
+                                <th colspan="1">假</th>
+                                <th colspan="1">补</th>
+                                <th colspan="1">缺</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <volist name="item['list']" id="peo" key="k">
+                                <tr class="success" data-id="{$peo.id}">
+                                    <th scope="row">{$k}</th>
+                                    <td colspan="2">{$peo.username}</td>
+                                    <td colspan="1" class="js-status" data-state="1">
+                                        <if condition="$peo.status eq 1">
+                                            <span class="status-icon weui_icon_success_circle"></span>
+                                        </if>
+                                    </td>
+                                    <td colspan="1" class="js-status" data-state="2">
+                                        <if condition="$peo.status eq 2">
+                                            <span class="weui_icon_info"></span>
+                                        </if>
+                                    </td>
+                                    <td colspan="1" class="js-status" data-state="3">
+                                        <if condition="$peo.status eq 3">
+                                            <span class="weui_icon_waiting_circle"></span>
+                                        </if>
+                                    </td>
+                                    <td colspan="1" class="js-status" data-state="false">
+                                        <if condition="$peo.status eq false">
+                                            <span class="weui_icon_warn"></span>
+                                        </if>
+                                    </td>
+                                </tr>
+                            </volist>
+                        </tbody>
+                    </table>
+                </foreach>
+            </div>
+        </div>
+    </div>
+    <link rel="import" href="../Public/html/footerContent.html?__inline">
+    <script>
+    require('js/callDetail');
+    </script>
+</body>
+
+</html>

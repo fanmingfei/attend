@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>点名列表</title>
+    <link rel="import" href="../Public/html/headContent.html?__inline">
+    <link rel="stylesheet" type="text/css" href="./css/style.less">
+</head>
+
+<body>
+    <div class="main">
+        <div class="record">
+            <foreach name="callList.data" item="item">
+              <a href="/?c=Call&a=callDetail&id={$item.id}">
+                <div class="weui_panel_bd">
+                    <div class="weui_media_box weui_media_text">
+                        <h4 class="weui_media_title">《{$item.title}》，{$item.classes}</h4>
+                        <ul class="weui_media_info">
+                            <li class="weui_media_info_meta">时间：{$item.time|date='Y-m-d H:i',###}</li>
+                            <li class="weui_media_info_meta">总人数：{$item.signInfo.total}人</li>
+                            <li class="weui_media_info_meta">已到：{$item.signInfo.process}人</li>
+                            <li class="weui_media_info_meta">请假：{$item.signInfo.leave}人</li>
+                            <li class="weui_media_info_meta">缺勤：{$item.signInfo.none}人</li>
+                            <li class="weui_media_info_meta weui_media_info_meta_extra">点击查看详情>></li>
+                        </ul>
+                    </div>
+                </div>
+              </a>
+            </foreach>
+            <center>
+              <if condition="$callList.isFirst neq 1">
+                <a class="weui_btn weui_btn_mini weui_btn_primary" href="/?c=Call&a=callList&page={$callList.prevPage}">上一页</a>
+              </if>
+              <if condition="$callList.isEnd neq 1">
+                <a class="weui_btn weui_btn_mini weui_btn_primary" href="/?c=Call&a=callList&page={$callList.nextPage}">下一页</a>
+              </if>
+              <br>
+              当前第 {$callList.page} 页
+            </center>
+        </div>
+    </div>
+
+    <link rel="import" href="../Public/html/footerContent.html?__inline">
+    <script>
+      require('js/callList');
+    </script>
+</body>
+
+</html>

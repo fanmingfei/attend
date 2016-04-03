@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>创建成功</title>
+    <link rel="import" href="../Public/html/headContent.html?__inline">
+    <link rel="stylesheet" type="text/css" href="./css/style.less?_inline">
+</head>
+
+<body>
+    <div class="main">
+        <div class="container success">
+            <div class="weui_msg">
+                <p class="weui_icon_area"><span class="weui_icon_msg weui_icon_success"></span></p>
+                <div class="weui_text_area">
+                    <h2 class="weui_msg_title">创建成功</h2>
+                    <p class="weui_msg_desc">点名时间：{$call['time']|date='m-d H:i',###} - {$call['endtime']|date='H:i',###} (10分钟)</p>
+                </div>
+                <div class="text-info">
+                    <p class="class">{$call['classes']}</p>
+                    <p class="course">{$call['title']}</p>
+                </div>
+            </div>
+            <a href="/?c=Call&a=callDetail&id={$call['id']}" class="btn-back weui_btn weui_btn_primary">查看点名详情</a>
+        </div>
+    </div>
+    <link rel="import" href="../Public/html/footerContent.html?__inline">
+
+</body>
+
+</html>

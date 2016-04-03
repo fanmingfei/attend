@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-    <title>学生绑定</title>
+    <title>发起点名</title>
     <link rel="import" href="../Public/html/headContent.html?__inline">
-    <link rel="stylesheet" type="text/css" href="./css/style.less">
+    <link rel="stylesheet" type="text/css" href="./css/style.less?__inline">
 </head>
 
 <body>
     <div class="main">
-        <div class="container student">
+        <div class="container begin">
             <div class="form-item">
-                <input type="text" name="username" class="form-control" placeholder="姓名" />
+                <input type="text" name="title" class="form-control" placeholder="课程名称" />
             </div>
-            <div class="form-item">
-                <div class="weui_cell weui_cell_select form-control">
+            <div class="form-item classes-box js-classes-box">
+                <div class="weui_cell weui_cell_select form-control js-class-item">
                     <div class="weui_cell_bd weui_cell_primary">
                         <select class="weui_select" name="classid">
                             <option selected value="0">请选择班级</option>
@@ -27,18 +27,18 @@
                     </div>
                 </div>
             </div>
+            <center class="add-more">
+                <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary js-add-class">添加班级</a>
+            </center>
+            <a class="named-btn js-call-btn">点名</a>
             <div class="form-item">
-                <input type="text" name="wename" class="form-control" placeholder="填写微信号" />
-            </div>
-            <input type="hidden" name="openid" value="{$openid}"/>
-            <div class="form-item">
-                <a href="javascript:;" class="weui_btn weui_btn_primary js-submit">绑定</a>
+                <a href="/?c=Call&a=callList" class="named-recording">查看我的点名记录>></a>
             </div>
         </div>
     </div>
     <link rel="import" href="../Public/html/footerContent.html?__inline">
     <script>
-        require('js/studentReg');
+        require('js/callBegin');
     </script>
 </body>
 

@@ -11,9 +11,10 @@ class SignModel extends Model {
             return -1;
         }
         $data = array(
-            'callid' => $cid,
+            'callid' => $callid,
             'sid' => $sid,
-            'time' => time()
+            'time' => time(),
+            'status'=> 1
         );
         $re = $this->data($data)->add();
         if ($re)
@@ -24,9 +25,9 @@ class SignModel extends Model {
 
     function setSignStatus ($callid, $sid, $status) {
         $condition = array('callid'=>$callid, 'sid'=>$sid);
-        $has = $this->where($condition)->find();
-        if(!$has) {
-            $re = $this->data(array('callid'=>$callid, 'sid'=>$sid, 'status'=>$status))->add();
+        $has = $this->where($condition)->count();
+        if($has == 0) {
+            $re = $this->data(array('callid'=>$callid, 'sid'=>$sid, 'status'=>$status, 'time'=>time()))->add();
         } else {
             $re = $this->where($condition)->data(array('status'=>$status))->save();
         }
@@ -34,6 +35,7 @@ class SignModel extends Model {
     }
 
     function getSignStatus ($callid, $sid) {
+        $sid = $sid ? $sid: session('user.id');
         $condition = array('callid'=>$callid, 'sid'=>$sid);
         $has = $this->where($condition)->find();
         if ($has) {
@@ -54,18 +56,11 @@ class SignModel extends Model {
         $classesModel = D('Classes');
         $studentModel = D('Student');
 
-        $condition = array('callid'=>$callid);
-
-
         // 先获取当前点名所有的班级id
-        $callItem = $callModel->where($condition)->find();
-        $cidArray = explode(",", $callItem['cid']);
+        $callItem = $callModel->getCallById($callid);
+        $cidArray = getIds($callItem['cid']);
 
-
-        // 去掉第一个和最后一个空值
-        array_shift($cidArray);
-        array_pop($cidArray);
-
+        $data = array();
 
         $classArray = array();
         // 取出班级里的学生和学生对应的 签到状态 放进数组 按照班级存放进二维数组
@@ -74,27 +69,93 @@ class SignModel extends Model {
             $className = $classInfo['name'];
 
             // 创建以编辑名命名的数组元素
-            $classArray[$className] = $studentModel->getStudentsByClassId($classid);
+            $classArray[$className]['list'] = $studentModel->getStudentsByClassId($classid);
+            $classArray[$className]['total'] = count($classArray[$className]['list']);
+            $classArray[$className]['process'] = 0;
+            $classArray[$className]['retroactive'] = 0;
+            $classArray[$className]['leave'] = 0;
+            $classArray[$className]['none'] = 0;
+
             // 遍历当前班级学生，取出学生对应的状态 并且放入数组
-            foreach ($classArray[$className] as $key2 => $user) {
+            foreach ($classArray[$className]['list'] as $key2 => $user) {
                 $sid = $user['id'];
-                $status = $this->getSignStatus($sid, $classid);
-                if ($status) {
-                    $classArray[$className][$key2]['status'] = $status;
+                $status = $this->getSignStatus($callid, $sid);
+                $classArray[$className]['list'][$key2]['status'] = $status;
+                switch ($status) {
+                    case '1':
+                        $classArray[$className]['process'] ++;
+                        break;
+                    case '2':
+                        $classArray[$className]['process'] ++;
+                        $classArray[$className]['retroactive'] ++;
+                        break;
+                    case '3':
+                        $classArray[$className]['leave'] ++;
+                    default:
+                        $classArray[$className]['none'] ++;
                 }
             }
         }
-
         return $classArray;
 
     }
 
-    function getStudentSignStatus ($callid, $sid) {
-        $sid = $sid || session('user.id');
+    function getSignPeopleInfo ($callid) {
+        $callModel = D('Call');
+        $studentModel = D('Student');
+
+        $call = $callModel->getCallById($callid);
+        $ids = getIds($call['cid']);
+
+
+        $cdt = array();
+        foreach ($ids as $key => $value) {
+            array_push($cdt, array(
+                'eq',
+                $value
+            ));
+        }
+        array_push($cdt, 'or');
+        $where['classid'] = $cdt;
+
+        $total = $studentModel->where($where)->count();
+
+        $where1 = array(
+            'callid'=>$callid,
+            'status' => 1
+        );
+        $active = $this->where($where1)->count();
+
+        $where1['status'] = 2;
+
+        $retroactive = $this->where($where1)->count();
+
+
+        $where1['status'] = 3;
+        
+        $leave = $this->where($where1)->count();
+
+        $process = $active + $retroactive;
+
+        $none = $total - $process - $leave;
+
+        $data = array(
+            'total' => $total,
+            'active' => $active,
+            'leave' => $leave,
+            'process' => $process,
+            'none' => $none,
+            'retroactive' => $retroactive
+        );
+
+        return $data;
+
+
+
     }
 
     function getStudentSignListBySid ($page, $size, $sid) {
-        $sid = $sid || session('user.id');
+        $sid = $sid ? $sid: session('user.id');
 
         $studentModel = D('Student');
         $callModel = D('Call');
@@ -108,7 +169,7 @@ class SignModel extends Model {
         $callListInfo = $callList['data'];
 
         foreach ($callListInfo as $key => $value) {
-            $signStatus = $this->getStudentSignStatus($value['id']);
+            $signStatus = $this->getSignStatus($value['id']);
             $callList['data'][$key]['status'] = $signStatus;
         }
 

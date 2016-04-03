@@ -1,41 +1,43 @@
 var _pri = {
     bindUI: function () {
         $('.js-submit').on('click', function () {
-            _pri.util.submitStudent();
+            _pri.util.submitTeacher();
         });
     },
     util: {
-        submitStudent: function () {
-            
+        submitTeacher: function () {
+            var btn = $('.js-submit');
+            if (btn.hasClass('weui_btn_disabled')) {
+                return;
+            }
+            btn.addClass('weui_btn_disabled');
             var username = $('input[name="username"]').val();
-            var classid = $('select[name="classid"]').val();
-            var wename = $('input[name="wename"]').val();
+            var phone = $('input[name="phone"]').val();
             var openid = $('input[name="openid"]').val();
             if (!username) {
                 alert('请填写姓名');
+                btn.removeClass('weui_btn_disabled');
                 return;
             }
-            if (!classid) {
-                alert('请选择班级');
-                return;
-            }
-            if (!wename) {
-                alert('请填写微信号');
+            if (!phone) {
+                alert('请填写手机号');
+                btn.removeClass('weui_btn_disabled');
                 return;
             }
             if (!openid) {
                 alert('出现错误！请联系管理员');
+                btn.removeClass('weui_btn_disabled');
                 return;
             }
+
             var data = {
                 username: username,
-                classid: classid,
-                wename: wename,
+                phone: phone,
                 openid: openid
             };
 
             $.ajax({
-                url: '/?c=User&a=registerStudent',
+                url: '/?c=User&a=registerTeacher',
                 type: 'post',
                 dataType: 'json',
                 data: data,
@@ -45,6 +47,12 @@ var _pri = {
                         return;
                     }
                     location.href="/?c=User&a=bindSuccess";
+                },
+                error: function () {
+                    alert('服务器错误，请重试');
+                },
+                complete:  function () {
+                    btn.removeClass('weui_btn_disabled');
                 }
             });
         }

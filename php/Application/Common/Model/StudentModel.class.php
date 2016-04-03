@@ -18,7 +18,7 @@ class StudentModel extends Model {
         }
     }
     function getStudentsByClassId ($cid) {
-        return $this->where(array('cid'=>$cid))->select();
+        return $this->where(array('classid'=>$cid))->select();
     }
     function getStudentById ($id) {
         return $this->where(array('id'=>$id))->find();

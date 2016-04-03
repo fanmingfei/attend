@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-  <title>Document</title>
-  <link rel="stylesheet" type="text/css" href="../Public/vendor/main.less">
-  <link rel="stylesheet" type="text/css" href="./css/style.less">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>老师绑定</title>
+    <link rel="import" href="../Public/html/headContent.html?__inline">
+    <link rel="stylesheet" type="text/css" href="./css/style.less">
 </head>
+
 <body>
-  <div class="main">
-    <div class="container teacher">
-      <div class="form-item">
-        <input type="text" class="form-control" placeholder="姓名" />
-      </div>
-      <div class="form-item">
-        <input type="text" class="form-control" placeholder="手机号码" />
-      </div>
-      <div class="form-item">
-        <a href="javascript:;" class="weui_btn weui_btn_primary">绑定</a>
-      </div>
+    <div class="main">
+        <div class="container teacher">
+            <div class="form-item">
+                <input type="text" name="username" class="form-control" placeholder="姓名" />
+            </div>
+            <div class="form-item">
+                <input type="text" name="phone" class="form-control" placeholder="手机号码" />
+            </div>
+            <input type="hidden" name="openid" value="{$openid}">
+            <div class="form-item">
+                <a href="javascript:;" class="weui_btn weui_btn_primary js-submit">绑定</a>
+            </div>
+        </div>
     </div>
-  </div>
-  <script src="../Public/js/mod.js"></script>
-  <script>
+    <link rel="import" href="../Public/html/footerContent.html?__inline">
+    <script>
     require('js/teacherReg');
-  </script>
+    </script>
 </body>
+
 </html>

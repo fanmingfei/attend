@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>签到</title>
+    <link rel="import" href="../Public/html/headContent.html?__inline">
+    <link rel="stylesheet" type="text/css" href="./css/style.less">
+</head>
+
+<body>
+    <div class="main">
+        <div class="container sign">
+            <div class="weui_msg">
+                <p class="weui_icon_area">
+                    <div class="sign-btn js-sign-btn">签到</div>
+                </p>
+                <div class="weui_text_area">
+                    <p class="weui_msg_desc">点名时间：{$call['time']|date='m-d H:i',###} - {$call['endtime']|date='H:i',###} (10分钟)</p>
+                </div>
+                <div class="text-info">
+                    <p class="class">{$call['classes']}</p>
+                    <p class="course">{$call['title']}</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <link rel="import" href="../Public/html/footerContent.html?__inline">
+    <script>
+        require('js/signStart');
+    </script>
+</body>
+
+</html>

@@ -80,17 +80,22 @@ class UserController extends Controller {
 
     public function registerTeacher () {
         $username = I('username');
+        $phone = I('phone');
         $openid = I('openid');
 
         if (!$username) {
             ajax_return(null, -1, '请填写姓名');
+        }
+        if (!$phone) {
+            ajax_return(null, -1, '请填写手机');
         }
         if (!$openid) {
             ajax_return(null, -1, '错误，请重新进入');
         }
 
         $teacherModel = D('Teacher');
-        if ($teacherModel->regTeacher($username, $openid)) {
+        
+        if ($teacherModel->regTeacher($username, $phone, $openid)) {
             ajax_return(null, 0, '绑定成功');
         } else {
             ajax_return(null, -1, '绑定出现问题能够，请重试或联系管理员');

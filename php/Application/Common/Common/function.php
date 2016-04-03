@@ -62,7 +62,11 @@ function checkLogin () {
     if (!cookie('user')) {
         $jump = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
         cookie('attend.jump', $jump);
-        $url = C('DOMAIN_URL').'/?c=Wechat&a=wxLogin';
+        if(I('state') == 't') {
+            $url = C('DOMAIN_URL').'/?c=Wechat&a=wxLogin&type=t';
+        } else {
+            $url = C('DOMAIN_URL').'/?c=Wechat&a=wxLogin';
+        }
         header('Location: '.$url);
     }
     return true;
@@ -106,3 +110,14 @@ function getDistance($lat1, $lng1, $lat2, $lng2)
      
     return round($calculatedDistance); 
 } 
+
+
+function getIds($arr) {
+
+    $arr = explode(",", $arr);
+    // 去掉第一个和最后一个空值
+    array_shift($arr);
+    array_pop($arr);
+
+    return $arr;
+}

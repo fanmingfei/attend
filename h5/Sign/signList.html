@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>签到列表</title>
+    <link rel="import" href="../Public/html/headContent.html?__inline">
+    <link rel="stylesheet" type="text/css" href="./css/style.less">
+</head>
+
+<body>
+    <div class="main">
+        <div class="record">
+            <foreach name="signList.data" item="item">
+                <div class="weui_cells">
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <p><span class="course">《{$item.title}》</span><span class="date">{$item.time|date='Y-m-d H:i',###}</span></p>
+                        </div>
+                        <div class="weui_cell_ft">
+                            <switch name="item.status">
+                                <case value="1">已签到</case>
+                                <case value="2">补签</case>
+                                <case value="3">请假</case>
+                                <default />缺勤
+                            </switch>
+                        </div>
+                    </div>
+                </div>
+            </foreach>
+            <center>
+              <if condition="$signList.isFirst neq 1">
+                <a class="weui_btn weui_btn_mini weui_btn_primary" href="/?c=Sign&a=signList&page={$signList.prevPage}">上一页</a>
+              </if>
+              <if condition="$signList.isEnd neq 1">
+                <a class="weui_btn weui_btn_mini weui_btn_primary" href="/?c=Sign&a=signList&page={$signList.nextPage}">下一页</a>
+              </if>
+              <br>
+              当前第 {$signList.page} 页
+            </center>
+        </div>
+    </div>
+    <link rel="import" href="../Public/html/footerContent.html?__inline">
+</body>
+
+</html>
