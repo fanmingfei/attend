@@ -1,3 +1,4 @@
 .DS_Store
 php/Application/Home/View
 Runtime
+node_modules
