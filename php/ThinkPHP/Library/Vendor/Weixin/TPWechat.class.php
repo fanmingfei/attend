@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  *  微信公众平台PHP-SDK, ThinkPHP实例
  *  @author dodgepudding@gmail.com
