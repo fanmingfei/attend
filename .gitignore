@@ -2,3 +2,4 @@
 php/Application/Home/View
 Runtime
 node_modules
+Application/Common/Conf/config.php

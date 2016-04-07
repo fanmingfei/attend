@@ -55,15 +55,14 @@ var _pri = {
                 success: function success(resp) {
                     if (resp.status !== 0) {
                         alert(resp.msg);
+                        btn.removeClass('weui_btn_disabled');
                         return;
                     }
                     location.href = "/?c=User&a=bindSuccess";
                 },
                 error: function error() {
-                    alert('服务器错误，请重试');
-                },
-                complete: function complete() {
                     btn.removeClass('weui_btn_disabled');
+                    alert('服务器错误，请重试');
                 }
             });
         }

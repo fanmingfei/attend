@@ -45,16 +45,15 @@ var _pri = {
                     success: function (resp) {
                         if (resp.status !== 0) {
                             alert(resp.msg);
+                            $('.js-sign-btn').removeClass('disabled');
                             return;
                         }
                         location.href = "/?c=Sign&a=postSignSuccess";
                     },
                     error: function () {
+                        $('.js-sign-btn').removeClass('disabled');
                         alert('服务器错误，重试');
                     },
-                    complete: function () {
-                        $('.js-sign-btn').removeClass('disabled');
-                    }
                 });
 
             });

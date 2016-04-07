@@ -51,15 +51,14 @@ var _pri = {
                     success: function success(resp) {
                         if (resp.status !== 0) {
                             alert(resp.msg);
+                            $('.js-sign-btn').removeClass('disabled');
                             return;
                         }
                         location.href = "/?c=Sign&a=postSignSuccess";
                     },
                     error: function error() {
-                        alert('服务器错误，重试');
-                    },
-                    complete: function complete() {
                         $('.js-sign-btn').removeClass('disabled');
+                        alert('服务器错误，重试');
                     }
                 });
             });
