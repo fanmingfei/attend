@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <title>考勤管理系统</title>
+
+  <!-- Bootstrap -->
+  <link href="./common/css/main.css" rel="stylesheet">
+  <style type="text/css">
+    .panel_side {
+      margin-top: 20px;
+    }
+    .tab-pane .panel-heading .panel-title span {
+      font-size: 13px;
+      margin-top: 3px;
+    }
+    .mt {
+      margin-top: 20px;
+    }
+  </style>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">考勤管理系统</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div>
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs">
+        <li><a href="./index.html" role="tab">首页</a></li>
+        <li><a href="./message.html" role="tab">消息</a></li>
+        <li class="active"><a href="./user.html" role="tab">用户管理</a></li>
+        <li><a href="./vocation.html" role="tab">请假管理</a></li>
+        <li><a href="./course.html" role="tab">课程管理</a></li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <!-- 用户管理 -->
+        <div role="tabpanel" class="active panel_side tab-pane" id="user">
+          <div>
+            <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
+              <li role="presentation" class="active"><a href="#studentList" aria-controls="studentList" role="tab" data-toggle="tab">学生列表</a></li>
+              <li role="presentation"><a href="#editStudent" aria-controls="editStudent" role="tab" data-toggle="tab">修改学生</a></li>
+              <li role="presentation"><a href="#teacherList" aria-controls="teacherList" role="tab" data-toggle="tab">老师列表</a></li>
+              <li role="presentation"><a href="#editTeacher" aria-controls="editTeacher" role="tab" data-toggle="tab">修改老师</a></li>
+            </ul>
+            <div class="tab-content col-md-11">
+              <div role="tabpanel" class="tab-pane active" id="studentList">学生列表</div>
+              <div role="tabpanel" class="tab-pane" id="editStudent">修改学生</div>
+              <div role="tabpanel" class="tab-pane" id="teacherList">老师列表</div>
+              <div role="tabpanel" class="tab-pane" id="editTeacher">修改老师</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="./common/js/jquery-2.2.2.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="./common/js/bootstrap.min.js"></script>
+</body>
+</html>
