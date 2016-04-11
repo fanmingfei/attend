@@ -17,4 +17,13 @@ class ClassesModel extends RelationModel {
             return $this->data(array('name'=> $name))->add();
         }
     }
+    function getClassByName($name) {
+        $where['name'] = array('like', '%'.$name.'%');
+        $class = $this->where($where)->select();
+        return $class;
+    }
+    function getOneByName ($name) {
+        $class = $this->where(array('name'=>$name))->find();
+        return $class['id'];
+    }
 }

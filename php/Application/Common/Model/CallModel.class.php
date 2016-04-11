@@ -52,7 +52,7 @@ class CallModel extends RelationModel {
 
     function getCallsByClassId($cid, $page, $size) {
 
-        $cid = ','.$cid.',';
+        $cid = '%,'.$cid.',%';
         $where['cid'] = array('like', $cid);
 
         $count = $this->where($where)->count();
@@ -126,7 +126,7 @@ class CallModel extends RelationModel {
 
         foreach ($cid as $key => $value) {
             $where['time'] = array('gt', $time);
-            $where['cid'] = array('like', ','.$value.',');
+            $where['cid'] = array('like', '%,'.$value.',%');
 
             $item = $this->where($where)->relation(true)->count();
 
@@ -143,10 +143,9 @@ class CallModel extends RelationModel {
         $time = time() - 600;
 
         $where['time'] = array('gt', $time);
-        $where['cid'] = array('like', ','.$cid.',');
+        $where['cid'] = array('like', '%,'.$cid.',%');
 
         $item = $this->where($where)->relation(true)->find();
-
         if ($item) {
             return $this->getCallById($item['id']);
         } else {

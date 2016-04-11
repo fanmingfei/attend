@@ -14,6 +14,15 @@ class TeacherModel extends RelationModel {
         } else {
             return false;
         }
+    }
 
+    function getAllTeachers () {
+        return $this->select();
+    }
+
+    function getTeacherByName ($username) {
+        $where['username'] = array('like', '%'.$username.'%');
+        $teacher = $this->where($where)->select();
+        return $teacher;
     }
 }

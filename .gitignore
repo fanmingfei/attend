@@ -3,3 +3,5 @@ php/Application/Home/View
 Runtime
 node_modules
 php/Application/Common/Conf/config.php
+php/Uploads
+php/static

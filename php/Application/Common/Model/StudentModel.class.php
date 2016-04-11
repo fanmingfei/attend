@@ -24,4 +24,21 @@ class StudentModel extends Model {
         return $this->where(array('id'=>$id))->find();
     }
 
+    function saveList($people) {
+        $classesModel = D('Classes');
+
+        foreach ($people as $key => $value) {
+            if ($value['major']){
+                $class = $classesModel->getOneByName($value['major']);
+                $classid = $class['id'];
+                if (!$class) {
+                    $classid = $classesModel->addClass($value['major']);
+                } 
+            }
+
+            $people['classid'] = $classid;
+            $this->data($value)->add();
+        }
+    }
+
 }
