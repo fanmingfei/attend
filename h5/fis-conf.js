@@ -14,9 +14,7 @@ fis.match('*.es6', {
 
 fis.match('::package', {
     postpackager: fis.plugin('loader')
-});
-
-fis.media('dev')
+})
 
 .match('*.less', {
     parser: fis.plugin('less'),
@@ -30,15 +28,26 @@ fis.media('dev')
 
 .match('*.html', {
     release: '/Application/Home/View/$0'
-})
+});
+
+
+fis.media('dev')
+
 
 .match('*', {
     deploy: fis.plugin('local-deliver', {
         to: '../php'
     }),
     domain: 'http://www.dianming.com/'
-})
+});
 
+fis.media('product')
+.match('*', {
+    deploy: fis.plugin('local-deliver', {
+        to: '../php'
+    }),
+    domain: 'http://attend.ldustu.com/'
+});
 
 
 
