@@ -12,7 +12,7 @@ class IndexController extends BaseController {
         if($type == 1) {
             header('Location: /?c=Sign&a=signStart');
         } else {
-            header('Location: /?c=Call&a=CallBegin');
+            header('Location: /?c=Call&a=callBegin');
         }
     }
     public function index2() {
