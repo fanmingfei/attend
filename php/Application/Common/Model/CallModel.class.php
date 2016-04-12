@@ -75,7 +75,7 @@ class CallModel extends RelationModel {
 
 
     function getTeacherCallListByTid ($page, $size, $uid) {
-        $uid |= session('user.id');
+        $uid = $uid ? $uid : session('user.id');
 
         if (session('user.special') == 1) {
             $idName = 'sid';
@@ -152,5 +152,8 @@ class CallModel extends RelationModel {
             return false;
         }
 
+    }
+    function setCallPs ($id, $ps) {
+        return $this->where(array('id'=>$id))->data(array('ps'=>$ps))->save();
     }
 }

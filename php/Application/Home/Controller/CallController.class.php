@@ -112,9 +112,12 @@ class CallController extends BaseController {
 
         $signModel = D('Sign');
 
-
         if(session('user.usertype') != 2 && session('user.special') != 1) {
             ajax_return(null, -1, '您没有修改权限');
+        }
+
+        if ((session('user.special') == 1) && ($status == 1 || $status == 'false')) {
+            ajax_return(null, -1, '你没有权限设置已到和缺勤');
         }
 
         $re = $signModel->setSignStatus($callid, $sid, $status);
@@ -124,6 +127,23 @@ class CallController extends BaseController {
             ajax_return(null, -1, '设置失败');
         }
 
+
+    }
+    function setCallPs () {
+        $id = I('get.id');
+        $ps = I('ps');
+
+
+        if(session('user.usertype') != 2 && session('user.special') != 1) {
+            $this->error('你没有权限修改');
+        }
+
+        $re = D('Call')->setCallPs($id, $ps);
+        if ($re !== false) {
+            $this->success('修改成功');
+        } else {
+            $this->error('修改失败');
+        }
 
     }
 }

@@ -24,7 +24,7 @@ class SignController extends BaseController {
 
         $distance = getDistance($callInfo['latitude'], $callInfo['longitude'], $latitude, $longitude);
 
-        if ($distance > 100) {
+        if ($distance > 1000) {
             ajax_return(null, -1, '距离太远，或定位错误！');
         }
 

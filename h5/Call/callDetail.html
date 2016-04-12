@@ -32,6 +32,14 @@
                     <div class="weui_cell_ft">{$call['time']|date='Y-m-d H:i',###}</div>
                 </div>
             </div>
+
+            <div class="form-item">
+                <form action="/?c=Call&a=setCallPs&id={$call.id}" method="post">
+                    <input type="text" name="ps" class="form-control" style="margin-top:10px;" placeholder="实际情况备注" value="{$call.ps}" />
+                    <input type="submit" class="weui_btn weui_btn_primary" style="margin-top:10px;" value="提交">
+                </form>
+            </div>
+
             <div class="tableWrap">
                 <foreach name="signs" item="item">
                     <table class="table table-condensed" data-id="{$call.id}">

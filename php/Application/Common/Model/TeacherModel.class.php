@@ -16,6 +16,11 @@ class TeacherModel extends RelationModel {
         }
     }
 
+    function getTeacherById($id) {
+        $user = $this->where(array('id'=>$id))->find();
+        return $user;
+    }
+
     function getAllTeachers () {
         return $this->select();
     }
