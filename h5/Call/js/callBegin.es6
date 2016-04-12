@@ -91,7 +91,7 @@ var _pri = {
                     $('.js-call-btn').removeClass('disabled');
                 }
             });
-        }
+        },
         unique: (arr) => {
             var n = [arr[0]];
             for(var i = 1; i < arr.length; i++)
