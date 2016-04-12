@@ -58,6 +58,9 @@ var _pri = {
 
         },
         postCall: function (res) {
+            if (!res.res) {
+                res.res = res;
+            }
             var latitude = res.res.latitude;
             var longitude = res.res.longitude;
 
