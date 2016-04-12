@@ -24,6 +24,6 @@ class ClassesModel extends RelationModel {
     }
     function getOneByName ($name) {
         $class = $this->where(array('name'=>$name))->find();
-        return $class['id'];
+        return $class;
     }
 }

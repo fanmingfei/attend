@@ -30,13 +30,14 @@ class StudentModel extends Model {
         foreach ($people as $key => $value) {
             if ($value['major']){
                 $class = $classesModel->getOneByName($value['major']);
-                $classid = $class['id'];
                 if (!$class) {
                     $classid = $classesModel->addClass($value['major']);
-                } 
+                } else {
+                    $classid = $class['id'];
+                }
             }
 
-            $people['classid'] = $classid;
+            $value['classid'] = $classid;
             $this->data($value)->add();
         }
     }
