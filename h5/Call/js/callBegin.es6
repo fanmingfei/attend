@@ -45,57 +45,50 @@ var _pri = {
             }
 
 
-            var promise = new Promise((resolve, reject) => {
-                wx.getLocation({
-                    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-                    success: function (res) {
-                        resolve(res);
-                    },
-                    fail: function () {
-                        alert('获取地理位置失败，请重试')
-                        $('.js-call-btn').removeClass('disabled');
-                        return;
-                    }
-                });
+            wx.getLocation({
+                type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                success: function (res) {
+                    var latitude = res.res.latitude;
+                    var longitude = res.res.longitude;
+
+                    var data = {
+                        title: title,
+                        cid: classesid,
+                        longitude: longitude,
+                        latitude: latitude
+                    };
+
+                    $.ajax({
+                        url: '/?c=Call&a=postCall',
+                        type: 'post',
+                        dataType: 'json',
+                        data: data,
+                        success: function (resp) {
+                            if (resp.status == -2) {
+                                alert(resp.data.join('，')+'，已在点名列表中，请勿选择');
+                                return;
+                            }
+                            if (resp.status !== 0) {
+                                alert(resp.msg);
+                                return;
+                            }
+                            location.href = "/?c=Call&a=postCallSuccess&id=" + resp.data;
+                        },
+                        error: function () {
+                            alert('服务器错误，重试');
+                        },
+                        complete: function () {
+                            $('.js-call-btn').removeClass('disabled');
+                        }
+                    });
+                },
+                fail: function () {
+                    alert('获取地理位置失败，请重试');
+                    $('.js-call-btn').removeClass('disabled');
+                    return;
+                }
             });
 
-            promise.then(function (res) {
-                console.log(res.res)
-                var latitude = res.res.latitude;
-                var longitude = res.res.longitude;
-
-                var data = {
-                    title: title,
-                    cid: classesid,
-                    longitude: longitude,
-                    latitude: latitude
-                };
-
-                $.ajax({
-                    url: '/?c=Call&a=postCall',
-                    type: 'post',
-                    dataType: 'json',
-                    data: data,
-                    success: function (resp) {
-                        if (resp.status == -2) {
-                            alert(resp.data.join('，')+'，已在点名列表中，请勿选择');
-                            return;
-                        }
-                        if (resp.status !== 0) {
-                            alert(resp.msg);
-                            return;
-                        }
-                        location.href = "/?c=Call&a=postCallSuccess&id=" + resp.data;
-                    },
-                    error: function () {
-                        alert('服务器错误，重试');
-                    },
-                    complete: function () {
-                        $('.js-call-btn').removeClass('disabled');
-                    }
-                })
-
-            });
 
 
 
