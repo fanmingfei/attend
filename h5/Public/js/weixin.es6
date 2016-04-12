@@ -1,6 +1,10 @@
 var nonceStr = 'stringforys';
 var timestamp = parseInt(new Date().getTime() / 1000);
 var appId = 'wx150e95df0d2ffdef';
+if (location.origin.indexOf('ldustu.com') >= 0) {
+    appId = 'wx265d8b93b6a401ce';
+
+}
 var url = encodeURIComponent(location.href.split('#')[0]);
 
 $.ajax({
