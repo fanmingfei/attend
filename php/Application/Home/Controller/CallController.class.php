@@ -116,9 +116,9 @@ class CallController extends BaseController {
             ajax_return(null, -1, '您没有修改权限');
         }
 
-        if ((session('user.special') == 1) && ($status == 1 || $status == 'false')) {
-            ajax_return(null, -1, '你没有权限设置已到和缺勤');
-        }
+        // if ((session('user.special') == 1) && ($status == 1 || $status == 'false')) {
+        //     ajax_return(null, -1, '你没有权限设置已到和缺勤');
+        // }
 
         $re = $signModel->setSignStatus($callid, $sid, $status);
         if ($re || $re == 0) {

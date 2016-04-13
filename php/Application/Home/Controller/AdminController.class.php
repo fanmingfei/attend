@@ -35,6 +35,20 @@ class AdminController extends Controller {
         $this->userNav = 'active';
         $this->display();
     }
+    public function addTeacher()
+    {
+        $this->userNav = 'active';
+        $this->display();
+        
+    }
+
+    public function teacherList()
+    {
+        $this->userNav = 'active';
+        $this->teachers = D('Teacher')->getAllTeachers();
+        $this->display();
+        
+    }
 
 
 }
