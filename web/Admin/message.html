@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <title>考勤管理系统</title>
+
+  <!-- Bootstrap -->
+  <link href="./common/css/main.css" rel="stylesheet">
+  <style type="text/css">
+    .panel_side {
+      margin-top: 20px;
+    }
+    .tab-pane .panel-heading .panel-title span {
+      font-size: 13px;
+      margin-top: 3px;
+    }
+    .mt {
+      margin-top: 20px;
+    }
+  </style>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">考勤管理系统</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div>
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs">
+        <li><a href="./index.html" role="tab">首页</a></li>
+        <li class="active"><a href="./message.html" role="tab">消息</a></li>
+        <li><a href="./user.html" role="tab">用户管理</a></li>
+        <li><a href="./vocation.html" role="tab">请假管理</a></li>
+        <li><a href="./course.html" role="tab">课程管理</a></li>
+      </ul>
+
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <!-- 消息 -->
+        <div role="tabpanel" class="active panel_side tab-pane" id="messages">
+          <div>
+            <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
+              <li role="presentation" class="active"><a href="#messageList" aria-controls="messageList" role="tab" data-toggle="tab">消息列表</a></li>
+              <li role="presentation"><a href="#groupList" aria-controls="groupList" role="tab" data-toggle="tab">群发消息</a></li>
+              <li role="presentation"><a href="#singleList" aria-controls="singleList" role="tab" data-toggle="tab">单发消息</a></li>
+            </ul>
+            <div class="tab-content col-md-11">
+              <div role="tabpanel" class="tab-pane active" id="messageList">
+                <!-- 标题容器 -->
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">我是标题 <span class="pull-right">日期：2016-13-32 25:61:61</span></h3>
+                  </div>
+                  <div class="panel-body">
+                    好久没有你的信好久没有人陪我谈心怀念你柔情似水的眼睛是我天空最美丽的星星异乡的午夜特别冷清一个男人和一颗热切的心不知在远方的你是否能感应我从来不敢给你任何诺言是因为我知道我们太年轻你追求的是一种浪漫感觉
+                  </div>
+                  <div class="panel-footer">链接地址：https://www.ldustu.com/</div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">我是标题 <span class="pull-right">日期：2016-13-32 25:61:61</span></h3>
+                  </div>
+                  <div class="panel-body">
+                    好久没有你的信好久没有人陪我谈心怀念你柔情似水的眼睛是我天空最美丽的星星异乡的午夜特别冷清一个男人和一颗热切的心不知在远方的你是否能感应我从来不敢给你任何诺言是因为我知道我们太年轻你追求的是一种浪漫感觉
+                  </div>
+                  <div class="panel-footer">链接地址：https://www.ldustu.com/</div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="groupList">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">群发消息</h3>
+                  </div>
+                  <div class="panel-body">
+                    <div class="col-md-6">
+                      <div>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 绑定全体学生
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 绑定全体教师
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 按照班级发送
+                        </label>
+                      </div>
+                      <div class="select_box mt">
+                        <select multiple class="form-control">
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                        </select>
+                      </div>
+                      <div class="select_box mt">
+                        <select multiple class="form-control">
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                          <option>美术本1402</option>
+                        </select>
+                      </div>
+                      <button class="btn btn-default btn-lg mt">点击添加班级</button>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group mt">
+                        <span class="input-group-addon" id="basic-addon1">标题</span>
+                        <input type="text" class="form-control" placeholder="请输入标题" aria-describedby="basic-addon1">
+                      </div>
+                      <div class="input-group mt">
+                        <span class="input-group-addon" id="basic-addon1">简介</span>
+                        <input type="text" class="form-control" placeholder="请输入简介" aria-describedby="basic-addon1">
+                      </div>
+                      <div class="form-group mt">
+                        <textarea class="form-control" rows="15" placeholder="输入消息"></textarea>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary btn-block">确认并提交</button>
+                  </div>
+
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="singleList">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <form class="form-inline">
+                      <div class="form-group">
+                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="输入姓名">
+                      </div>
+                      <div class="form-group">
+                        <input type="password" class="form-control" id="exampleInputPassword3" placeholder="输入班级: 美术本1402">
+                      </div>
+                      <button type="submit" class="btn btn-default">搜索</button>
+                    </form>
+                  </div>
+                  <div class="panel-body">
+                    <div class="thumbnail">
+                      <img class="col-md-3" src="./common/images/test.png" alt="...">
+                      <div class="caption col-md-9">
+                        <div class="row mt">
+                          <div class="col-xs-4">李学生</div>
+                          <div class="col-xs-4">班级：美术本1402</div>
+                          <div class="col-xs-4">手机号码：12312312312</div>
+                        </div>
+                        <div class="row mt">
+                          <div class="col-xs-4">请假N次</div>
+                          <div class="col-xs-4">补签M次</div>
+                          <div class="col-xs-4">迟到Y次</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="thumbnail">
+                      <img class="col-md-3" src="./common/images/test.png" alt="...">
+                      <div class="caption col-md-9">
+                        <div class="row mt">
+                          <div class="col-xs-4">李学生</div>
+                          <div class="col-xs-4">班级：美术本1402</div>
+                          <div class="col-xs-4">手机号码：12312312312</div>
+                        </div>
+                        <div class="row mt">
+                          <div class="col-xs-4">请假N次</div>
+                          <div class="col-xs-4">补签M次</div>
+                          <div class="col-xs-4">迟到Y次</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="./common/js/jquery-2.2.2.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="./common/js/bootstrap.min.js"></script>
+</body>
+</html>

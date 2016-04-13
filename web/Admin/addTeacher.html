@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>考勤管理系统</title>
+    <link href="./common/headContent.html?__inline" rel="import" />
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <link href="./common/header.html?__inline" rel="import" />
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div>
+            <!-- Nav tabs -->
+            <link href="./common/nav.html?__inline" rel="import" />
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- 课程管理 -->
+                <div role="tabpanel" class="active panel_side tab-pane" id="course">
+                    <div>
+                        <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
+                            <li role="presentation"><a href="#studentList" aria-controls="studentList" role="tab" data-toggle="tab">学生列表</a></li>
+                            <li role="presentation"><a href="#editStudent" aria-controls="editStudent" role="tab" data-toggle="tab">添加学生</a></li>
+                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=teacherList">老师列表</a></li>
+                            <li role="presentation" class="active"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addTeacher">添加老师</a></li>
+                        </ul>
+                        <div class="tab-content col-md-11">
+                            <!-- 添加课程 -->
+                            <div role="tabpanel" class="tab-pane active" id="addCourse">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading clearfix">
+                                            添加老师
+                                    </div>
+                                    <form action="/?c=Teacher&a=addTeacher" method="post">
+                                        <div class="panel-body js-addCourse-from">
+                                            <div class="col-sm-12">
+                                                <div class="row mt">
+                                                    <div class="col-sm-2">老师名字</div>
+                                                    <div class="col-sm-10">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" placeholder="老师名字" name="name" value="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <button type="submit" class="btn btn-primary btn-lg js-submit-course">提交</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href="./common/footerContent.html?__inline" rel="import" />
+    <script>
+    // require('./Course/addCourse');
+    </script>
+</body>
+
+</html>
