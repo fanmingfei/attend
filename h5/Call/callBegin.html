@@ -14,6 +14,7 @@
         <div class="container begin">
             <div class="form-item">
                 <input type="text" name="title" class="form-control" placeholder="课程名称" />
+                <input type="hidden" name="tid" value="4"/>
             </div>
             <div class="form-item classes-box js-classes-box">
                 <div class="weui_cell weui_cell_select form-control js-class-item">
@@ -30,6 +31,18 @@
             <center class="add-more">
                 <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary js-add-class">添加班级</a>
             </center>
+            <div class="form-item classes-box js-teachers-box">
+                <div class="weui_cell weui_cell_select form-control js-class-item">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <select class="weui_select" name="tcid">
+                            <option selected value="0">请选择班主任</option>
+                            <volist name="teachers" id="vo">
+                                <option value="{$vo.id}">{$vo.username}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <a class="named-btn js-call-btn">点名</a>
             <div class="form-item">
                 <a href="/?c=Call&a=callList" class="named-recording">查看我的点名记录>></a>

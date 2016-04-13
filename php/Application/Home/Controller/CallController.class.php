@@ -5,10 +5,12 @@ class CallController extends BaseController {
     function postCall () {
         $cid = ','.I('cid').',';
         $title = I('title');
-        $longitude = I('longitude');
-        $latitude = I('latitude');
+        $tcid = I('tcid');
+        $tid = I('tid');
+        $longitude = 0; //I('longitude');
+        $latitude = 0; //I('latitude');
 
-        if (!$cid || !$title || !$longitude || !$latitude) {
+        if (!$cid || !$title || !$tcid) { // || !$longitude || !$latitude
             $msg = '参数不完整';
             ajax_return(null, -1, $msg);
         }
@@ -21,7 +23,7 @@ class CallController extends BaseController {
             ajax_return($hasCls, -2, '改班级在点名列表中');
         }
 
-        $result = $callModel->addCall($cid, $title, $longitude, $latitude);
+        $result = $callModel->addCall($cid, $title, $tcid, $tid, $longitude, $latitude);
 
         if ($result) {
             ajax_return($result, 0, '点名成功');
@@ -54,6 +56,7 @@ class CallController extends BaseController {
             $this->show('你没有权限点名');
             exit();
         }
+        $this->assign('teachers', D('Teacher')->getAllTeachers());
         $this->assign('classes', D('Classes')->getAllClasses());
         $this->display();
     }
@@ -112,7 +115,7 @@ class CallController extends BaseController {
 
         $signModel = D('Sign');
 
-        if(session('user.usertype') != 2 && session('user.special') != 1) {
+        if(session('user.usertype') != 2) {//&& session('user.special') != 1
             ajax_return(null, -1, '您没有修改权限');
         }
 
@@ -126,8 +129,6 @@ class CallController extends BaseController {
         } else {
             ajax_return(null, -1, '设置失败');
         }
-
-
     }
     function setCallPs () {
         $id = I('get.id');

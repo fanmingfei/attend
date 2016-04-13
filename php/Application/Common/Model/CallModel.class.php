@@ -10,21 +10,23 @@ class CallModel extends RelationModel {
             'mapping_name'  => 'teacher',
         )
     );
-    function addCall($cid, $title, $longitude, $latitude) {
-        if (session('user.special') == 1) {
-            $idName = 'sid';
-        } else {
-            $idName = 'tid';
-        }
+    function addCall($cid, $title, $tcid, $tid, $longitude, $latitude) {
         $uid = session('user.id');
+        if (session('user.special') == 1) {
+            $info['sid'] = $uid;
+            $info['tid'] = $tid;
+        } else {
+            $info['tid'] = $uid;
+        }
         $data = array(
-            $idName => $uid,
             'cid' => $cid,
             'title' => $title,
             'longitude' => $longitude,
             'latitude' => $latitude,
-            'time' => time()
+            'time' => time(),
+            'tcid' => $tcid
         );
+        $data = array_merge($data, $info);
         $re = $this->data($data)->add();
         if ($re)
             return $re;
@@ -79,14 +81,22 @@ class CallModel extends RelationModel {
 
         if (session('user.special') == 1) {
             $idName = 'sid';
+            $where = array(
+                $idName=>$uid
+            );
         } else {
             $idName = 'tid';
+            $where = array(
+                $idName=>$uid,
+                'tcid' => $uid,
+                '_logic' => 'or'
+            );
         }
+
 
         $signModel = D('Sign');
         $classesModel = D('Classes');
 
-        $where = array($idName=>$uid);
 
         $count = $this->where($where)->count();
 
@@ -94,7 +104,6 @@ class CallModel extends RelationModel {
 
         $start = ($page - 1) * $size;
         $result = $this->where($where)->limit($start, $size)->order('id desc')->select();
-
 
         foreach ($result as $key => $value) {
             $result[$key]['signInfo'] = D('Sign')->getSignPeopleInfo($value['id']);
