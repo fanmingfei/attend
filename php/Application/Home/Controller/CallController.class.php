@@ -56,6 +56,9 @@ class CallController extends BaseController {
             $this->show('你没有权限点名');
             exit();
         }
+
+        $this->assign('schedule', D('Schedule')->getCurrentSchedule());
+
         $this->assign('teachers', D('Teacher')->getAllTeachers());
         $this->assign('classes', D('Classes')->getAllClasses());
         $this->display();

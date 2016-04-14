@@ -47,7 +47,17 @@ class AdminController extends Controller {
         $this->userNav = 'active';
         $this->teachers = D('Teacher')->getAllTeachers();
         $this->display();
-        
+    }
+    public function termset()
+    {
+        $this->termNav = 'active';
+
+        $term = M('Term')->find(1);
+        $term['starttime'] = date('Y-m-d', $term['starttime']);
+        $term['endtime'] = date('Y-m-d', $term['endtime']);
+        $this->term = $term;
+
+        $this->display();
     }
 
 

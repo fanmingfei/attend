@@ -13,8 +13,8 @@
     <div class="main">
         <div class="container begin">
             <div class="form-item">
-                <input type="text" name="title" class="form-control" placeholder="课程名称" />
-                <input type="hidden" name="tid" value="4"/>
+                <input type="text" name="title" class="form-control" placeholder="课程名称" value="{$schedule.name}" />
+                <input type="hidden" name="tid" value="{$schedule.teacherid}"/>
             </div>
             <div class="form-item classes-box js-classes-box">
                 <div class="weui_cell weui_cell_select form-control js-class-item">

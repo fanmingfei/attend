@@ -106,6 +106,62 @@ class ScheduleModel extends RelationModel {
     }
     
 
+    function getCurrentSchedule() {
+        $type = session('user.usertype');
+        if ($type == 1) {
+            return $this->getCurrentScheduleBySid();
+        } else {
+            return $this->getCurrentScheduleByTid();
+        }
+    }
+
+    function getCurrentScheduleBySid($sid) {
+        $sid = $sid ? $sid : session('user.id');
+
+        $classid = session('user.classid');
+
+        $termModel = D('Term');
+        $currLession = $termModel->getCurrentLessionNum();
+        if ($currLession == 0) {
+            return false;
+        }
+        $currentWeek = $termModel->getCurrentWeek();
+        if (!$currentWeek) {
+            return false;
+        }
+        $day = date('w');
+        $schedule = $this->where(array(
+            'classid' => $classid,
+            'lessionnums' => array('like', '%,'.$currLession.',%'),
+            'weeks'=>array('like', '%,'.$currentWeek.',%'),
+            'day'=>array('like', $day)
+        ))->find();
+
+        return $schedule;
+
+    }
+    function getCurrentScheduleByTid($tid) {
+        $tid = $tid ? $tid : session('user.id');
+
+        $termModel = D('Term');
+        $currLession = $termModel->getCurrentLessionNum();
+        if ($currLession == 0) {
+            return false;
+        }
+        $currentWeek = $termModel->getCurrentWeek();
+        if (!$currentWeek) {
+            return false;
+        }
+        $day = date('w');
+        $schedule = $this->where(array(
+            'teacherid' => $tid,
+            'lessionnums' => array('like', '%,'.$currLession.',%'),
+            'weeks'=>array('like', '%,'.$currentWeek.',%'),
+            'day'=>array('like', $day)
+        ))->find();
+
+        return $schedule;
+    }
 
 
 }
