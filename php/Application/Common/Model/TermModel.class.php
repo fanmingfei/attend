@@ -24,11 +24,11 @@ class TermModel extends RelationModel {
             $array[$key] = intval($arr[0]) * 60 + intval($arr[1]);
         }
 
-        $array1[] = array($array['onestart'], $array['oneend']);
-        $array1[] = array($array['twostart'], $array['twoend']);
-        $array1[] = array($array['threestart'], $array['threeend']);
-        $array1[] = array($array['fourstart'], $array['fourend']);
-        $array1[] = array($array['fivestart'], $array['fiveend']);
+        $array1[] = array($array['onestart'] - 10, $array['oneend']);
+        $array1[] = array($array['twostart'] - 10, $array['twoend']);
+        $array1[] = array($array['threestart'] - 10, $array['threeend']);
+        $array1[] = array($array['fourstart'] - 10, $array['fourend']);
+        $array1[] = array($array['fivestart'] - 10, $array['fiveend']);
 
 
         $lession = 0;
