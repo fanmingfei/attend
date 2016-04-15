@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class StudentController extends Controller {
+class StudentController extends BackController {
     public function importStudent()
     {
         import("Vendor.Excel.PHPExcel");

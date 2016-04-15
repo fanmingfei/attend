@@ -44,7 +44,7 @@
                 <foreach name="signs" item="item">
                     <table class="table table-condensed" data-id="{$call.id}">
                         <caption>{$key}出勤情况
-                            <br><small>应到：{$item.total}，已到：{$item.process}，补签：{$item.retroactive}，请假：{$item.leave}，未签到：{$item.none}</small></caption>
+                            <br><small>出勤率：{$item.rate}，应到：{$item.total}，已到：{$item.process}，补签：{$item.retroactive}，请假：{$item.leave}，未签到：{$item.none}</small></caption>
                         <thead>
                             <tr>
                                 <th>序号</th>

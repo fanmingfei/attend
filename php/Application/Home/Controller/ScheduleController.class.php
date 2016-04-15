@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class ScheduleController extends Controller {
+class ScheduleController extends BackController {
     public function postSchedule() {
         $id = I('id');
         $name = I('name');

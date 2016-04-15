@@ -38,7 +38,7 @@ class StudentModel extends Model {
             }
 
             $value['classid'] = $classid;
-            $this->data($value)->add();
+            $this->where(array('username'=>$value['username'],'classid'=>$value['classid']))->data($value)->save();
         }
     }
 

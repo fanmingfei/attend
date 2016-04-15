@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class ClassesController extends Controller {
+class ClassesController extends BackController {
     function addClass () {
         $this->display();
     }

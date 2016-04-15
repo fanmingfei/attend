@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class TermController extends Controller {
+class TermController extends BackController {
     public function setTerm()
     {
         $array = I('post.');

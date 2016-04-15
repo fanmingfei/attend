@@ -75,6 +75,7 @@ class SignModel extends Model {
             $classArray[$className]['retroactive'] = 0;
             $classArray[$className]['leave'] = 0;
             $classArray[$className]['none'] = 0;
+            $classArray[$className]['rate'] = 0;
 
             // 遍历当前班级学生，取出学生对应的状态 并且放入数组
             foreach ($classArray[$className]['list'] as $key2 => $user) {
@@ -86,15 +87,18 @@ class SignModel extends Model {
                         $classArray[$className]['process'] ++;
                         break;
                     case '2':
+                        $classArray[$className]['leave'] ++;
+                        break;
+                    case '3':
                         $classArray[$className]['process'] ++;
                         $classArray[$className]['retroactive'] ++;
                         break;
-                    case '3':
-                        $classArray[$className]['leave'] ++;
                     default:
                         $classArray[$className]['none'] ++;
                 }
             }
+            $classArray[$className]['rate'] = intval((intval($classArray[$className]['process']) / intval($classArray[$className]['total'])) * 100).'%';
+
         }
         return $classArray;
 
@@ -126,12 +130,12 @@ class SignModel extends Model {
         );
         $active = $this->where($where1)->count();
 
-        $where1['status'] = 2;
+        $where1['status'] = 3;
 
         $retroactive = $this->where($where1)->count();
 
 
-        $where1['status'] = 3;
+        $where1['status'] = 2;
         
         $leave = $this->where($where1)->count();
 
@@ -139,13 +143,16 @@ class SignModel extends Model {
 
         $none = $total - $process - $leave;
 
+        $rate = intval(($process / $total)*100) . '%';
+
         $data = array(
             'total' => $total,
             'active' => $active,
             'leave' => $leave,
             'process' => $process,
             'none' => $none,
-            'retroactive' => $retroactive
+            'retroactive' => $retroactive,
+            'rate' => $rate
         );
 
         return $data;

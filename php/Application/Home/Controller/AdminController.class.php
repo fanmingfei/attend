@@ -1,7 +1,8 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class AdminController extends Controller {
+class AdminController extends BackController {
+
     public function index(){
         $this->indexNav = 'active';
         $this->display();
@@ -60,5 +61,11 @@ class AdminController extends Controller {
         $this->display();
     }
 
+    public function logout()
+    {
+        cookie('super', null);
+        session('super', null);
+        $this->success('退出成功！', '/?c=Login');
+    }
 
 }
