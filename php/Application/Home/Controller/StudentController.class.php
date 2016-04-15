@@ -34,7 +34,7 @@ class StudentController extends BackController {
 
         $row = $objWorksheet->getHighestRow();
         // $col = $objWorksheet->getHighestColumn(); 
-        $keyname = array('grade', 'major', 'studentid', 'username', 'phone', 'sex', 'idcard', 'political', 'address', 'bankid', 'father', 'fatherphone', 'mother', 'motherfphone', 'dorm', 'room');
+        $keyname = array('grade', 'major', 'studentid', 'username', 'phone', 'sex', 'idcard', 'political', 'address', 'bankid', 'father', 'fatherphone', 'mother', 'motherphone', 'dorm', 'room');
         $people = array();
         for ($r = 3; $r <= $row; $r++) {
             $c = 1;
@@ -46,8 +46,37 @@ class StudentController extends BackController {
         }
         D('Student')->saveList($people);
         $this->success('添加成功！');
-        
-
-
     }
+    public function postStudent () {
+        $user = I('post.');
+        if ($user['id']) {
+            $this->saveStudent($user);
+            return false;
+        }
+        $has = D('Student')->where(array('username'=>$user['username'], 'classid'=>$user['classid']))->find();
+        if ($has) {
+            $this->error('该学生已存在');
+        }
+        if (!$user['username']) {
+            $this->error('请填写姓名');
+        }
+        if (!$user['classid']) {
+            $this->error('请选择班级');
+        }
+        $re = D('Student')->data($user)->add();
+        if ($re) {
+            $this->success('添加成功');
+        } else {
+            $this->error('添加失败');
+        }
+    }
+    public function saveStudent ($user) {
+        $re = D('Student')->where(array('id'=>$user['id']))->data($user)->save();
+        if ($re) {
+            $this->success('修改成功');
+        } else {
+            $this->error('修改失败');
+        }
+    }
+
 }

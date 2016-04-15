@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>考勤管理系统</title>
+    <link href="./common/headContent.html?__inline" rel="import" />
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <link href="./common/header.html?__inline" rel="import" />
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div>
+            <!-- Nav tabs -->
+            <link href="./common/nav.html?__inline" rel="import" />
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- 用户管理 -->
+                <div role="tabpanel" class="active panel_side tab-pane" id="user">
+                    <div>
+                        <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
+                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=user">学生列表</a></li>
+                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addStudent">添加学生</a></li>
+                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=teacherList">老师列表</a></li>
+                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addTeacher">添加老师</a></li>
+                            <li role="presentation" class="active"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=importStudent">批量导入学生</a></li>
+                        </ul>
+                        <div class="tab-content col-md-11">
+                            <div role="tabpanel" class="tab-pane active" id="studentList">
+                                <div role="tabpanel" class="tab-pane active" id="addCourse">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading clearfix">
+                                            学生导入
+                                        </div>
+                                        <div class="panel-body">
+                                            <form action="/?c=Student&a=importStudent" method="post" enctype="multipart/form-data">
+                                                <div class="panel-body js-addCourse-from">
+                                                    <div class="col-sm-12">
+                                                        <div class="row mt">
+                                                            请点击这里
+                                                            <a href="/file/0.xls">
+                                                                下载模板文件
+                                                            </a>
+                                                            根据模板格式进行数据填充
+                                                        </div>
+                                                        <div class="row mt">
+                                                            <div class="col-sm-2">选择文件</div>
+                                                            <div class="col-sm-10">
+                                                                <div class="form-group">
+                                                                    <input type="file" class="form-control" name="file_stu">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <button type="submit" class="btn btn-primary btn-lg js-submit-course">提交</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href="./common/footerContent.html?__inline" rel="import" />
+    <script>
+      $('.js-search-user').on('click', function () {
+        var keyword = $('.js-search-user-input').val();
+        var order = $('.js-order').val();
+        if (!keyword) {
+          alert('请填写关键字');
+          return;
+        }
+        location.href = '/?c=Admin&a=user&keyword='+keyword+'&order='+order;
+      })
+    </script>
+</body>
+
+</html>

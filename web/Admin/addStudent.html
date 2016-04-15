@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <title>考勤管理系统</title>
+
+    <link href="./common/headContent.html?__inline" rel="import" />
+
+
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+        <link href="./common/header.html?__inline" rel="import" />
+      
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div>
+      <!-- Nav tabs -->
+            <link href="./common/nav.html?__inline" rel="import" />
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <!-- 用户管理 -->
+        <div role="tabpanel" class="active panel_side tab-pane" id="user">
+          <div>
+            <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
+              <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=user">学生列表</a></li>
+              <li role="presentation" class="active"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addStudent">添加学生</a></li>
+              <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=teacherList">老师列表</a></li>
+              <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addTeacher">添加老师</a></li>
+              <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=importStudent">批量导入学生</a></li>
+            </ul>
+            <div class="tab-content col-md-11">
+              <div role="tabpanel" class="tab-pane active" id="studentList">
+                  <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                          添加学生
+                    </div>
+                      <form action="/?c=Student&a=postStudent" method="post">
+                          <div class="panel-body js-addCourse-from">
+                              <div class="col-sm-12">
+                                  <div class="row mt">
+                                      <div class="col-sm-2">姓名</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="hidden" class="form-control" placeholder="" name="id" value="{$student.id}">
+                                              <input type="text" class="form-control" placeholder="" name="username" value="{$student.username}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">班级</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <select  class="form-control" name="classid" >
+                                                <volist name="classes" id="item">
+                                                  <option value="{$item.id}"
+                                                   <php>
+                                                        if ($item['id'] == $student['classid']){ echo 'selected'; }
+                                                   </php>
+                                                  >{$item.name}</option>
+                                                </volist>
+                                              </select>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">年级</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="" name="grade" value="{$student.grade}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">学号</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="" name="studentid" value="{$student.studentid}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">电话</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="" name="phone" value="{$student.phone}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">性别</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <select class="form-control" name="sex">
+                                                <option value="男"
+                                                  <if condition="$student['username'] == '男'">selected</if>
+                                                >男</option>
+                                                <option value="女"
+                                                  <if condition="$student['username'] == '女'">selected</if>
+                                                >女</option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">身份证</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="" name="idcard" value="{$student.idcard}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">政治面貌</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="" name="political" value="{$student.political}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">家庭住址</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="" name="address" value="{$student.address}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">银行卡号</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="" name="bankid" value="{$student.idcard}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">父亲姓名</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="" name="father" value="{$student.father}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">母亲姓名</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="" name="mother" value="{$student.mother}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">父亲电话</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="" name="fatherphone" value="{$student.fatherphone}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">母亲电话</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="" name="motherphone" value="{$student.idcard}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">宿舍楼号</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="" name="dorm" value="{$student.dorm}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">房间号</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="" name="room" value="{$student.room}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row mt">
+                                      <div class="col-sm-2">是否班长</div>
+                                      <div class="col-sm-10">
+                                          <div class="form-group">
+                                              <select class="form-control" name="special">
+                                                <option value="0"
+                                                  <if condition="$student['spacial'] == 0">selected</if>
+                                                >否</option>
+                                                <option value="1"
+                                                  <if condition="$student['spacial'] == 1">selected</if>
+                                                >是</option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="panel-footer">
+                          <button type="submit" class="btn btn-primary btn-lg js-submit-course">提交</button>
+                      </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <link href="./common/footerContent.html?__inline" rel="import" />
+
+</body>
+</html>

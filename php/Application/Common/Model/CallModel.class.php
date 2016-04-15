@@ -165,4 +165,5 @@ class CallModel extends RelationModel {
     function setCallPs ($id, $ps) {
         return $this->where(array('id'=>$id))->data(array('ps'=>$ps))->save();
     }
+
 }

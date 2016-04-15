@@ -1,7 +1,15 @@
 <?php
 namespace Common\Model;
-use Think\Model;
-class StudentModel extends Model {
+use Think\Model\RelationModel;
+class StudentModel extends RelationModel {
+    protected $_link = array(
+        'Classes' => array(
+            'mapping_type'  => self::BELONGS_TO,
+            'class_name'    => 'Classes',
+            'foreign_key'   => 'classid',
+            'mapping_name'  => 'classes'
+        )
+    );
     function getStudentByOpenId ($openid) {
         $user = $this->where(array('openid'=>$openid))->find();
         return $user;
@@ -38,8 +46,58 @@ class StudentModel extends Model {
             }
 
             $value['classid'] = $classid;
-            $this->where(array('username'=>$value['username'],'classid'=>$value['classid']))->data($value)->save();
+            $this->data($value)->add();
         }
     }
+    public function searchStudents($keyword, $order)
+    {
+        $classes = D('Classes')->getClassByName($keyword);
+
+
+        if ($classes) {
+            $cls = array();
+            foreach ($classes as $key => $value) {
+                array_push($cls, array(
+                    'eq',
+                    $value['id']
+                ));
+            }
+            array_push($cls, 'or');
+        }
+
+        $map['classid'] = $cls;
+        $map['username'] = array('like', '%'.$keyword.'%');
+        $map['studentid'] = array('like', '%'.$keyword.'%');
+        $map['idcard'] = array('like', '%'.$keyword.'%');
+        $map['grade'] = array('like', '%'.$keyword.'%');
+        $map['wename'] = array('like', '%'.$keyword.'%');
+
+        $map['_logic'] = 'OR';
+        $students = $this->where($map)->relation(true)->select();
+        $students = $this->filterStudents($students);
+        // var_dump($order);
+
+        if($order == 2) {
+            uasort($students, 'studentSortByNone');
+        } else {
+            uasort($students, 'studentSortByLeave');
+        }
+
+        return $students;
+    }
+
+    function filterStudents($students) {
+        $signModel = D('Sign');
+
+        foreach ($students as $key => $value) {
+            $callInfo = $signModel->getStudentSignCountBySid($value['id']);
+            $students[$key]['leave'] = $callInfo['leave'];
+            $students[$key]['retroactive'] = $callInfo['retroactive'];
+            $students[$key]['none'] = $callInfo['none'];
+        }
+
+        return $students;
+    }
+
 
 }

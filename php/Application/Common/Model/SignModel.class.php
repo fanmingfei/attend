@@ -182,4 +182,30 @@ class SignModel extends Model {
 
         return $callList;
     }
+
+    function getStudentSignCountBySid ($sid) {
+
+        $sid = $sid ? $sid : session('user.id');
+
+        $term = M('Term')->find(1);
+        $startTime = $term['starttime'];
+        $where['time'] = array('EGT', $startTime);
+        $where['sid'] = $sid;
+        $all = $this->where($where)->count();
+
+        $arrive = $this->where($where)->where(array('status'=>1))->count();
+        $leave = $this->where($where)->where(array('status'=>2))->count();
+        $retroactive = $this->where($where)->where(array('status'=>3))->count();
+
+        $none = $all - $arrive - $leave - $retroactive;
+
+        return array(
+            'all' => $all,
+            'arrive' => $arrive, 
+            'leave' => $leave,
+            'retroactive' => $retroactive,
+            'none' => $none
+        );
+
+    }
 }

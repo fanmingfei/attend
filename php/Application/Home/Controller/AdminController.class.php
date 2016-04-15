@@ -34,10 +34,25 @@ class AdminController extends BackController {
     }
     public function user () {
         $this->userNav = 'active';
+
+        $keyword = I('keyword');
+        $order = I('order');
+
+        if ($keyword) {
+            $studentModel = D('Student');
+            
+            $this->students = $studentModel->searchStudents($keyword, $order);
+            $this->keyword = $keyword;
+        }
+
         $this->display();
     }
     public function addTeacher()
     {
+        $id = I('id');
+        if ($id) {
+            $this->teacher = D('Teacher')->getTeacherById($id);
+        }
         $this->userNav = 'active';
         $this->display();
         
@@ -66,6 +81,16 @@ class AdminController extends BackController {
         cookie('super', null);
         session('super', null);
         $this->success('退出成功！', '/?c=Login');
+    }
+    public function addStudent () {
+        $id = I('id');
+        if ($id) {
+            $this->student = D('Student')->getStudentById($id);
+        }
+        $classes = D('Classes')->getAllClasses();
+        $this->userNav = 'active';
+        $this->classes = $classes;
+        $this->display();
     }
 
 }

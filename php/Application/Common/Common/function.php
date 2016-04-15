@@ -121,3 +121,20 @@ function getIds($arr) {
 
     return $arr;
 }
+
+
+function studentSortByNone($a, $b) {
+    if ($a['none'] > $b['none']) {
+        return -1;
+    } else {
+        return 1;
+    }
+}
+
+function studentSortByLeave($a, $b) {
+    if ($a['leave'] > $b['leave']) {
+        return -1;
+    } else {
+        return 1;
+    }
+}
