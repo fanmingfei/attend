@@ -93,4 +93,17 @@ class AdminController extends BackController {
         $this->display();
     }
 
+    public function name () {
+
+        $keyword = I('keyword');
+
+        if ($keyword) {
+            $allCalls = D('Call') -> searchCall($keyword);
+        } else {
+            $allCalls = D('Call') -> getAllCalls();
+        }
+
+        $this -> assign('callList', $allCalls);
+        $this -> display();
+    }
 }
