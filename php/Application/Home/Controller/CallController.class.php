@@ -59,7 +59,7 @@ class CallController extends BaseController {
 
         $this->assign('schedule', D('Schedule')->getCurrentSchedule());
 
-        $this->assign('teachers', D('Teacher')->getAllTeachers());
+        $this->assign('teachers', D('Teacher')->getAllLeaderTeacher());
         $this->assign('classes', D('Classes')->getAllClasses());
         $this->display();
     }

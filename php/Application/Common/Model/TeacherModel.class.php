@@ -33,4 +33,8 @@ class TeacherModel extends RelationModel {
     function deleteById($id) {
         return $this->where(array('id'=>$id))->delete();
     }
+    function getAllLeaderTeacher()
+    {
+        return $user = $this->where(array('lead'=>1))->select();
+    }
 }
