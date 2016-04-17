@@ -31,7 +31,12 @@
           <div>
             <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
               <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=user">学生列表</a></li>
-              <li role="presentation" class="active"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addStudent">添加学生</a></li>
+              <li role="presentation"
+                          <if condition="$student">
+                            <else/>
+                            class="active"
+                          </if>
+              ><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addStudent">添加学生</a></li>
               <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=teacherList">老师列表</a></li>
               <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addTeacher">添加老师</a></li>
               <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=importStudent">批量导入学生</a></li>
@@ -40,7 +45,11 @@
               <div role="tabpanel" class="tab-pane active" id="studentList">
                   <div class="panel panel-default">
                     <div class="panel-heading clearfix">
-                          添加学生
+                          <if condition="$student">
+                            修改学生
+                            <else/>
+                            添加学生
+                          </if>
                     </div>
                       <form action="/?c=Student&a=postStudent" method="post">
                           <div class="panel-body js-addCourse-from">

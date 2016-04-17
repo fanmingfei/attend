@@ -68,6 +68,7 @@
                                                         <th>请假</th>
                                                         <th>旷课</th>
                                                         <th>补签</th>
+                                                        <th>班长</th>
                                                         <th>操作</th>
                                                     </tr>
                                                 </thead>
@@ -85,6 +86,7 @@
                                                             <td>{$item.leave}</td>
                                                             <td>{$item.none}</td>
                                                             <td>{$item.retroactive}</td>
+                                                            <td><if condition="$item.special == 1">是<else/>否</if></td>
                                                             <td>
                                                                 <a href="/?c=Admin&a=addStudent&id={$item.id}">修改</a>
                                                                 <a href="/?c=Student&a=delete&id={$item.id}">删除</a>

@@ -28,7 +28,11 @@
                     <div>
                         <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
                             <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=course">课程列表</a></li>
-                            <li role="presentation" class="active"><a href="{$Think.CONFIG.DOMAIN_URL}//?c=Admin&a=addCourse">添加课程</a></li>
+                            <li role="presentation" 
+                              <if condition="$schedule">
+                                <else/>
+                                class="active"
+                              </if>><a href="{$Think.CONFIG.DOMAIN_URL}//?c=Admin&a=addCourse">添加课程</a></li>
                         </ul>
                         <div class="tab-content col-md-11">
                             <!-- 添加课程 -->
