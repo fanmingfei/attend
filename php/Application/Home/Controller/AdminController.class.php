@@ -4,6 +4,7 @@ use Think\Controller;
 class AdminController extends BackController {
 
     public function index(){
+        D('Schedule')->getSchedulesByRange(1461034800, 1461049200);
         $this->indexNav = 'active';
         $this->display();
     }

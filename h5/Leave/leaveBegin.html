@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>发起请假</title>
+    <link rel="import" href="../Public/html/headContent.html?__inline">
+    <link rel="stylesheet" type="text/css" href="./css/style.less?__inline">
+</head>
+
+<body>
+    <div class="main">
+        <div class="container start">
+            <div class="weui_cell">
+                <div class="weui_cell_hd">
+                    <label for="" class="weui_label">开始时间：</label>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary js-time-select">
+                    <input class="weui_input form-control" type="date" value="" name="startDate">
+                    <input class="weui_input form-control" type="time" value="" name="startHour">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd">
+                    <label for="" class="weui_label">结束时间：</label>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary js-time-select">
+                    <input class="weui_input form-control" type="date" name="endDate" value="">
+                    <input class="weui_input form-control" type="time" name="endHour" value="">
+                </div>
+            </div>
+            <div class="form-btn">
+                <a href="javascript:;" class="weui_btn weui_btn_primary js-getTeachers">获取请假课程</a>
+            </div>
+            <div class="teacherList">
+                <div class="weui_cells_title">授课老师：(请选择对应课程和老师，如有老师调课才需要改动，默认全选)</div>
+                <div class="lessionList">
+                </div>
+                <form action="/?c=Leave&a=postLeave" method="post" enctype="multipart/form-data" id="leaveForm">
+                    <div class="weui_cells_title">请假原因：</div>
+                    <div class="weui_cells weui_cells_form">
+                        <div class="weui_cell">
+                            <div class="weui_cell_bd weui_cell_primary">
+                                <textarea class="weui_textarea" placeholder="请输入请假原因：" rows="3" name="description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="weui_cells_title">上传图片</div>
+                        <div class="weui_cells weui_cells_form">
+                            <div class="weui_cell">
+                                <div class="weui_cell_bd weui_cell_primary">
+                                    <input class="form-control" type="file" name="leave_file" accept="image/jpg,image/jpeg,image/png,image/gif" />
+                                    <div class="weui_cells_title">图片大小限制在1M以内（图片使用qq发送给好友然后长按保存到手机可以压缩图片大小）</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-btn">
+                        <input type="hidden" value="" name="lessions">
+                        <input type="hidden" value="" name="starttime">
+                        <input type="hidden" value="" name="endtime">
+                        <a href="javascript:;" class="weui_btn weui_btn_primary js-submit-leave">提交</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <link rel="import" href="../Public/html/footerContent.html?__inline">
+    <script>
+    require('js/leaveBegin');
+    </script>
+</body>
+
+</html>

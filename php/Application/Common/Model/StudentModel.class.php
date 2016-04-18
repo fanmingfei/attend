@@ -75,7 +75,6 @@ class StudentModel extends RelationModel {
         $map['_logic'] = 'OR';
         $students = $this->where($map)->relation(true)->select();
         $students = $this->filterStudents($students);
-        // var_dump($order);
 
         if($order == 2) {
             uasort($students, 'studentSortByNone');

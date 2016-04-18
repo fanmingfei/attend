@@ -163,5 +163,49 @@ class ScheduleModel extends RelationModel {
         return $schedule;
     }
 
+    function getSheduleByTime($sid, $time)
+    {
+        $sid = $sid ? $sid : session('user.id');
+
+        $classid = session('user.classid');
+
+        $termModel = D('Term');
+
+        $currLession = $termModel->getCurrentLessionNum(date('H:i', $time));
+        if ($currLession == 0) {
+            return false;
+        }
+        $currentWeek = $termModel->getCurrentWeek($time);
+        if (!$currentWeek) {
+            return false;
+        }
+        $day = date('w', $time);
+        $schedule = $this->where(array(
+            'classid' => $classid,
+            'lessionnums' => array('like', '%,'.$currLession.',%'),
+            'weeks'=>array('like', '%,'.$currentWeek.',%'),
+            'day'=>array('like', $day)
+        ))->relation(true)->find();
+
+        return $schedule;
+        
+    }
+
+    function getSchedulesByRange($start, $end) {
+        $termModel = D('Term');
+
+        $lessionsTime = $termModel->getLessionTimeByRange($start, $end);
+
+        $array = array();
+
+        foreach ($lessionsTime as $key => $value) {
+            $schedule = $this->getSheduleByTime(null, $value);
+            if ($schedule) {
+                $schedule['date'] = date('m月d号', $value);
+                $array[] = $schedule;
+            }
+        }
+        return $array;
+    }
 
 }

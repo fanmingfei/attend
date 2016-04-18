@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <title>请假成功</title>
+    <link rel="import" href="../Public/html/headContent.html?__inline">
+    <link rel="stylesheet" type="text/css" href="./css/style.less?__inline">
+</head>
+<body>
+  <div class="main">
+    <div class="container success">
+      <div class="weui_msg">
+        <p class="weui_icon_area"><span class="weui_icon_msg weui_icon_success"></span></p>
+        <div class="weui_text_area">
+          <h2 class="weui_msg_title">发起成功</h2>
+          <p class="weui_msg_desc">时间：{$leave['starttime']|date='m月d号 H:i',###}-{$leave['endtime']|date='m月d号 H:i',###}</p>
+        </div>
+      </div>
+      <a href="/?c=Leave&a=leaveDetail&id={$leave.id}" class="btn-back weui_btn weui_btn_primary">查看请假详情</a>
+    </div>
+  </div>
+</body>
+</html>
