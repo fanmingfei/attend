@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>考勤管理系统</title>
+    <link href="./common/headContent.html?__inline" rel="import" />
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <link href="./common/header.html?__inline" rel="import" />
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div>
+            <!-- Nav tabs -->
+            <link href="./common/nav.html?__inline" rel="import" />
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- 用户管理 -->
+                <div role="tabpanel" class="active panel_side tab-pane" id="user">
+                    <div>
+                        <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
+                            <li role="presentation" class="active"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=classes">班级列表</a></li>
+                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addClasses">增改班级</a></li>
+                            
+                        </ul>
+                        <div class="tab-content col-md-11">
+                            <div role="tabpanel" class="tab-pane active" id="studentList">
+                                <div role="tabpanel" class="tab-pane active" id="addCourse">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading clearfix">
+                                            班级列表
+                                        </div>
+                                        <div class="panel-body">
+
+                                            <div class="container">
+                                                <form action="/?c=Admin&a=classes" method="post">
+                                                    <div class="form-inline">
+                                                        <input type="text" name="name" class="form-control" placeholder="输入课程名称" >
+                                                        <button class="btn btn-default" type="submit">提交</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>序号</th>
+                                                        <th>班级名称</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <volist name="classes" id="item" key="key">
+                                                        <tr>
+                                                            <td>{$key}</td>
+                                                            <td>{$item.name}</td>
+                                                            <td>
+                                                                <a href="/?c=Admin&a=addClasses&id={$item.id}">修改</a>
+                                                                <a href="/?c=Admin&a=removeClass&id={$item.id}">删除</a>
+                                                            </td>
+                                                        </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href="./common/footerContent.html?__inline" rel="import" />
+    <script>
+      $('.js-search-user').on('click', function () {
+        var keyword = $('.js-search-user-input').val();
+        var order = $('.js-order').val();
+        if (!keyword) {
+          alert('请填写关键字');
+          return;
+        }
+        location.href = '/?c=Admin&a=user&keyword='+keyword+'&order='+order;
+      })
+    </script>
+</body>
+
+</html>
