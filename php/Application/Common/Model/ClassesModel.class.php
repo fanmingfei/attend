@@ -26,4 +26,21 @@ class ClassesModel extends RelationModel {
         $class = $this->where(array('name'=>$name))->find();
         return $class;
     }
+    function saveClass($id, $name) {
+        $data = array(
+            'name' => $name,
+            'id' => $id
+            );
+        $result = $this -> data($data) -> save();
+        if (!$result) {
+            $this -> error('更新失败！');
+        }
+        return $result;
+    }
+
+    function removeClass ($id) {
+
+        $result = D('Classes') -> where(array('id' => $id)) -> delete();
+        return $result;
+    }
 }

@@ -75,6 +75,99 @@ class CallModel extends RelationModel {
         return $data;
     }
 
+    function getAllCalls ($page=1, $size=20) {
+        $count = $this -> count();
+
+        $pageCount = ceil($count / $size);
+        $start = ($page - 1) * $size;
+
+        $calls = $this -> limit($start, $size) -> order('time desc') -> select();
+
+        $allCalls = D('Call') -> getCallDetail($calls);
+
+        foreach ($allCalls as $key => $value) {
+            $pageArr = array(
+                'count' => $count,
+                'size' => $size,
+                'pageCount' => $pageCount,
+                'page' => $page
+            );
+        }
+        return array(
+            'callList' => $allCalls,
+            'page' => $pageArr
+            );
+    }
+
+    function searchCall ($keyword) {
+
+        $classes = D('Classes') -> getClassByName($keyword);
+        $teacher = D('Teacher') -> getTeacherByName($keyword);
+        if ($classes) {
+            $cidArr = array();
+            foreach ($classes as $key => $value) {
+                array_push($cidArr, array(
+                    'like', '%,'.$value['id'].',%'
+                    ));
+            }
+            array_push($cidArr, 'or');
+        }
+        if ($teacher) {
+            $tidArr = array();
+            foreach ($teacher as $key => $value) {
+                array_push($tidArr, array(
+                    'eq', $value['id']
+                    ));
+            }
+            array_push($tidArr, 'or');
+        }
+
+        $where['cid'] = $cidArr;
+        $where['tid'] = $tidArr;
+        $where['_logic'] = 'OR';
+
+        $call = $this -> where($where) -> select();
+
+        $allCalls = $this -> getCallDetail($call);
+
+        return array(
+            'callList' => $allCalls
+            );
+
+    }
+    function getCallDetail ($calls) {
+
+
+        foreach ($calls as $key => $value) {
+            $cid = getIds($value['cid']);
+            $class = D('Classes') -> getClassById($cid[0]);
+
+            $calls[$key]['className'] = $class['name'];
+
+            $tcid = $value['tcid'];
+            $tcidTeacher = D('Teacher') -> getTeacherById($tcid);
+            $calls[$key]['tcidTeacher'] = $tcidTeacher['username'];
+
+            $tid = $value['tid'];
+            $teacher = D('Teacher') -> getTeacherById($tid);
+            $calls[$key]['teacher'] = $teacher['username'];
+
+            $sid = $calls[$key]['sid'];
+            if ($sid) {
+                $startUser = D('Student') -> getStudentById($sid);
+            }else {
+                $startUser = $teacher;
+            }
+
+            $calls[$key]['startUser'] = $startUser['username']; 
+            
+            $data = D('Sign') -> getSignPeopleInfo($value['id']);
+            $calls[$key]['data'] = $data;
+        }
+
+        return $calls;
+    }
+
 
     function getTeacherCallListByTid ($page, $size, $uid) {
         $uid = $uid ? $uid : session('user.id');

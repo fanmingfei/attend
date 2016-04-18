@@ -94,4 +94,98 @@ class AdminController extends BackController {
         $this->display();
     }
 
+    public function name () {
+
+        $keyword = I('keyword');
+        $page = I('page', 1);
+        $size = I('size', 20);
+
+        if ($keyword) {
+            $result = D('Call') -> searchCall($keyword);
+        } else {
+            $result = D('Call') -> getAllCalls($page, $size);
+        }
+
+        $this -> assign($result);
+        $this -> display();
+    }
+
+    public function nameDetail () {
+        $callid = I('id');
+        $signModel = D('Sign');
+        $callModel = D('Call');
+        $classes = $signModel->getStudentsByCallid($callid);
+        $call = $callModel->getCallById($callid);
+
+        $this->assign(array(
+            'signs'=> $classes,
+            'call'=> $call
+        ));
+        $this->display();
+    }
+
+    function setStatus () {
+        $sid = I('sid');
+        $callid = I('callid');
+        $status = I('status');
+
+        $signModel = D('Sign');
+
+        $re = $signModel->setSignStatus($callid, $sid, $status);
+        if ($re || $re == 0) {
+            ajax_return(null, 0, '设置成功');
+        } else {
+            ajax_return(null, -1, '设置失败');
+        }
+    }
+
+    public function classes () {
+
+        $className = I('name');
+
+        $class = D('Classes') -> getClassByName($className);
+
+        $this -> assign('classes', $class);
+        $this -> display();
+    }
+
+    public function addClasses () {
+
+        $id = I('id');
+        $className = I('name');
+
+        $classes = D('Classes') -> getClassById($id);
+        if ($className && $id) {
+            $existClass = D('Classes') -> getOneByName($className);
+            if ($existClass) {
+                $this -> error('班级名称已存在！');
+            }
+            $result = D('Classes') -> saveClass($id, $className);
+
+            if ($result) {
+                $this -> success('修改成功！', U('Admin/classes'));
+            }
+        }
+        if ($className && !$id) {
+            $newClass = D('Classes') -> addClass($className);
+
+            if ($newClass) {
+                $this -> success('添加成功！', U('Admin/classes'));
+            }
+        }
+
+        $this -> assign('classes', $classes);
+        $this -> display();
+    }
+
+    public function removeClass() {
+        $id = I('id');
+
+        $result = D('Classes') -> removeClass($id);
+        if ($result) {
+            $this -> success('删除成功！');
+        }else {
+            $this -> error('删除失败！');
+        }
+    }
 }
