@@ -50,6 +50,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>序号</th>
+                                                        <th>课程</th>
                                                         <th>班级</th>
                                                         <th>发起人</th>
                                                         <th>任课老师</th>
@@ -64,6 +65,7 @@
                                                     <volist name="callList" id="item" key="key">
                                                         <tr>
                                                             <td>{$key}</td>
+                                                            <td>{$item['title']}</td>
                                                             <td>{$item['className']}</td>
                                                             <td>{$item['startUser']}</td>
                                                             <td>{$item['teacher']}</td>

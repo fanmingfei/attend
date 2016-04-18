@@ -124,6 +124,7 @@ class CallModel extends RelationModel {
 
         $where['cid'] = $cidArr;
         $where['tid'] = $tidArr;
+        $where['title'] = array('like', '%'.$keyword.'%');
         $where['_logic'] = 'OR';
 
         $call = $this -> where($where) -> select();

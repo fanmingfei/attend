@@ -106,6 +106,7 @@ class AdminController extends BackController {
             $result = D('Call') -> getAllCalls($page, $size);
         }
 
+        $this->keyword = $keyword;
         $this -> assign($result);
         $this -> display();
     }
