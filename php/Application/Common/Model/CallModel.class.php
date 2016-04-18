@@ -75,11 +75,28 @@ class CallModel extends RelationModel {
         return $data;
     }
 
-    function getAllCalls () {
-        $calls = $this -> select();
+    function getAllCalls ($page=1, $size=20) {
+        $count = $this -> count();
+
+        $pageCount = ceil($count / $size);
+        $start = ($page - 1) * $size;
+
+        $calls = $this -> limit($start, $size) -> order('time desc') -> select();
 
         $allCalls = D('Call') -> getCallDetail($calls);
-        return $allCalls;
+
+        foreach ($allCalls as $key => $value) {
+            $pageArr = array(
+                'count' => $count,
+                'size' => $size,
+                'pageCount' => $pageCount,
+                'page' => $page
+            );
+        }
+        return array(
+            'callList' => $allCalls,
+            'page' => $pageArr
+            );
     }
 
     function searchCall ($keyword) {
@@ -113,10 +130,14 @@ class CallModel extends RelationModel {
 
         $allCalls = $this -> getCallDetail($call);
 
-        return $allCalls;
+        return array(
+            'callList' => $allCalls
+            );
 
     }
     function getCallDetail ($calls) {
+
+
         foreach ($calls as $key => $value) {
             $cid = getIds($value['cid']);
             $class = D('Classes') -> getClassById($cid[0]);

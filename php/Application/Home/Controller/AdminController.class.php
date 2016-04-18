@@ -96,14 +96,45 @@ class AdminController extends BackController {
     public function name () {
 
         $keyword = I('keyword');
+        $page = I('page', 1);
+        $size = I('size', 20);
 
         if ($keyword) {
-            $allCalls = D('Call') -> searchCall($keyword);
+            $result = D('Call') -> searchCall($keyword);
         } else {
-            $allCalls = D('Call') -> getAllCalls();
+            $result = D('Call') -> getAllCalls($page, $size);
         }
 
-        $this -> assign('callList', $allCalls);
+        $this -> assign($result);
         $this -> display();
+    }
+
+    public function nameDetail () {
+        $callid = I('id');
+        $signModel = D('Sign');
+        $callModel = D('Call');
+        $classes = $signModel->getStudentsByCallid($callid);
+        $call = $callModel->getCallById($callid);
+
+        $this->assign(array(
+            'signs'=> $classes,
+            'call'=> $call
+        ));
+        $this->display();
+    }
+
+    function setStatus () {
+        $sid = I('sid');
+        $callid = I('callid');
+        $status = I('status');
+
+        $signModel = D('Sign');
+
+        $re = $signModel->setSignStatus($callid, $sid, $status);
+        if ($re || $re == 0) {
+            ajax_return(null, 0, '设置成功');
+        } else {
+            ajax_return(null, -1, '设置失败');
+        }
     }
 }
