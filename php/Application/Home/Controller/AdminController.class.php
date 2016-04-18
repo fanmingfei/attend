@@ -137,4 +137,54 @@ class AdminController extends BackController {
             ajax_return(null, -1, '设置失败');
         }
     }
+
+    public function classes () {
+
+        $className = I('name');
+
+        $class = D('Classes') -> getClassByName($className);
+
+        $this -> assign('classes', $class);
+        $this -> display();
+    }
+
+    public function addClasses () {
+
+        $id = I('id');
+        $className = I('name');
+
+        $classes = D('Classes') -> getClassById($id);
+        if ($className && $id) {
+            $existClass = D('Classes') -> getOneByName($className);
+            if ($existClass) {
+                $this -> error('班级名称已存在！');
+            }
+            $result = D('Classes') -> saveClass($id, $className);
+
+            if ($result) {
+                $this -> success('修改成功！', U('Admin/classes'));
+            }
+        }
+        if ($className && !$id) {
+            $newClass = D('Classes') -> addClass($className);
+
+            if ($newClass) {
+                $this -> success('添加成功！', U('Admin/classes'));
+            }
+        }
+
+        $this -> assign('classes', $classes);
+        $this -> display();
+    }
+
+    public function removeClass() {
+        $id = I('id');
+
+        $result = D('Classes') -> removeClass($id);
+        if ($result) {
+            $this -> success('删除成功！');
+        }else {
+            $this -> error('删除失败！');
+        }
+    }
 }
