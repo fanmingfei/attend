@@ -189,4 +189,15 @@ class AdminController extends BackController {
             $this -> error('删除失败！');
         }
     }
+    public function deleteCall () {
+        $id = I('id');
+        if ($id) {
+            $re = D('Call')->deleteCall($id);
+        }
+        if ($re) {
+            $this->success('删除成功');
+        } else {
+            $this->error('删除失败');
+        }
+    }
 }

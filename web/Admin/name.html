@@ -72,7 +72,7 @@
                                                             <td>{$item['tcidTeacher']}</td>
                                                             <td>{$item['data']['rate']}</td>
                                                             <td>总人数:{$item['data']['total']}请假:{$item['data']['leave']}缺勤:{$item['data']['none']}出勤:{$item['data']['process']}</td>
-                                                            <td><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=nameDetail&id={$item['id']}"><span class="glyphicon glyphicon-cog"></span></a></td>
+                                                            <td><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=nameDetail&id={$item['id']}">详情</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=deleteCall&id={$item['id']}">删除</a></td>
                                                         </tr>
                                                     </volist>
                                                 </tbody>
