@@ -9,6 +9,12 @@ var _pri = {
         $('.js-call-btn').on('click', () => {
             _pri.util.submitCall();
         });
+        $('.js-search-teacher').on('keyup', function () {
+            _pri.util.searchTeacher($(this).val());
+        });
+    },
+    conf: {
+        teachers: []
     },
     util: {
         addClass: () => {
@@ -34,7 +40,15 @@ var _pri = {
                 return;
             }
 
-            var tid = $('input[name="tid"]').val();
+            var tid = $('select[name="tid"]').val();
+            if (tid == 0 || !tid) {
+                var c = confirm('确定不选择任课老师吗？');
+                if (!c) {
+                    $('.js-call-btn').removeClass('disabled');
+                    return;
+                }
+            }
+
 
             var $classesDom = $('select[name="classid"]');
             var arr = [];
@@ -111,9 +125,41 @@ var _pri = {
                 if (arr.indexOf(arr[i]) == i) n.push(arr[i]);
             }
             return n;
-        }
+        },
+        getTeachers: function () {
+            $.each($('.js-teachers-box').find('option'), function (i, item) {
+                var $item = $(item);
+                _pri.conf.teachers.push({
+                    id: $item.val(),
+                    username: $(item).text()
+                });
+            });
+        },
+        searchTeacher: function (val) {
+            var list = _pri.conf.teachers.filter(function (item) {
+                if (item.username.indexOf(val) >= 0) {
+                    return true;
+                }
+                return false;
+            });
+            if(!val) {
+                _pri.util.createTeacherItem(_pri.conf.teachers);
+            } else {
+                _pri.util.createTeacherItem(list);
+            }
+
+        },
+        createTeacherItem: function (list) {
+            $('.js-teachers-box').empty();
+            var str = '';
+            list.forEach(function (item) {
+                str += '<option value="'+item.id+'">'+item.username+'</option>';
+            });
+            $(str).appendTo('.js-teachers-box');
+        },
     },
     init: function () {
+        _pri.util.getTeachers();
         this.bindUI();
     }
 };
