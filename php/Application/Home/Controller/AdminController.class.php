@@ -106,6 +106,7 @@ class AdminController extends BackController {
             $result = D('Call') -> getAllCalls($page, $size);
         }
 
+        $this->nameNav = 'active';
         $this->keyword = $keyword;
         $this -> assign($result);
         $this -> display();
@@ -146,6 +147,7 @@ class AdminController extends BackController {
 
         $class = D('Classes') -> getClassByName($className);
 
+        $this->classesNav = 'active';
         $this -> assign('classes', $class);
         $this -> display();
     }
