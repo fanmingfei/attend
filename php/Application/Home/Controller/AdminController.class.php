@@ -94,6 +94,13 @@ class AdminController extends BackController {
         $this->display();
     }
 
+    public function uploadImg () {
+
+        
+        
+        $this -> display();
+    }
+
     public function name () {
 
         $keyword = I('keyword');

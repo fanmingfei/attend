@@ -117,4 +117,13 @@ class UserController extends Controller {
         $this->display('studentReg');
     }
 
+    public function userDetail () {
+        $sid = I('id', 3);
+
+        $student = D('Student') -> getStudentById($sid);
+        $student['class'] = D('Classes') -> getClassById($student['classid']);
+
+        $this -> assign('userDetail', $student);
+        $this -> display();
+    }
 }
