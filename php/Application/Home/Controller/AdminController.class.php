@@ -132,6 +132,12 @@ class AdminController extends BackController {
         $status = I('status');
 
         $signModel = D('Sign');
+        
+        $call = D('Call')->where(array('id' => $callid))->find();
+        if (time() > $call['time'] + 24*60*60) {
+            ajax_return(null, -1, '超出操作时间，24小时内可操作');
+            return;
+        }
 
         $re = $signModel->setSignStatus($callid, $sid, $status);
         if ($re || $re == 0) {

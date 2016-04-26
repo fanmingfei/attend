@@ -123,6 +123,12 @@ class CallController extends BaseController {
             ajax_return(null, -1, '您没有修改权限');
         }
 
+        $call = D('Call')->where(array('id' => $callid))->find();
+        if (time() > $call['time'] + 24*60*60) {
+            ajax_return(null, -1, '超出操作时间，24小时内可操作');
+            return;
+        }
+
         // if ((session('user.special') == 1) && ($status == 1 || $status == 'false')) {
         //     ajax_return(null, -1, '你没有权限设置已到和缺勤');
         // }
