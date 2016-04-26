@@ -176,7 +176,9 @@ class CallModel extends RelationModel {
         if (session('user.special') == 1) {
             $idName = 'sid';
             $where = array(
-                $idName=>$uid
+                $idName=>$uid,
+                'cid' => array('like', '%,'.session('user.classid').',%'),
+                '_logic' => 'or'
             );
         } else {
             $idName = 'tid';
