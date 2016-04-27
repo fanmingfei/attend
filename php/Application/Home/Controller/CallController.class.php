@@ -7,10 +7,10 @@ class CallController extends BaseController {
         $title = I('title');
         $tcid = I('tcid');
         $tid = I('tid');
-        $longitude = 0; //I('longitude');
-        $latitude = 0; //I('latitude');
+        $longitude = I('longitude');
+        $latitude = I('latitude');
 
-        if (!$cid || !$title || !$tcid) { // || !$longitude || !$latitude
+        if (!$cid || !$title || !$tcid || !$longitude || !$latitude) { 
             $msg = '参数不完整';
             ajax_return(null, -1, $msg);
         }

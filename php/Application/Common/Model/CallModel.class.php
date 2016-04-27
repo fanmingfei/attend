@@ -85,14 +85,12 @@ class CallModel extends RelationModel {
 
         $allCalls = D('Call') -> getCallDetail($calls);
 
-        foreach ($allCalls as $key => $value) {
-            $pageArr = array(
-                'count' => $count,
-                'size' => $size,
-                'pageCount' => $pageCount,
-                'page' => $page
-            );
-        }
+        $pageArr = array(
+            'count' => $count,
+            'size' => $size,
+            'pageCount' => $pageCount,
+            'page' => $page
+        );
         return array(
             'callList' => $allCalls,
             'page' => $pageArr

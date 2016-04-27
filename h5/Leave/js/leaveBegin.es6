@@ -1,13 +1,14 @@
 var _pri = {
     bindUI: function () {
-        $('.js-getTeachers').on('click', function () {
-            _pri.util.getTeachers();
-        });
-        $('.js-time-select').on('input', function (argument) {
-            $('.teacherList').hide();
-        });
         $('.js-submit-leave').on('click', function () {
             _pri.util.leaveSubmit();
+        });
+        $('.js-add-teacher').on('click', function () {
+            _pri.conf.teacherSelectDom.clone().appendTo('.js-teacher-select-box');
+        });
+        $(document).on('input',  '.js-search-teacher', function () {
+            var $select = $(this).closest('.js-teacher-select-item').find('select');
+            _pri.util.searchTeacher($select, $(this).val());
         });
     },
     regExp: {
@@ -16,54 +17,16 @@ var _pri = {
     },
     conf: {
         start: '',
-        end: ''
+        end: '',
+        teacherSelectDom: null,
+        teachers: [],
     },
     util: {
-        getTeachers: function () {
 
-            var startDate = $('[name="startDate"]').val();
-            var startTime = $('[name="startHour"]').val();
-            var endDate = $('[name="endDate"]').val();
-            var endTime = $('[name="endHour"]').val();
-
-            var testDate = _pri.regExp.date;
-            var testTime = _pri.regExp.time;
-
-            if (!testDate.test(startDate) || !testDate.test(endDate) || !testTime.test(startTime) || !testTime.test(endTime)) {
-                alert('时间输入格式错误');
-                return;
-            }
-            var start = startDate + ' ' + startTime;
-            var end = endDate + ' ' + endTime;
-
-            _pri.conf.start = start;
-            _pri.conf.end = end;
-
-            $.ajax({
-                url: '/?c=Leave&a=getLeaveTeachers',
-                data: {
-                    start: start,
-                    end: end
-                },
-                dataType: 'json',
-                success: function (resp) {
-                    if (resp.status !== 0) {
-                        alert(resp.msg);
-                        return;
-                    }
-                    var str = '';
-                    resp.data.forEach(function (item) {
-                        str += _pri.util.tmpl(item);
-                    });
-                    $('.lessionList').empty().append($(str));
-                    $('.teacherList').show();
-                },
-                error: function () {
-                    alert('服务器错误');
-                }
-            });
-            
+        getTeacherDom: function () {
+            _pri.conf.teacherSelectDom = $('.js-teacher-select-item').eq(0).clone();
         },
+
         tmpl: function (data) {
             var lession = data.lessionnums.split(',');
             lession.pop();
@@ -77,24 +40,94 @@ var _pri = {
             '</div>';
         },
         leaveSubmit: function () {
-            var $item = $('.lessionList').find('input[checked]');
+            var startDate = $('[name="startDate"]').val();
+            var startTime = $('[name="startHour"]').val();
+            var endDate = $('[name="endDate"]').val();
+            var endTime = $('[name="endHour"]').val();
+
+            var testDate = _pri.regExp.date;
+            var testTime = _pri.regExp.time;
+
+            if (!testDate.test(startDate) || !testDate.test(endDate) || !testTime.test(startTime) || !testTime.test(endTime)) {
+                alert('时间输入格式错误');
+                return;
+            }
+
+            var description = $('textarea[name="description"]').val();
+            if (!description) {
+                alert('请填写请假原因');
+                return;
+            }
+
+            var start = startDate + ' ' + startTime;
+            var end = endDate + ' ' + endTime;
+
+            _pri.conf.start = start;
+            _pri.conf.end = end;
+
+
+            var $item = $('.js-teacher-select-box').find('select');
             var arr = [];
             $.each($item, function (i, elem) {
-                var $elem = $(elem).closest('.lession-item');
-                var item = {};
-                item.scheduleid = $elem.attr('data-id');
-                item.teacherid = $elem.attr('data-teacher');
-                item.scheduletime = $elem.attr('data-time');
-                arr.push(item);
+                if ($(elem).val() !== '0') {
+                    arr.push($(elem).val());
+                }
             });
-            $('input[name="lessions"]').val(JSON.stringify(arr));
+            if (arr.length == 0) {
+                alert('请选择老师！');
+                return;
+            }
+            arr = _pri.util.unique(arr);
+
+            $('input[name="teachers"]').val(JSON.stringify(arr));
             $('input[name="starttime"]').val(_pri.conf.start);
             $('input[name="endtime"]').val(_pri.conf.end);
             $('#leaveForm').submit();
-        }
+        },
+        getTeachers: function () {
+            $.each($('.js-teachers-box').find('option'), function (i, item) {
+                var $item = $(item);
+                _pri.conf.teachers.push({
+                    id: $item.val(),
+                    username: $(item).text()
+                });
+            });
+        },
+        searchTeacher: function ($select, val) {
+            var list = _pri.conf.teachers.filter(function (item) {
+                if (item.username.indexOf(val) >= 0) {
+                    return true;
+                }
+                return false;
+            });
+            if(!val) {
+                _pri.util.createTeacherItem($select, _pri.conf.teachers);
+            } else {
+                _pri.util.createTeacherItem($select, list);
+            }
+
+        },
+        createTeacherItem: function ($select, list) {
+            $select.empty();
+            var str = '';
+            list.forEach(function (item) {
+                str += '<option value="'+item.id+'">'+item.username+'</option>';
+            });
+            $(str).appendTo($select);
+        },
+        unique: (arr) => {
+            var n = [arr[0]];
+            for(var i = 1; i < arr.length; i++)
+            {
+                if (arr.indexOf(arr[i]) == i) n.push(arr[i]);
+            }
+            return n;
+        },
     },
     init: function () {
         this.bindUI();
+        _pri.util.getTeachers();
+        _pri.util.getTeacherDom();
     }
 };
 

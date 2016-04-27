@@ -11,6 +11,5 @@ class BaseController extends Controller {
             $user = D('Teacher')->getTeacherById($user['id']);
         }
         session('user', $user);
-        session('user.type', cookie('user.type'));
     }
 }

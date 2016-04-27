@@ -54,21 +54,46 @@
                             </div>
                         </div>
                     </div>
-            <div class="form-item classes-box">
-                <input type="text" class="form-control js-search-teacher" placeholder="搜索任课老师" value="" />
-                <div class="weui_cell weui_cell_select js-class-item">
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <select class="form-control js-teachers-box" class="weui_select" name="tid" >
-                            <option selected value="0">选择任课老师</option>
-                            <volist name="teachers1" id="vo">
-                                <option value="{$vo.id}">{$vo.username}</option>
-                            </volist>
-                        </select>
+                    <div class="js-teacher-select-box">
+                        <div class="weui_cells_title">选择班主任</div>
+                        <div class="form-item classes-box" style="overflow:hidden">
+                            <div>
+                                <div class="weui_cell weui_cell_select js-class-item">
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <select class="form-control js-teachers-box" class="weui_select">
+                                            <option selected value="0">选择班主任</option>
+                                            <volist name="headerTeachers" id="vo">
+                                                <option value="{$vo.id}">{$vo.username}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weui_cells_title">选择请假老师</div>
+                        <div class="form-item classes-box js-teacher-select-item" style="overflow:hidden">
+                            <div style="width: 49%; float:left">
+                                <input type="text" class="form-control js-search-teacher" placeholder="搜索任课老师" value="" />
+                            </div>
+                            <div style="width: 49%; float:left">
+                                <div class="weui_cell weui_cell_select js-class-item">
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <select class="form-control js-teachers-box" class="weui_select">
+                                            <option selected value="0">选择老师</option>
+                                            <volist name="teachers" id="vo">
+                                                <option value="{$vo.id}">{$vo.username}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                    <center>
+                        <a href="javascript:;" style="margin-top: 10px" class="weui_btn weui_btn_mini weui_btn_primary js-add-teacher">添加老师</a>
+                    </center>
                     <div class="form-btn">
-                        <input type="hidden" value="" name="lessions">
+                        <input type="hidden" value="" name="teachers">
                         <input type="hidden" value="" name="starttime">
                         <input type="hidden" value="" name="endtime">
                         <a href="javascript:;" class="weui_btn weui_btn_primary js-submit-leave">提交</a>

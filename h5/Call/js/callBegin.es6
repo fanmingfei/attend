@@ -1,5 +1,5 @@
 
-// require('../../Public/js/weixin');
+require('../../Public/js/weixin');
 
 var _pri = {
     bindUI: function () {
@@ -67,53 +67,54 @@ var _pri = {
                 return;
             }
 
-            // wx.getLocation({
-            //     type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-            //     success: function (res) {
-            //         var latitude = res.latitude;
-            //         var longitude = res.longitude;
-            //         if (res.res) {
-            //             latitude = res.res.latitude;
-            //             longitude = res.res.longitude;
-            //         }
-
-            //     },
-            //     fail: function () {
-            //         alert('获取地理位置失败，请重试');
-            //         $('.js-call-btn').removeClass('disabled');
-            //         return;
-            //     }
-    // });
-            var data = {
-                title: title,
-                cid: classesid,
-                tcid: tcid,
-                longitude: 0,
-                latitude: 0,
-                tid: tid
-            };
-
-            $.ajax({
-                url: '/?c=Call&a=postCall',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (resp) {
-                    if (resp.status == -2) {
-                        alert(resp.data.join('，')+'，已在点名列表中，请勿选择');
-                        return;
+            wx.getLocation({
+                type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                success: function (res) {
+                    var latitude = res.latitude;
+                    var longitude = res.longitude;
+                    if (res.res) {
+                        latitude = res.res.latitude;
+                        longitude = res.res.longitude;
                     }
-                    if (resp.status !== 0) {
-                        alert(resp.msg);
-                        return;
-                    }
-                    location.href = "/?c=Call&a=postCallSuccess&id=" + resp.data;
+
+                    var data = {
+                        title: title,
+                        cid: classesid,
+                        tcid: tcid,
+                        longitude: longitude,
+                        latitude: latitude,
+                        tid: tid
+                    };
+
+                    $.ajax({
+                        url: '/?c=Call&a=postCall',
+                        type: 'post',
+                        dataType: 'json',
+                        data: data,
+                        success: function (resp) {
+                            if (resp.status == -2) {
+                                alert(resp.data.join('，')+'，已在点名列表中，请勿选择');
+                                return;
+                            }
+                            if (resp.status !== 0) {
+                                alert(resp.msg);
+                                return;
+                            }
+                            location.href = "/?c=Call&a=postCallSuccess&id=" + resp.data;
+                        },
+                        error: function () {
+                            alert('服务器错误，重试');
+                        },
+                        complete: function () {
+                            $('.js-call-btn').removeClass('disabled');
+                        }
+                    });
+
                 },
-                error: function () {
-                    alert('服务器错误，重试');
-                },
-                complete: function () {
+                fail: function () {
+                    alert('获取地理位置失败，请重试');
                     $('.js-call-btn').removeClass('disabled');
+                    return;
                 }
             });
 

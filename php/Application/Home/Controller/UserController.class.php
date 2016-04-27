@@ -38,10 +38,8 @@ class UserController extends Controller {
         $time = 30*24*60*60;
         if ($teacher) {
             cookie('user', $teacher, $time);
-            cookie('user.type', 't', $time);
         } else {
             cookie('user', $student, $time);
-            cookie('user.type', 's', $time);
         }
 
         $jump = cookie('attend.jump');

@@ -50,6 +50,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>序号</th>
+                                                        <th>时间</th>
                                                         <th>课程</th>
                                                         <th>班级</th>
                                                         <th>发起人</th>
@@ -65,6 +66,7 @@
                                                     <volist name="callList" id="item" key="key">
                                                         <tr>
                                                             <td>{$key}</td>
+                                                            <td>{$item['time']|date='Y-m-d H:i',###}</td>
                                                             <td>{$item['title']}</td>
                                                             <td>{$item['className']}</td>
                                                             <td>{$item['startUser']}</td>
@@ -91,7 +93,7 @@
                                                     </if>
                                                 <else />
                                                     <for start="0" end="$page['pageCount']">
-                                                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=name&page&page={$i + 1}" class="btn btn-default">{$i + 1}</a>
+                                                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=name&page={$i + 1}" class="btn btn-default">{$i + 1}</a>
                                                     </for>
                                                 </if>
                                             </div>
