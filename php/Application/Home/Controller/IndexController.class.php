@@ -15,6 +15,16 @@ class IndexController extends BaseController {
             header('Location: /?c=Call&a=callBegin');
         }
     }
+    public function leave()
+    {
+        $type = session('user.usertype');
+        if($type == 1) {
+            header('Location: /?c=Leave&a=leaveBegin');
+        } else {
+            header('Location: /?c=Leave&a=teacherList');
+        }
+        
+    }
     public function index2() {
     }
 }

@@ -208,4 +208,37 @@ class AdminController extends BackController {
             $this->error('删除失败');
         }
     }
+    public function leave ()
+    {
+
+        $keyword = I('keyword');
+        $page = I('page', 1);
+        $size = I('size', 20);
+
+        if ($keyword) {
+            $result = D('Leave') -> searchLeaves($keyword);
+        } else {
+            $result = D('Leave') -> getAllLeaves($page, $size);
+        }
+
+        $this->leaveNav = 'active';
+        $this->keyword = $keyword;
+        $this -> assign($result);
+        $this -> display();
+
+        
+    }
+    public function deleteLeave()
+    {
+
+        $id = I('id');
+        if ($id) {
+            $re = D('Leave')->where(array('id'=>$id))->delete();
+        }
+        if ($re) {
+            $this->success('删除成功');
+        } else {
+            $this->error('删除失败');
+        }
+    }
 }
