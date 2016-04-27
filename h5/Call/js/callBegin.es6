@@ -40,12 +40,14 @@ var _pri = {
                 return;
             }
 
-            var tid = $('select[name="tid"]').val();
-            if (tid == 0 || !tid) {
-                var c = confirm('确定不选择任课老师吗？');
-                if (!c) {
-                    $('.js-call-btn').removeClass('disabled');
-                    return;
+            if ($('.js-teachers-box').length > 0)  {
+                var tid = $('select[name="tid"]').val();
+                if (tid == 0 || !tid) {
+                    var c = confirm('确定不选择任课老师吗？');
+                    if (!c) {
+                        $('.js-call-btn').removeClass('disabled');
+                        return;
+                    }
                 }
             }
 
