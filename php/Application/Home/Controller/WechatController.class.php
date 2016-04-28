@@ -143,5 +143,50 @@ class WechatController extends BaseController {
         );
         $a = $this->weObj->sendTemplateMessage($msg);
     }
+    public function postCallToTeacher($cid)
+    {
+
+        $call = D('Call')->getCallById($cid);
+        $teacherModel = D('Teacher');
+        $tc = $teacherModel->getTeacherById($call['tcid']);
+        $t = $teacherModel->getTeacherById($call['tid']);
+
+        if (C('debug')) {
+            $tempid = 'Ob6GRNreJLPrtrUx_ozMi0U0IHuEiQvRcHJi9ohV86E';
+        } else {
+            $tempid = 'NXbwy061HFikgswYbkDzXPj5x91Fx4oRXQqSAhTCBcc';
+        }
+
+        $msg = array(
+            "touser" => $tc['openid'],
+            "template_id" => $tempid,
+            "url" => C('DOMAIN_URL').'/?c=Call&a=callDetail&id='.$cid,
+            "topcolor" => "#FF0000",
+            "data" => array(
+                "first"=> array(
+                    "value" => '发起了点名',
+                    // "color" => "#173177"
+                ),
+                "keyword3"=> array(
+                    "value" => '发起点名',
+                ),
+                'keyword2'=>array(
+                    "value" => $call['classes'],
+                ),
+                'keyword1'=>array(
+                    "value" => date('Y-m-d H:i:s',$call['time']),
+                ),
+                'remark' => array(
+                    "value"=> date('Y-m-d H:i:s',time()),
+                    "color" => "#173177"
+                )
+            )
+        );
+        $a = $this->weObj->sendTemplateMessage($msg);
+
+        $msg['touser'] = $t['openid'];
+        $a = $this->weObj->sendTemplateMessage($msg);
+        
+    }
 
 }

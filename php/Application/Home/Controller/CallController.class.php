@@ -26,6 +26,8 @@ class CallController extends BaseController {
         $result = $callModel->addCall($cid, $title, $tcid, $tid, $longitude, $latitude);
 
         if ($result) {
+            $weObj = new \Home\Controller\WechatController();
+            $weObj->postCallToTeacher($result);
             ajax_return($result, 0, '点名成功');
         } else {
             ajax_return(null, -1, '点名失败');
