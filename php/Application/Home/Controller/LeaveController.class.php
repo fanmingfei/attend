@@ -116,11 +116,15 @@ class LeaveController extends BaseController {
             $this->error('失败！请重试');
         }
         $teachers = json_decode($teachers, true);
+
+        $weObj = new \Home\Controller\WechatController();
+
         foreach ($teachers as $key => $value) {
             $item['addtime'] = time();
             $item['leaveid'] = $id;
             $item['teacherid'] = $value;
             M('agree')->data($item)->add();
+            $weObj->postLeaveToTeacher(session('user.id'), $value, $id);
         }
         Header('Location: '. C('DOMAIN_URL').'/?c=Leave&a=leaveSuccess&id='.$id);
 
@@ -150,6 +154,8 @@ class LeaveController extends BaseController {
         $type = I('type');
         $re = M('Leave')->where(array('id'=>$id))->data(array('status'=>$type))->save();
         if ($re) {
+            $weObj = new \Home\Controller\WechatController();
+            $weObj->postLeaveToStudent($id);
             $this->success('操作成功');
         } else {
             $this->error('出现问题');
