@@ -27,35 +27,31 @@
                 <div role="tabpanel" class="active panel_side tab-pane" id="course">
                     <div>
                         <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
-                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=classes">班级列表</a></li>
-                            <li role="presentation" class="active"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addClasses">增改班级</a></li>
-                            
+                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=user">学生列表</a></li>
+                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addStudent">添加学生</a></li>
+                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=teacherList">老师列表</a></li>
+                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addTeacher">添加老师</a></li>
+                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=importStudent">批量导入学生</a></li>
+                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=uploadImg">上传图片</a></li>
                         </ul>
                         <div class="tab-content col-md-11">
                             <!-- 添加课程 -->
                             <div role="tabpanel" class="tab-pane active" id="addCourse">
                                 <div class="panel panel-default">
                                     <div class="panel-heading clearfix">
-                                        <if condition="$classes">修改班级<else/>添加班级</if>
+                                        上传图片
                                     </div>
-                                    <form action="/?c=Admin&a=addClasses" method="post">
-                                        <div class="panel-body js-addCourse-from">
-                                            <div class="col-sm-12">
-                                                <div class="row mt">
-                                                    <div class="col-sm-2">班级名称</div>
-                                                    <div class="col-sm-10">
-                                                        <div class="form-group">
-                                                            <input type="hidden" class="form-control" name="id" value="{$classes.id}">
-                                                            <input type="text" class="form-control" placeholder="班级名称" name="name" value="{$classes.name}">
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label for="inputEmail3" class="col-sm-2 control-label">选择图片</label>
+                                            <div class="col-sm-10">
+                                              <input type="file" class="form-control" id="inputEmail3" placeholder="图片">
                                             </div>
                                         </div>
-                                        <div class="panel-footer">
-                                            <button type="submit" class="btn btn-primary btn-lg js-submit-course">提交</button>
-                                        </div>
-                                    </form>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <a href="#" class="btn btn-success">提交</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -117,4 +117,16 @@ class UserController extends Controller {
         $this->display('studentReg');
     }
 
+    public function userDetail () {
+        if (session('user.usertype') == 1 && session('user.special') == 0) {
+            $this -> show('无权限查看！');
+            exit();
+        }
+        $sid = I('id', 3);
+
+        $student = D('Student') -> getStudentById($sid);
+        $student['class'] = D('Classes') -> getClassById($student['classid']);
+        $this -> assign('userDetail', $student);
+        $this -> display();
+    }
 }
