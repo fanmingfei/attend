@@ -59,7 +59,7 @@
                             <volist name="item['list']" id="peo" key="k">
                                 <tr class="success" data-id="{$peo.id}">
                                     <th scope="row">{$k}</th>
-                                    <td colspan="2"><a href="/?c=User&a=UserDetail&id={$peo.id}&userid={$Think.session.userid}">{$peo.username}</a></td>
+                                    <td colspan="2"><a href="/?c=User&a=UserDetail&id={$peo.id}">{$peo.username}</a></td>
                                     <td colspan="1" class="js-status" data-state="1">
                                         <if condition="$peo.status eq 1">
                                             <span class="status-icon weui_icon_success_circle"></span>

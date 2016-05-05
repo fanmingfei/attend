@@ -15,6 +15,10 @@ class IndexController extends BaseController {
             header('Location: /?c=Call&a=callBegin');
         }
     }
-    public function index2() {
+    public function my () {
+        $user = session('user');
+        dump($user);
+
+        $this -> display();
     }
 }
