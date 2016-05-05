@@ -71,6 +71,22 @@ class StudentController extends BackController {
         }
     }
     public function saveStudent ($user) {
+
+        $path = $_SERVER[DOCUMENT_ROOT].'/Uploads/';
+        $upload = new \Think\Upload();// 实例化上传类
+        $upload->maxSize   =     1024000 ;// 设置附件上传大小
+        $upload->exts      =     array('jpg', 'jpeg', 'gif', 'png');// 设置附件上传类型
+        $upload->rootPath  =     $path; // 设置附件上传根目录
+        $upload->savePath  =     'Student/'; // 设置附件上传（子）目录
+        $upload->autoSub   =     false;
+        // 上传文件 
+        $info   =   $upload->upload();
+        if(!$info && $upload->getError() !== '没有文件被上传！') {// 上传错误提示错误信息
+            $this->error($upload->getError());
+            exit();
+        }else if ($info['image']['savename']) {
+            $user['image'] = 'Uploads/Student/'.$info['image']['savename'];
+        }
         $re = D('Student')->where(array('id'=>$user['id']))->data($user)->save();
         if ($re) {
             $this->success('修改成功');

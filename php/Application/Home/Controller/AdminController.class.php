@@ -45,7 +45,6 @@ class AdminController extends BackController {
             $this->students = $studentModel->searchStudents($keyword, $order);
             $this->keyword = $keyword;
         }
-
         $this->display();
     }
     public function addTeacher()
@@ -93,7 +92,6 @@ class AdminController extends BackController {
         $this->classes = $classes;
         $this->display();
     }
-
     public function name () {
 
         $keyword = I('keyword');

@@ -25,6 +25,9 @@ class IndexController extends BaseController {
         }
         
     }
-    public function index2() {
+    public function my () {
+        $user = session('user');
+        $this -> display();
     }
+
 }

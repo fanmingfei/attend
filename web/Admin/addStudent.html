@@ -40,6 +40,7 @@
               <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=teacherList">老师列表</a></li>
               <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addTeacher">添加老师</a></li>
               <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=importStudent">批量导入学生</a></li>
+              <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=uploadImg">上传图片</a></li>
             </ul>
             <div class="tab-content col-md-11">
               <div role="tabpanel" class="tab-pane active" id="studentList">
@@ -51,7 +52,7 @@
                             添加学生
                           </if>
                     </div>
-                      <form action="/?c=Student&a=postStudent" method="post">
+                      <form action="/?c=Student&a=postStudent" method="post" enctype="multipart/form-data">
                           <div class="panel-body js-addCourse-from">
                               <div class="col-sm-12">
                                   <div class="row mt">
@@ -221,10 +222,26 @@
                                           </div>
                                       </div>
                                   </div>
+                                  <div class="row mt">
+                                    <label for="stuImage" class="col-sm-2 control-label">图片</label>
+                                    <div class="col-sm-10">
+                                      <input type="file" class="form-control" id="stuImage" name="image" accept="image/jpg,image/jpeg,image/png,image/gif">
+                                    </div>
+                                  </div>
+                                  <div class="row mt">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                      原图片：
+                                      <empty name="student['image']">
+                                        无图片
+                                      <else /> 
+                                        <img class="img-rounded" src="{$Think.CONFIG.DOMAIN_URL}/{$student['image']}" alt="">
+                                      </empty>
+                                    </div>
+                                  </div>
                               </div>
                           </div>
                       </div>
-
+                      
                       <div class="panel-footer">
                           <button type="submit" class="btn btn-primary btn-lg js-submit-course">提交</button>
                       </div>
