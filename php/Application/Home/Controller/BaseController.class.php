@@ -10,7 +10,10 @@ class BaseController extends Controller {
         } else {
             $user = D('Teacher')->getTeacherById($user['id']);
         }
+        if(!$user) {
+            cookie('user', null);
+            checkLogin();
+        }
         session('user', $user);
-        session('user.type', cookie('user.type'));
     }
 }

@@ -4,6 +4,10 @@ use Think\Controller;
 class LeaveController extends BaseController {
     public function leaveBegin()
     {
+        $headerTeachers = D('Teacher')->getAllLeaderTeacher();
+        $this->headerTeachers = $headerTeachers;
+        $teachers = D('Teacher')->getAllTeachers();
+        $this->teachers = $teachers;
         $this->display();
     }
     public function getLeaveTeachers()
@@ -25,15 +29,44 @@ class LeaveController extends BaseController {
         $agreeModel = D('Agree');
         $leave = $leaveModel->getLeaveById($id);
         $agree = $agreeModel->getAgreeByLeaveId($id);
-        var_dump($agree);
 
         $this->agree = $agree;
         $this->leave = $leave;
+        $this->user = session('user');
 
         $this->display();
     }
     public function leaveList() {
+        if(session('user.usertype') == 2) {
+            header('Location: '.C('DOMAIN_URL').'/?c=Leave&a=teacherList');
+        }
+        $leaveModel = D('Leave');
+        $page = I('page',1);
+        $size = I('size',20);
+        $leaves = $leaveModel->getStudentLeaves($page, $size);
+        $this->assign($leaves);
         $this->display();
+    }
+    public function teacherList() {
+        if(session('user.usertype') == 1) {
+            header('Location: '.C('DOMAIN_URL').'/?c=Leave&a=leaveList');
+        }
+        $agreeModel = D('Agree');
+        $page = I('page',1);
+        $size = I('size',20);
+        $agrees = $agreeModel->getAgreesByTeacher($page, $size);
+        $this->user = session('user');
+        $this->assign($agrees);
+        $this->display();
+    }
+    public function leaveCancel () {
+        $id = I('id');
+        $re = M('Leave')->where(array('id'=>$id))->data(array('status'=>3))->save();
+        if ($re) {
+            $this->success('取消成功');
+        } else {
+            $this->error('取消出现问题');
+        }
     }
 
     public function leaveSuccess()
@@ -47,12 +80,9 @@ class LeaveController extends BaseController {
         $leave = I('post.');
 
 
+        $teachers = htmlspecialchars_decode($leave['teachers']);
 
-
-        $lessions = htmlspecialchars_decode($leave['lessions']);
-
-        unset($leave['lessions']);
-
+        unset($leave['teachers']);
 
 
         $path = $_SERVER[DOCUMENT_ROOT].'/Uploads/';
@@ -85,13 +115,50 @@ class LeaveController extends BaseController {
         if (!$id) {
             $this->error('失败！请重试');
         }
-            $lessions = json_decode($lessions, true);
-        foreach ($lessions as $key => $value) {
-            $value['addtime'] = time();
-            $value['leaveid'] = $id;
-            M('agree')->data($value)->add();
+        $teachers = json_decode($teachers, true);
+
+        $weObj = new \Home\Controller\WechatController();
+
+        foreach ($teachers as $key => $value) {
+            $item['addtime'] = time();
+            $item['leaveid'] = $id;
+            $item['teacherid'] = $value;
+            M('agree')->data($item)->add();
+            $weObj->postLeaveToTeacher(session('user.id'), $value, $id);
         }
         Header('Location: '. C('DOMAIN_URL').'/?c=Leave&a=leaveSuccess&id='.$id);
 
+    }
+    function setAgree () {
+
+        $id = I('id');
+        $re = M('Agree')->where(array('leaveid'=>$id,'teacherid'=>session('user.id')))->data(array('status'=>1))->save();
+        if ($re) {
+            $this->success('已同意');
+        } else {
+            $this->error('出现问题');
+        }
+    }
+    function setRefuse () {
+
+        $id = I('id');
+        $re = M('Agree')->where(array('leaveid'=>$id,'teacherid'=>session('user.id')))->data(array('status'=>2))->save();
+        if ($re) {
+            $this->success('已拒绝');
+        } else {
+            $this->error('出现问题');
+        }
+    }
+    function setStatus() {
+        $id = I('id');
+        $type = I('type');
+        $re = M('Leave')->where(array('id'=>$id))->data(array('status'=>$type))->save();
+        if ($re) {
+            $weObj = new \Home\Controller\WechatController();
+            $weObj->postLeaveToStudent($id);
+            $this->success('操作成功');
+        } else {
+            $this->error('出现问题');
+        }
     }
 }

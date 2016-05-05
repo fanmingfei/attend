@@ -26,6 +26,12 @@
             }
         });
 
+
+        $('.js-search-lession-input').on('keyup', function (e) {
+            if(e.keyCode==13){
+                $('.js-search-lession').trigger('click');
+            }
+        });
         $('.js-search-lession').on('click', function () {
             var keyword = $('.js-search-lession-input').val();
             location.href = '?c=Admin&a=course&keyword=' + keyword;

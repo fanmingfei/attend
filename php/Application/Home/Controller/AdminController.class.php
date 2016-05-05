@@ -104,6 +104,7 @@ class AdminController extends BackController {
             $result = D('Call') -> getAllCalls($page, $size);
         }
 
+        $this->nameNav = 'active';
         $this->keyword = $keyword;
         $this -> assign($result);
         $this -> display();
@@ -129,6 +130,12 @@ class AdminController extends BackController {
         $status = I('status');
 
         $signModel = D('Sign');
+        
+        $call = D('Call')->where(array('id' => $callid))->find();
+        if (time() > $call['time'] + 24*60*60) {
+            ajax_return(null, -1, '超出操作时间，24小时内可操作');
+            return;
+        }
 
         $re = $signModel->setSignStatus($callid, $sid, $status);
         if ($re || $re == 0) {
@@ -144,6 +151,7 @@ class AdminController extends BackController {
 
         $class = D('Classes') -> getClassByName($className);
 
+        $this->classesNav = 'active';
         $this -> assign('classes', $class);
         $this -> display();
     }
@@ -185,6 +193,50 @@ class AdminController extends BackController {
             $this -> success('删除成功！');
         }else {
             $this -> error('删除失败！');
+        }
+    }
+    public function deleteCall () {
+        $id = I('id');
+        if ($id) {
+            $re = D('Call')->deleteCall($id);
+        }
+        if ($re) {
+            $this->success('删除成功');
+        } else {
+            $this->error('删除失败');
+        }
+    }
+    public function leave ()
+    {
+
+        $keyword = I('keyword');
+        $page = I('page', 1);
+        $size = I('size', 20);
+
+        if ($keyword) {
+            $result = D('Leave') -> searchLeaves($keyword);
+        } else {
+            $result = D('Leave') -> getAllLeaves($page, $size);
+        }
+
+        $this->leaveNav = 'active';
+        $this->keyword = $keyword;
+        $this -> assign($result);
+        $this -> display();
+
+        
+    }
+    public function deleteLeave()
+    {
+
+        $id = I('id');
+        if ($id) {
+            $re = D('Leave')->where(array('id'=>$id))->delete();
+        }
+        if ($re) {
+            $this->success('删除成功');
+        } else {
+            $this->error('删除失败');
         }
     }
 }

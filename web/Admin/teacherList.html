@@ -48,6 +48,7 @@
                                                     <th>序号</th>
                                                     <th>姓名</th>
                                                     <th>班主任</th>
+                                                    <th>是否注册</th>
                                                     <th>操作</th>
                                                 </tr>
                                             </thead>
@@ -58,6 +59,9 @@
                                                         <td>{$item.username}</td>
                                                         <td>
                                                             <if condition="$item.lead eq 0">否<else/>是</if>
+                                                        </td>
+                                                        <td>
+                                                            <if condition="$item.openid eq null"><else/>是</if>
                                                         </td>
                                                         <td>
                                                             <a href="/?c=Admin&a=addTeacher&id={$item.id}">修改</a>
