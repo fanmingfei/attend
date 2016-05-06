@@ -20,61 +20,73 @@
                 </div>
                 <div class="weui_cell">
                     <div class="weui_cell_bd weui_cell_primary">
-                        <p>学号</p>
-                    </div>
-                    <div class="weui_cell_ft">{$userDetail['studentid']}</div>
-                </div>
-                <div class="weui_cell">
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <p>年级</p>
-                    </div>
-                    <div class="weui_cell_ft">{$userDetail['grade']}</div>
-                </div>
-                <div class="weui_cell">
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <p>班级</p>
-                    </div>
-                    <div class="weui_cell_ft">{$userDetail['class']['name']}</div>
-                </div>
-                <div class="weui_cell">
-                    <div class="weui_cell_bd weui_cell_primary">
                         <p>手机</p>
                     </div>
                     <div class="weui_cell_ft">{$userDetail['phone']}</div>
                 </div>
-                <div class="weui_cell">
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <p>微信</p>
+                <if condition="$userDetail['usertype'] eq 1">
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <p>学号</p>
+                        </div>
+                        <div class="weui_cell_ft">{$userDetail['studentid']}</div>
                     </div>
-                    <div class="weui_cell_ft">{$userDetail['wename']}</div>
-                </div>
-                <div class="weui_cell">
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <p>身份证</p>
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <p>年级</p>
+                        </div>
+                        <div class="weui_cell_ft">{$userDetail['grade']}</div>
                     </div>
-                    <div class="weui_cell_ft">{$userDetail['idcard']}</div>
-                </div>
-                <div class="weui_cell">
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <p>照片</p>
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <p>班级</p>
+                        </div>
+                        <div class="weui_cell_ft">{$userDetail['classes']['name']}</div>
                     </div>
-                    <div class="weui_cell_ft">
-                        <div>
-                            <empty name="userDetail['image']">
-                                 照片未上传
-                            <else />
-                            <img src="{$Think.CONFIG.DOMAIN_URL}/{$userDetail['image']}" alt="">
-                            </empty>
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <p>微信</p>
+                        </div>
+                        <div class="weui_cell_ft">{$userDetail['wename']}</div>
+                    </div>
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <p>身份证</p>
+                        </div>
+                        <div class="weui_cell_ft">{$userDetail['idcard']}</div>
+                    </div>
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <p>性别</p>
+                        </div>
+                        <div class="weui_cell_ft">{$userDetail['sex']}</div>
+                    </div>
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <p>照片</p>
+                        </div>
+                        <div class="weui_cell_ft">
+                            <div>
+                                <empty name="userDetail['image']">
+                                     照片未上传
+                                <else />
+                                <img src="{$Think.CONFIG.DOMAIN_URL}/{$userDetail['image']}" alt="">
+                                </empty>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <else />
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <p>职位</p>
+                        </div>
+                        <div class="weui_cell_ft">{$userDetail['job']}</div>
+                    </div>
+                </if>
             </div>
         </div>
     </div>
     <link rel="import" href="../Public/html/footerContent.html?__inline">
-    <script>
-    require('js/callDetail');
-    </script>
 </body>
 
 </html>

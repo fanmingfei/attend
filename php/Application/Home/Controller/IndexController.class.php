@@ -16,9 +16,16 @@ class IndexController extends BaseController {
         }
     }
     public function my () {
-        $user = session('user');
-        dump($user);
-
+        $userId = session('user.id');
+        $userType = session('user.usertype');
+        if ($userType == 1) {
+            $userDetail = D('Student') -> getStudentById($userId);
+        }else{
+            $userDetail = D('Teacher') -> getTeacherById($userId);
+            $userDetail['lead'] ? $userDetail['job'] = '班主任' : $userDetail['job'] = '代课老师';
+        }
+        $this -> userDetail = $userDetail;
         $this -> display();
     }
+
 }
