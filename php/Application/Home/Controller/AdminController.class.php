@@ -239,4 +239,26 @@ class AdminController extends BackController {
             $this->error('删除失败');
         }
     }
+
+    public function leaveDetail(){
+        $id = I('id');
+        $this->leaveNav = 'active';
+        $this -> leaveDetail = D('Leave') -> getLeaveById($id);
+        $this -> display();
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
