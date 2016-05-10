@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>考勤管理系统</title>
+    <link href="./common/headContent.html?__inline" rel="import" />
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <link href="./common/header.html?__inline" rel="import" />
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div>
+            <!-- Nav tabs -->
+            <link href="./common/nav.html?__inline" rel="import" />
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- 点名管理 -->
+                <div role="tabpanel" class="active panel_side tab-pane" id="user">
+                    <div>
+                        <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
+                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leave">请假记录</a></li>
+                            <li role="presentation" class="active"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leaveCreate">发起请假</a></li>
+                        </ul>
+                        <div class="tab-content col-md-11">
+                            <div role="tabpanel" class="tab-pane active" id="studentList">
+                                <div role="tabpanel" class="tab-pane active" id="addCourse">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading clearfix">
+                                            发起请假
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="container start col-md-11">
+                                                <div class="weui_cell">
+                                                    <div class="weui_cell_hd">
+                                                        <label for="" class="weui_label">开始时间：</label>
+                                                    </div>
+                                                    <div class="weui_cell_bd weui_cell_primary js-time-select">
+                                                        <input class="weui_input form-control" type="date" value="" name="startDate">
+                                                        <input class="weui_input form-control" type="time" value="" name="startHour">
+                                                    </div>
+                                                </div>
+                                                <div class="weui_cell">
+                                                    <div class="weui_cell_hd">
+                                                        <label for="" class="weui_label">结束时间：</label>
+                                                    </div>
+                                                    <div class="weui_cell_bd weui_cell_primary js-time-select">
+                                                        <input class="weui_input form-control" type="date" name="endDate" value="">
+                                                        <input class="weui_input form-control" type="time" name="endHour" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="teacherList">
+                                                    <form action="/?c=LeaveBack&a=postLeave" method="post" enctype="multipart/form-data" id="leaveForm">
+                                                        
+                                                <div class="row mt">
+                                                    <div class="col-sm-2">学生姓名</div>
+                                                    <div class="col-sm-10">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" placeholder="" name="username">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt">
+                                                    <div class="col-sm-2">学生班级</div>
+                                                    <div class="col-sm-10">
+                                                        <select class="form-control" name="classid">
+                                                            <volist name="classes" id="item">
+                                                                <option value="{$item.id}">{$item.name}</option>
+                                                            </volist>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                        <div class="weui_cells_title ">请假原因：</div>
+                                                        <div class="weui_cells weui_cells_form">
+                                                            <div class="weui_cell">
+                                                                <div class="weui_cell_bd weui_cell_primary">
+                                                                    <textarea class="weui_textarea form-control" placeholder="请输入请假原因：" rows="3" name="description"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-item">
+                                                            <div class="weui_cells_title">上传图片</div>
+                                                            <div class="weui_cells weui_cells_form">
+                                                                <div class="weui_cell">
+                                                                    <div class="weui_cell_bd weui_cell_primary">
+                                                                        <input class="form-control" type="file" name="leave_file" accept="image/jpg,image/jpeg,image/png,image/gif" />
+                                                                        <div class="weui_cells_title">图片大小限制在1M以内（图片使用qq发送给好友然后长按保存到手机可以压缩图片大小）</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="js-teacher-select-box">
+                                                            <div class="weui_cells_title">选择班主任</div>
+                                                            <div class="form-item classes-box" style="overflow:hidden">
+                                                                <div>
+                                                                    <div class="weui_cell weui_cell_select js-class-item">
+                                                                        <div class="weui_cell_bd weui_cell_primary">
+                                                                            <select class="form-control js-teachers-box" class="weui_select">
+                                                                                <option selected value="0">选择班主任</option>
+                                                                                <volist name="headerTeachers" id="vo">
+                                                                                    <option value="{$vo.id}">{$vo.username}</option>
+                                                                                </volist>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="weui_cells_title">选择请假老师</div>
+                                                            <div class="form-item classes-box js-teacher-select-item" style="overflow:hidden">
+                                                                <div style="width: 49%; float:left">
+                                                                    <input type="text" class="form-control js-search-teacher" placeholder="搜索任课老师" value="" />
+                                                                </div>
+                                                                <div style="width: 49%; float:left">
+                                                                    <div class="weui_cell weui_cell_select js-class-item">
+                                                                        <div class="weui_cell_bd weui_cell_primary">
+                                                                            <select class="form-control js-teachers-box" class="weui_select">
+                                                                                <option selected value="0">选择老师</option>
+                                                                                <volist name="teachers" id="vo">
+                                                                                    <option value="{$vo.id}">{$vo.username}</option>
+                                                                                </volist>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <center>
+                                                            <a href="javascript:;" style="margin-top: 10px" class="btn btn-primary js-add-teacher">添加老师</a>
+                                                        </center>
+                                                        <div class="form-btn">
+                                                            <input type="hidden" value="" name="teachers">
+                                                            <input type="hidden" value="" name="starttime">
+                                                            <input type="hidden" value="" name="endtime">
+                                                            <a href="javascript:;" class="btn btn-primary js-submit-leave">提交</a>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href="./common/footerContent.html?__inline" rel="import" />
+    <script>
+    require('Leave/leaveBegin.es6');
+    </script>
+</body>
+
+</html>

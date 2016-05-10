@@ -98,5 +98,9 @@ class StudentModel extends RelationModel {
         return $students;
     }
 
+    function getStudentByNameAndClass($name, $cls) {
+        return $this->where(array('username'=>$name, 'classid'=>$cls))->find();
+    }
+
 
 }

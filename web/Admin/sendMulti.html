@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>考勤管理系统</title>
+    <link href="./common/headContent.html?__inline" rel="import" />
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <link href="./common/header.html?__inline" rel="import" />
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div>
+            <!-- Nav tabs -->
+            <link href="./common/nav.html?__inline" rel="import" />
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- 消息 -->
+                <div role="tabpanel" class="active panel_side tab-pane active" id="messages">
+                    <div>
+                        <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
+                            <link href="./common/messageNav.html?__inline" rel="import" />
+                        </ul>
+                        <div class="tab-content col-md-11">
+                            <div role="tabpanel" class="tab-pane active" id="groupList">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">群发消息</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-md-6">
+                                            <div>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 绑定全体学生
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 绑定全体教师
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 按照班级发送
+                                                </label>
+                                            </div>
+                                            <div class="select_box mt">
+                                                <select multiple class="form-control">
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                </select>
+                                            </div>
+                                            <div class="select_box mt">
+                                                <select multiple class="form-control">
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                    <option>美术本1402</option>
+                                                </select>
+                                            </div>
+                                            <button class="btn btn-default btn-lg mt">点击添加班级</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group mt">
+                                                <span class="input-group-addon" id="basic-addon1">标题</span>
+                                                <input type="text" class="form-control" placeholder="请输入标题" aria-describedby="basic-addon1">
+                                            </div>
+                                            <div class="input-group mt">
+                                                <span class="input-group-addon" id="basic-addon1">简介</span>
+                                                <input type="text" class="form-control" placeholder="请输入简介" aria-describedby="basic-addon1">
+                                            </div>
+                                            <div class="form-group mt">
+                                                <textarea class="form-control" rows="15" placeholder="输入消息"></textarea>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary btn-block">确认并提交</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href="./common/footerContent.html?__inline" rel="import" />
+</body>
+
+</html>

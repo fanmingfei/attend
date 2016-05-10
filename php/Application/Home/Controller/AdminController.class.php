@@ -239,4 +239,16 @@ class AdminController extends BackController {
             $this->error('删除失败');
         }
     }
+    public function leaveCreate()
+    {
+        $classes = D('Classes')->getAllClasses();
+        $headerTeachers = D('Teacher')->getAllLeaderTeacher();
+        $teachers = D('Teacher')->getAllTeachers();
+
+        $this->classes = $classes;
+        $this->headerTeachers = $headerTeachers;
+        $this->teachers = $teachers;
+        $this->display();
+    }
+
 }
