@@ -250,5 +250,4 @@ class AdminController extends BackController {
         $this->teachers = $teachers;
         $this->display();
     }
-
 }

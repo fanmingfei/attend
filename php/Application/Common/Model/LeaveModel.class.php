@@ -84,5 +84,38 @@ class LeaveModel extends RelationModel {
         );
 
     }
+    function getLeaveListByClassId($page=1, $size=20, $cid) {
+        $cid = $cid ? $cid : session('user.classid');
+        $students = D('Student')->getStudentsByClassId($cid);
+        if($students) {
+            $sidArr = array();
+            foreach ($students as $key => $value) {
+                array_push($sidArr, array(
+                    'like', $value['id']
+                ));
+            }   
+            array_push($sidArr, 'or');
+            $condition['sid'] = $sidArr;
+        }
+        $count = $this -> where($condition)-> count();
+
+        $pageCount = ceil($count / $size);
+        $start = ($page - 1) * $size;
+
+        $leaves = $this -> limit($start, $size) -> where($condition) -> order('addtime desc') -> relation(true) -> select();
+
+
+        $pageArr = array(
+            'count' => $count,
+            'size' => $size,
+            'pageCount' => $pageCount,
+            'page' => $page
+        );
+        return array(
+            'leaveList' => $leaves,
+            'page' => $pageArr
+        );
+
+    }
 
 }

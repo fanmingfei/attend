@@ -95,7 +95,7 @@
                                 <php>
                                     if ($item['status'] == 0) { echo '等待'; } else if ($item['status'] == 1) { echo '同意'; } else { echo '拒绝'; }
                                 </php>
-                                <elseif condition="$leave.status eq 0"/>
+                                <elseif condition="$leave.status eq 0" />
                                 <php>
                                     if ($item['teacherid'] == $user['id']) { if ($item['status'] == 0) {
                                 </php>
@@ -116,7 +116,6 @@
                                 <php>
                                     if ($item['status'] == 0) { echo '等待'; } else if ($item['status'] == 1) { echo '同意'; } else { echo '拒绝'; }
                                 </php>
-
                             </if>
                         </div>
                     </div>
@@ -145,14 +144,14 @@
                     <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setStatus&id={$leave.id}&type=2" class="btn-back weui_btn weui_btn_primary" style="margin-top: 10px;margin-bottom: 10px;">同意转拒绝</a>
                     <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setStatus&id={$leave.id}&type=0" class="btn-back weui_btn weui_btn_primary" style="margin-top: 10px;margin-bottom: 10px;">设为等待状态</a>
                     <elseif condition="$leave.status eq 2" />
-                    <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setStatus&id={$leave.id}&type=1" class="btn-back weui_btn weui_btn_primary"style="margin-top: 10px;margin-bottom: 10px;">拒绝转同意</a>
-                    <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setStatus&id={$leave.id}&type=0" class="btn-back weui_btn weui_btn_primary"style="margin-top: 10px;margin-bottom: 10px;">设为等待状态</a>
+                    <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setStatus&id={$leave.id}&type=1" class="btn-back weui_btn weui_btn_primary" style="margin-top: 10px;margin-bottom: 10px;">拒绝转同意</a>
+                    <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setStatus&id={$leave.id}&type=0" class="btn-back weui_btn weui_btn_primary" style="margin-top: 10px;margin-bottom: 10px;">设为等待状态</a>
                 </if>
             </if>
         </div>
         <div class="container">
             <div class="weui_cells_title">假条二维码</div>
-            <img src="http://qr.topscan.com/api.php?text={$Think.config.DOMAIN_URL}/?c=Leave&a=leaveDetail&id={$leave.id}" style="width: 100%"/>
+            <img src="http://qr.topscan.com/api.php?text={$Think.config.DOMAIN_URL}/?c=Leave&a=leaveDetail&id={$leave.id}" style="width: 100%" />
         </div>
     </div>
 </body>
