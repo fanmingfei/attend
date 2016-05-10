@@ -38,19 +38,19 @@
         <div class="container">
             <div class="btn-group" role="group" aria-label="...">
                 <if condition="$page['page'] gt 3">
-                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveList&page=1" class="btn btn-default">首页</a>
-                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveList&page={$page['page']-1}" class="btn btn-default">上一页</a>
-                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveList&page={$page['page'] - 3}" class="btn btn-default">{$page['page'] - 3}</a>
-                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveList&page={$page['page'] - 2}" class="btn btn-default">{$page['page'] - 2}</a>
-                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveList&page={$page['page'] - 1}" class="btn btn-default">{$page['page'] - 1}</a>
-                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveList&page={$page['page']}" class="btn btn-default">{$page['page']}</a>
+                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveClassList&page=1" class="btn btn-default">首页</a>
+                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveClassList&page={$page['page']-1}" class="btn btn-default">上一页</a>
+                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveClassList&page={$page['page'] - 3}" class="btn btn-default">{$page['page'] - 3}</a>
+                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveClassList&page={$page['page'] - 2}" class="btn btn-default">{$page['page'] - 2}</a>
+                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveClassList&page={$page['page'] - 1}" class="btn btn-default">{$page['page'] - 1}</a>
+                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveClassList&page={$page['page']}" class="btn btn-default">{$page['page']}</a>
                     <if condition="$page['pageCount'] gt $page['page']">
-                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveList&page={$page['page'] + 1}" class="btn btn-default">{$page['page'] + 1}</a>
-                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveList&page={$page['pageCount']}" class="btn btn-default">尾页</a>
+                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveClassList&page={$page['page'] + 1}" class="btn btn-default">{$page['page'] + 1}</a>
+                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveClassList&page={$page['pageCount']}" class="btn btn-default">尾页</a>
                     </if>
                     <else />
                     <for start="0" end="$page['pageCount']">
-                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveList&page={$i + 1}" class="btn btn-default">{$i + 1}</a>
+                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Leave&a=leaveClassList&page={$i + 1}" class="btn btn-default">{$i + 1}</a>
                     </for>
                 </if>
             </div>
