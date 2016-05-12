@@ -7,27 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>考勤管理系统</title>
-    <link href="./common/headContent.html?__inline" rel="import" />
+    <link href="../Admin/common/headContent.html?__inline" rel="import" />
 </head>
 
 <body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <link href="./common/header.html?__inline" rel="import" />
+            <link href="../Admin/common/header.html?__inline" rel="import" />
         </div>
     </nav>
     <div class="container-fluid">
         <div>
             <!-- Nav tabs -->
-            <link href="./common/nav.html?__inline" rel="import" />
+            <link href="../Admin/common/nav.html?__inline" rel="import" />
             <!-- Tab panes -->
             <div class="tab-content">
                 <!-- 点名管理 -->
                 <div role="tabpanel" class="active panel_side tab-pane" id="user">
                     <div>
                         <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
-                            <li role="presentation" class="active"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leave">请假记录</a></li>
+                            <li role="presentation" class="active"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave">请假记录</a></li>
                         </ul>
                         <div class="tab-content col-md-11">
                             <div role="tabpanel" class="tab-pane active" id="studentList">
@@ -70,26 +70,26 @@
                                                                     if ($item['status'] == 0) { echo '等待'; } else if($item['status'] == 1) { echo '同意'; } else if ($item['status'] == 2) { echo '拒绝'; } else if ($item['status'] == 3){ echo '已撤回'; }
                                                                 </php>
                                                             </td>
-                                                            <td><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leaveTicket&id={$item['id']}" target="_blank">假条</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leaveDetail&id={$item['id']}">详情</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=deleteLeave&id={$item['id']}">删除</a></td>
+                                                            <td><a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leaveTicket&id={$item['id']}" target="_blank">假条</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leaveDetail&id={$item['id']}">详情</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=deleteLeave&id={$item['id']}">删除</a></td>
                                                         </tr>
                                                     </volist>
                                                 </tbody>
                                             </table>
                                             <div class="btn-group" role="group" aria-label="...">
                                                 <if condition="$page['page'] gt 3">
-                                                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leave&page=1" class="btn btn-default">首页</a>
-                                                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leave&page={$page['page']-1}" class="btn btn-default">上一页</a>
-                                                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leave&page={$page['page'] - 3}" class="btn btn-default">{$page['page'] - 3}</a>
-                                                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leave&page={$page['page'] - 2}" class="btn btn-default">{$page['page'] - 2}</a>
-                                                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leave&page={$page['page'] - 1}" class="btn btn-default">{$page['page'] - 1}</a>
-                                                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leave&page={$page['page']}" class="btn btn-default">{$page['page']}</a>
+                                                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave&page=1" class="btn btn-default">首页</a>
+                                                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave&page={$page['page']-1}" class="btn btn-default">上一页</a>
+                                                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave&page={$page['page'] - 3}" class="btn btn-default">{$page['page'] - 3}</a>
+                                                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave&page={$page['page'] - 2}" class="btn btn-default">{$page['page'] - 2}</a>
+                                                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave&page={$page['page'] - 1}" class="btn btn-default">{$page['page'] - 1}</a>
+                                                    <a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave&page={$page['page']}" class="btn btn-default">{$page['page']}</a>
                                                     <if condition="$page['pageCount'] gt $page['page']">
-                                                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leave&page={$page['page'] + 1}" class="btn btn-default">{$page['page'] + 1}</a>
-                                                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leave&page={$page['pageCount']}" class="btn btn-default">尾页</a>
+                                                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave&page={$page['page'] + 1}" class="btn btn-default">{$page['page'] + 1}</a>
+                                                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave&page={$page['pageCount']}" class="btn btn-default">尾页</a>
                                                     </if>
                                                     <else />
                                                     <for start="0" end="$page['pageCount']">
-                                                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leave&page={$i + 1}" class="btn btn-default">{$i + 1}</a>
+                                                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave&page={$i + 1}" class="btn btn-default">{$i + 1}</a>
                                                     </for>
                                                 </if>
                                             </div>
@@ -103,7 +103,7 @@
             </div>
         </div>
     </div>
-    <link href="./common/footerContent.html?__inline" rel="import" />
+    <link href="../Admin/common/footerContent.html?__inline" rel="import" />
     <script>
     $('.js-search-name-input').on('keyup', function (e) {
         if(e.keyCode==13){
@@ -117,7 +117,7 @@
         //     return;
         // }
 
-        window.location.href = "{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=leave&keyword=" + $('.js-search-name-input').val();
+        window.location.href = "{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave&keyword=" + $('.js-search-name-input').val();
     });
     </script>
 </body>

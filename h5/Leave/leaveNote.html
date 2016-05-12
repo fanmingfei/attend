@@ -68,6 +68,12 @@
                     <img src="{$Think.config.DOMAIN_URL}/{$leave.image}" style="width:100%" alt="">
                 </div>
             </if>
+            <if condition="$leave.student.image neq null">
+                <div class="weui_cells_title">学生图片</div>
+                <div class="weui_cells weui_cells_form">
+                    <img src="{$Think.config.DOMAIN_URL}/{$leave.student.image}" style="width:100%" alt="">
+                </div>
+            </if>
             <span style="display:block;text-align: center; line-height: 40px; color: #888">
                 总状态：
             <if condition="$leave.status eq 3">
