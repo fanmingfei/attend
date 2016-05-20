@@ -46,8 +46,9 @@ class AdminLeaveController extends BackController {
     public function setLeaveAgree () {
 
         $id = I('id');
-        $re = M('Leave')->where(array('id'=>$id))->data(array('status'=>1))->save();
-        if ($re) {
+        $leaveRe = M('Leave')->where(array('id'=>$id))->data(array('status'=>1))->save();
+        $agreeRe = M('Agree')->where(array('leaveid'=>$id))->data(array('status'=>1))->save();
+        if ($leaveRe && $agreeRe) {
             $this->success('已同意');
         } else {
             $this->error('出现问题');
@@ -56,7 +57,8 @@ class AdminLeaveController extends BackController {
     public function setLeaveRefuse () {
 
         $id = I('id');
-        $re = M('Leave')->where(array('leaveid'=>$id))->data(array('status'=>2))->save();
+        $re = M('Leave')->where(array('id'=>$id))->data(array('status'=>2))->save();
+        $agreeRe = M('Agree')->where(array('leaveid'=>$id))->data(array('status'=>2))->save();
         if ($re) {
             $this->success('已拒绝');
         } else {
