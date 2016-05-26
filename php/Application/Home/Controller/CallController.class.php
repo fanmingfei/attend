@@ -122,9 +122,9 @@ class CallController extends BaseController {
 
         $signModel = D('Sign');
 
-        if(session('user.usertype') != 2) {//&& session('user.special') != 1
-            ajax_return(null, -1, '您没有修改权限');
-        }
+        // if(session('user.usertype') != 2) {//&& session('user.special') != 1
+        //     ajax_return(null, -1, '您没有修改权限');
+        // }
 
         $call = D('Call')->where(array('id' => $callid))->find();
         if (time() > $call['time'] + 24*60*60) {
