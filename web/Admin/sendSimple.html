@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>考勤管理系统</title>
+    <link href="./common/headContent.html?__inline" rel="import" />
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <link href="./common/header.html?__inline" rel="import" />
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div>
+            <!-- Nav tabs -->
+            <link href="./common/nav.html?__inline" rel="import" />
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- 消息 -->
+                <div role="tabpanel" class="active panel_side tab-pane" id="messages">
+                    <div>
+                        <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
+                            <link href="./common/messageNav.html?__inline" rel="import" />
+                        </ul>
+                        <div class="tab-content col-md-11">
+                            <div role="tabpanel" class="tab-pane active" id="singleList">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <form class="form-inline">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" id="exampleInputEmail3" placeholder="输入姓名">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" class="form-control" id="exampleInputPassword3" placeholder="输入班级: 美术本1402">
+                                            </div>
+                                            <button type="submit" class="btn btn-default">搜索</button>
+                                        </form>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="thumbnail">
+                                            <img class="col-md-3" src="./common/images/test.png" alt="...">
+                                            <div class="caption col-md-9">
+                                                <div class="row mt">
+                                                    <div class="col-xs-4">李学生</div>
+                                                    <div class="col-xs-4">班级：美术本1402</div>
+                                                    <div class="col-xs-4">手机号码：12312312312</div>
+                                                </div>
+                                                <div class="row mt">
+                                                    <div class="col-xs-4">请假N次</div>
+                                                    <div class="col-xs-4">补签M次</div>
+                                                    <div class="col-xs-4">迟到Y次</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="thumbnail">
+                                            <img class="col-md-3" src="./common/images/test.png" alt="...">
+                                            <div class="caption col-md-9">
+                                                <div class="row mt">
+                                                    <div class="col-xs-4">李学生</div>
+                                                    <div class="col-xs-4">班级：美术本1402</div>
+                                                    <div class="col-xs-4">手机号码：12312312312</div>
+                                                </div>
+                                                <div class="row mt">
+                                                    <div class="col-xs-4">请假N次</div>
+                                                    <div class="col-xs-4">补签M次</div>
+                                                    <div class="col-xs-4">迟到Y次</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href="./common/footerContent.html?__inline" rel="import" />
+</body>
+
+</html>

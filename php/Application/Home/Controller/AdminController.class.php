@@ -222,3 +222,51 @@ class AdminController extends BackController {
 
 
 
+<<<<<<< HEAD
+=======
+        $id = I('id');
+        if ($id) {
+            $re = D('Leave')->where(array('id'=>$id))->delete();
+        }
+        if ($re) {
+            $this->success('删除成功');
+        } else {
+            $this->error('删除失败');
+        }
+    }
+    public function leaveCreate()
+    {
+        $classes = D('Classes')->getAllClasses();
+        $headerTeachers = D('Teacher')->getAllLeaderTeacher();
+        $teachers = D('Teacher')->getAllTeachers();
+
+        $this->classes = $classes;
+        $this->headerTeachers = $headerTeachers;
+        $this->teachers = $teachers;
+        $this->display();
+    }
+    public function setting()
+    {
+        $dist = M('setting')->where(array('name'=>'distance'))->find();
+        $distance = $dist['value'];
+        $this->distance = $distance;
+        $this->settingNav = 'active';
+        $this->display();
+    }
+    public function setDistance()
+    {
+        $distance = I('distance');
+        if (!$distance) {
+            $this->error('请正确填写距离');
+        }
+        $re = M('setting')->where(array('name'=>'distance'))->data(array('value'=>$distance))->save();
+        if ($re) {
+            $this->success('保存成功');
+        } else {
+            $this->error('保存失败');
+        }
+
+
+    }
+}
+>>>>>>> ab6fe8cb99b4cf46bd9c447740bf0f115152eb1f

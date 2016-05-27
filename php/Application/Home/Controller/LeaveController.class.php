@@ -61,6 +61,10 @@ class LeaveController extends BaseController {
     }
     public function leaveCancel () {
         $id = I('id');
+        $leave = D('Leave')->getLeaveById($id);
+        if ($leave['sid'] != session('user.id')) {
+            $this->error('非本人无法撤回');
+        }
         $re = M('Leave')->where(array('id'=>$id))->data(array('status'=>3))->save();
         if ($re) {
             $this->success('取消成功');
@@ -161,4 +165,21 @@ class LeaveController extends BaseController {
             $this->error('出现问题');
         }
     }
+    function toLeaveList () {
+        $type = session('user.type');
+        $special = session('user.special');
+        if ($type == 1) {
+            header('Location: /?c=Leave&a=teacherList');
+        } else if ($special == 1) {
+            header('Location: /?c=Leave&a=selectType');
+        } else {
+            header('Location: /?c=Leave&a=leaveList');
+        }
+    }
+    function leaveClassList() {
+        $leaves = D('Leave')->getLeaveListByClassId();
+        $this->assign($leaves);
+        $this->display();
+    }
+
 }
