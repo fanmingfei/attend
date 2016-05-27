@@ -198,34 +198,6 @@ class AdminController extends BackController {
     public function deleteCall () {
         $id = I('id');
         if ($id) {
-            $re = D('Call')->deleteCall($id);
-        }
-        if ($re) {
-            $this->success('删除成功');
-        } else {
-            $this->error('删除失败');
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
-=======
-        $id = I('id');
-        if ($id) {
             $re = D('Leave')->where(array('id'=>$id))->delete();
         }
         if ($re) {
@@ -269,4 +241,3 @@ class AdminController extends BackController {
 
     }
 }
->>>>>>> ab6fe8cb99b4cf46bd9c447740bf0f115152eb1f
