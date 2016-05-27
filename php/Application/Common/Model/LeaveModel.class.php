@@ -12,8 +12,6 @@ class LeaveModel extends RelationModel {
         )
     );
 
-
-
     function getLeaveById($id) {
         $leave = $this->relation(true)->find($id);
         $class = D('Classes')->getClassById($leave['student']['classid']);

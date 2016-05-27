@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>考勤管理系统</title>
+    <link href="../Admin/common/headContent.html?__inline" rel="import" />
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <link href="../Admin/common/header.html?__inline" rel="import" />
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div>
+            <!-- Nav tabs -->
+            <link href="../Admin/common/nav.html?__inline" rel="import" />
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- 点名管理 -->
+                <div role="tabpanel" class="active panel_side tab-pane" id="user">
+                    <div>
+                        <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
+                            <li role="presentation" class="active"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave">请假记录</a></li>
+                        </ul>
+                        <div class="tab-content col-md-11">
+                            <div role="tabpanel" class="tab-pane active" id="studentList">
+                                <div role="tabpanel" class="tab-pane active" id="addCourse">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading clearfix">
+                                            请假详情
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">姓名</div>
+                                                <div class="col-sm-8 col-sm-offset-1">
+                                                    {$leaveDetail['student']['username']}
+                                                    <span class="label label-info">{$leaveDetail['student']['sex']}</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">班级</div>
+                                                <div class="col-sm-8 col-sm-offset-1">{$leaveDetail['student']['studentid']}</div>
+                                            </div>
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">学号</div>
+                                                <div class="col-sm-8 col-sm-offset-1">{$leaveDetail['student']['classname']}</div>
+                                            </div>
+
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">手机号码</div>
+                                                <div class="col-sm-8 col-sm-offset-1">{$leaveDetail['student']['phone']}</div>
+                                            </div>
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">请假原因</div>
+                                                <div class="col-sm-8 col-sm-offset-1">{$leaveDetail['description']}</div>
+                                            </div>
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">开始时间</div>
+                                                <div class="col-sm-8 col-sm-offset-1">{$leaveDetail['starttime']|date='Y-m-d H:i',###}</div>
+                                            </div>
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">结束时间</div>
+                                                <div class="col-sm-8 col-sm-offset-1">{$leaveDetail['endtime']|date='Y-m-d H:i', ###}</div>
+                                            </div>
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">状态</div>
+                                                <div class="col-sm-8 col-sm-offset-1">
+                                                    <php>
+                                                        if ($leaveDetail['status'] == 0) { echo '等待'; } 
+                                                        else if($leaveDetail['status'] == 1) { echo '同意'; } 
+                                                        else if ($leaveDetail['status'] == 2) { echo '拒绝'; } 
+                                                        else if ($leaveDetail['status'] == 3){ echo '已撤回'; }
+                                                    </php>
+                                                </div>
+                                            </div>
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">父亲联系方式</div>
+                                                <div class="col-sm-8 col-sm-offset-1">{$leaveDetail['student']['fatherphone']}</div>
+                                            </div>
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">母亲联系方式</div>
+                                                <div class="col-sm-8 col-sm-offset-1">{$leaveDetail['student']['motherphone']}</div>
+                                            </div>
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">宿舍</div>
+                                                <div class="col-sm-8 col-sm-offset-1">{$leaveDetail['student']['dorm']}{$leaveDetail['student']['room']}</div>
+                                            </div>
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">图片</div>
+                                                <div class="col-sm-8 col-sm-offset-1">
+                                                    <if condition="$leaveDetail['image']">
+                                                        <img src="{$Think.CONFIG.DOMAIN_URL}/{$leaveDetail['image']}" alt="">
+                                                    <else />
+                                                        照片未上传
+                                                    </if>
+                                                </div>
+                                            </div>
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">学生照片</div>
+                                                <div class="col-sm-8 col-sm-offset-1">
+                                                    <if condition="$leaveDetail['student']['image']">
+                                                        <img src="{$Think.CONFIG.DOMAIN_URL}/{$leaveDetail['student']['image']}" alt="">
+                                                    <else />
+                                                        照片未上传
+                                                    </if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <php>
+                                                if ($leaveDetail['status'] == 0) {
+                                            </php>
+                                            <a class="btn btn-success" href="{$Think.config.DOMAIN_URL}/?c=AdminLeave&a=setLeaveAgree&id={$leaveDetail.id}" class="weui_btn weui_btn_mini weui_btn_primary">同意</a>
+                                            <a class="btn btn-danger" href="{$Think.config.DOMAIN_URL}/?c=AdminLeave&a=setLeaveRefuse&id={$leaveDetail.id}" class="weui_btn weui_btn_mini weui_btn_primary">拒绝</a>
+                                            <php>
+                                                } else if ($leaveDetail['status'] == 1) {
+                                            </php>
+                                            <a class="btn btn-danger" href="{$Think.config.DOMAIN_URL}/?c=AdminLeave&a=setLeaveRefuse&id={$leaveDetail.id}" class="weui_btn weui_btn_mini weui_btn_primary">同意转为拒绝</a>
+                                            <php>
+                                                } else {
+                                            </php>
+                                            <a class="btn btn-success" href="{$Think.config.DOMAIN_URL}/?c=AdminLeave&a=setLeaveAgree&id={$leaveDetail.id}" class="weui_btn weui_btn_mini weui_btn_primary">拒绝转为同意</a>
+                                            <php>
+                                                }
+                                            </php>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href="../Admin/common/footerContent.html?__inline" rel="import" />
+    <script>
+    $('.js-search-name-input').on('keyup', function (e) {
+        if(e.keyCode==13){
+            $('.js-search-name').trigger('click');
+        }
+    })
+    $('.js-search-name').on('click', function() {
+        var keyword = $('.js-search-name-input').val();
+        // if (!keyword) {
+        //     alert('请填写关键字');
+        //     return;
+        // }
+
+        window.location.href = "{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave&keyword=" + $('.js-search-name-input').val();
+    });
+    </script>
+</body>
+
+</html>
