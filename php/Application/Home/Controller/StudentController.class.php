@@ -94,5 +94,14 @@ class StudentController extends BackController {
             $this->error('修改失败');
         }
     }
-
+    public function delete()
+    {
+        $id = I('id');
+        $re = D('Student')->where(array('id'=>$id))->delete();
+        if ($re) {
+            $this->success('删除成功');
+        } else {
+            $this->error('删除失败');
+        }
+    }
 }
