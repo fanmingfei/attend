@@ -31,11 +31,6 @@ class IndexController extends BaseController {
     public function leave()
     {
         $type = session('user.usertype');
-        $spacial = session('user.special');
-        if ($spacial == 1) {
-            $this->display('Leave/selectType');
-            exit();
-        }
 
         if($type == 1) {
             header('Location: /?c=Leave&a=leaveBegin');
