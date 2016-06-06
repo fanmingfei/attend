@@ -90,7 +90,7 @@ class MessageController extends BackController {
         //加入到发送队列
         $httpsqs = $this->httpsqs;
         $message = $httpsqs->put('tpl_message', $insertId);
-        ajax_return($insertId, -1, '创建模板消息成功，正在发送中');
+        ajax_return($insertId, 0, '创建模板消息成功，正在发送中');
     }
 
     //单发老师
@@ -149,7 +149,7 @@ class MessageController extends BackController {
         //加入到发送队列
         $httpsqs = $this->httpsqs;
         $message = $httpsqs->put('tpl_message', $insertId);
-        ajax_return($insertId, -1, '创建模板消息成功，正在发送中');
+        ajax_return($insertId, 0, '创建模板消息成功，正在发送中');
     }
 
     //群发学生
@@ -159,8 +159,9 @@ class MessageController extends BackController {
         $content = I('content', '');
         $url = I('url', '');
         $remark = I('remark', '');
-        $groupType = I('grouptype', 0);//默认0全体，1按班级
+        $groupType = I('grouptype', 0);//默认0全体，1按班级, 2按年级
         $classIds = I('classids', '');
+        $gradeIds = I('gradeids', '');
 
         if($title=='') {
             ajax_return([], -1, '标题不能为空');
@@ -168,60 +169,76 @@ class MessageController extends BackController {
         if($content=='') {
             ajax_return([], -1, '消息内容不能为空');
         }
-        if($groupType!=0 && $groupType!=1) {
+        if($groupType!=0 && $groupType!=1 && $groupType !=2) {
             ajax_return([], -1, '错误的群发类型');
         }
         if($groupType==1&&$classIds=='') {
             ajax_return([], -1, '你没有选择班级');
         }
-        if($groupType==1) {
-            //处理输入的班级id数据
-            $classIds = explode(',', $classIds);
-            if($classIds[0]==''){
-                ajax_return([], -1, '你没有选择班级');
-            }
-            $arr = array();
-            foreach ($classIds as $val) {  
-                if (empty($val)) {  
-                    continue;  
-                }  
-                $arr[] = $val;  
-            }
-            array_unique($arr);
-            $classIds = implode(',', $arr);
-            $map['id']  = array('in',$classIds);
-            $classes = D('Classes')->where($map)->select();
-            $arr = [];
-            $classNames = [];
-            foreach($classes as $class) {
-                array_push($classNames, $class['name']);
-                //获取某个班级的所有学生id, 并存入arr数组
-                $users = D('Student')->where(['classid'=>$class['id']])->select();
-                foreach($users as $user) {
+        if($groupType==2&&$gradeIds=='') {
+            ajax_return([], -1, '你没有选择年级');
+        }
+
+        $remarkTxt = '';
+        switch ($groupType) {
+            case 0:
+                $all = D('Student')->select();
+                $arr = [];
+                foreach ($all as $user) {
                     array_push($arr, $user['id']);
                 }
-            }
-            $userIds = implode(',', $arr);
-        } else {
-            $all = D('Student')->select();
-            $arr = [];
-            foreach ($all as $user) {
-                array_push($arr, $user['id']);
-            }
-            $userIds = implode(',', $arr);
+                $userIds = implode(',', $arr);
+                if($remark == '') {
+                    $remarkTxt = '群发全体学生';
+                }
+                break;
+            case 1:
+                //处理输入的班级id数据
+                $classIds = explode(',', $classIds);
+                if($classIds[0]==''){
+                    ajax_return([], -1, '你没有选择班级');
+                }
+                $arr = array();
+                foreach ($classIds as $val) {  
+                    if (empty($val)) {  
+                        continue;  
+                    }  
+                    $arr[] = $val;  
+                }
+                array_unique($arr);
+                $classIds = implode(',', $arr);
+                $map['id']  = array('in',$classIds);
+                $classes = D('Classes')->where($map)->select();
+                $arr = [];
+                $classNames = [];
+                foreach($classes as $class) {
+                    array_push($classNames, $class['name']);
+                    //获取某个班级的所有学生id, 并存入arr数组
+                    $users = D('Student')->where(['classid'=>$class['id']])->select();
+                    foreach($users as $user) {
+                        array_push($arr, $user['id']);
+                    }
+                }
+                $userIds = implode(',', $arr);
+                if($remark == '') {
+                    $remarkTxt = '群发指定班级: '.implode(',', $classNames);
+                }
+                break;
+            case 2:
+                $all = D('Student')->where(['grade'=>['in',$gradeIds]])->select();
+                $arr = [];
+                foreach ($all as $user) {
+                    array_push($arr, $user['id']);
+                }
+                $userIds = implode(',', $arr);
+                if($remark == '') {
+                    $remarkTxt = '群发指定年级: '.$gradeIds;
+                }
+                break;
         }
 
         if($userIds=='') {
             ajax_return([], -1, '选取的用户不能为空');
-        }
-
-        if($remark == '') {
-            if($groupType==0) {
-                $remarkTxt = '群发全体学生';
-            }
-            if($groupType==1) {
-                $remarkTxt = '群发指定班级: '.implode(',', $classNames);
-            }
         }
 
         //插入数据
@@ -239,8 +256,36 @@ class MessageController extends BackController {
         //加入到发送队列
         $httpsqs = $this->httpsqs;
         $message = $httpsqs->put('tpl_message', $insertId);
-        ajax_return($insertId, -1, '创建模板消息成功，正在发送中');
+        ajax_return($insertId, 0, '创建模板消息成功，正在发送中');
     }
 
+    //获取班级列表
+    public function getAllClass() {
+        $classes = D('Classes')->select();
+        ajax_return($classes, 0, '获取班级成功');
+    }
 
+    //获取学生
+    public function getSingleStu() {
+        $keyword = I('keyword', '');
+
+        if(empty($keyword)) {
+            ajax_return([], -1, '关键词不能为空');
+        }
+
+        $user = D('Student')->searchStudents($keyword);
+        ajax_return($user, 0, '搜索完毕');
+    }
+
+    //获取老师
+    public function getSingleT() {
+        $keyword = I('keyword', '');
+
+        if(empty($keyword)) {
+            ajax_return([], -1, '关键词不能为空');
+        }
+
+        $user = D('Teacher')->getTeacherByName($keyword);
+        ajax_return($user, 0, '搜索完毕');
+    }
 }
