@@ -15,6 +15,14 @@
             <div class="weui_cells">
                 <div class="weui_cell">
                     <div class="weui_cell_bd weui_cell_primary">
+                        <p>编号</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        {$leave.id}
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
                         <p>姓名</p>
                     </div>
                     <div class="weui_cell_ft">
@@ -80,15 +88,70 @@
                 <volist name="agree" id="item">
                     <div class="weui_cell">
                         <div class="weui_cell_bd weui_cell_primary">
-                            <p><i class="weui_icon_success"></i>{$item.teacher.username} {$item.scheduletime} 周{$item.schedule.day} 第{$item.schedule.lessionnums}节</p>
+                            <p>{$item.teacher.username}:{$item.teacher.phone}</p>
                         </div>
                         <div class="weui_cell_ft" style="max-width: 150px;">
-                            《{$item.schedule.name}》
+                            <if condition="$user.usertype eq 1">
+                                <php>
+                                    if ($item['status'] == 0) { echo '等待'; } else if ($item['status'] == 1) { echo '同意'; } else { echo '拒绝'; }
+                                </php>
+                                <elseif condition="$leave.status eq 0" />
+                                <php>
+                                    if ($item['teacherid'] == $user['id']) { if ($item['status'] == 0) {
+                                </php>
+                                <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setAgree&id={$leave.id}" class="weui_btn weui_btn_mini weui_btn_primary">同意</a>
+                                <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setRefuse&id={$leave.id}" class="weui_btn weui_btn_mini weui_btn_primary">拒绝</a>
+                                <php>
+                                    } else if ($item['status'] == 1) {
+                                </php>
+                                <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setRefuse&id={$leave.id}" class="weui_btn weui_btn_mini weui_btn_primary">同意转为拒绝</a>
+                                <php>
+                                    } else {
+                                </php>
+                                <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setAgree&id={$leave.id}" class="weui_btn weui_btn_mini weui_btn_primary">拒绝转为同意</a>
+                                <php>
+                                    } } else{ if ($item['status'] == 0) { echo '等待'; } else if ($item['status'] == 1) { echo '同意'; } else { echo '拒绝'; } }
+                                </php>
+                                <else />
+                                <php>
+                                    if ($item['status'] == 0) { echo '等待'; } else if ($item['status'] == 1) { echo '同意'; } else { echo '拒绝'; }
+                                </php>
+                            </if>
                         </div>
                     </div>
                 </volist>
             </div>
-            <a href="javascript:;" class="btn-back weui_btn weui_btn_primary">取消</a>
+            <span style="display:block;text-align: center; line-height: 40px; color: #888">
+                总状态：
+            <if condition="$leave.status eq 3">
+                请假已取消
+                <elseif condition="$leave.status eq 2"/>
+                    已拒绝
+                <elseif condition="$leave.status eq 1"/>
+                    已同意
+                <else/>
+                等待中
+            </if>
+            </span>
+            <if condition="($leave.status neq 3) and ($user.usertype eq 1)">
+                <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=leaveCancel&id={$leave.id}" class="btn-back weui_btn weui_btn_primary">撤回请假</a>
+            </if>
+            <if condition="$user.tzz eq 1">
+                <if condition="$leave.status eq 0">
+                    <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setStatus&id={$leave.id}&type=1" class="btn-back weui_btn weui_btn_primary">同意</a>
+                    <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setStatus&id={$leave.id}&type=2" class="btn-back weui_btn weui_btn_primary" style="margin-top: 10px;margin-bottom: 10px;">拒绝</a>
+                    <elseif condition="$leave.status eq 1" />
+                    <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setStatus&id={$leave.id}&type=2" class="btn-back weui_btn weui_btn_primary" style="margin-top: 10px;margin-bottom: 10px;">同意转拒绝</a>
+                    <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setStatus&id={$leave.id}&type=0" class="btn-back weui_btn weui_btn_primary" style="margin-top: 10px;margin-bottom: 10px;">设为等待状态</a>
+                    <elseif condition="$leave.status eq 2" />
+                    <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setStatus&id={$leave.id}&type=1" class="btn-back weui_btn weui_btn_primary" style="margin-top: 10px;margin-bottom: 10px;">拒绝转同意</a>
+                    <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setStatus&id={$leave.id}&type=0" class="btn-back weui_btn weui_btn_primary" style="margin-top: 10px;margin-bottom: 10px;">设为等待状态</a>
+                </if>
+            </if>
+        </div>
+        <div class="container">
+            <div class="weui_cells_title">假条二维码</div>
+            <img src="http://qr.topscan.com/api.php?text={$Think.config.DOMAIN_URL}/?c=Leave&a=leaveDetail&id={$leave.id}" style="width: 100%" />
         </div>
     </div>
 </body>

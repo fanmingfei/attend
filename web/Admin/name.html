@@ -37,7 +37,6 @@
                                             点名记录
                                         </div>
                                         <div class="panel-body">
-
                                             <div class="container">
                                                 <div class="form-inline">
                                                     <div class="form-group">
@@ -50,6 +49,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>序号</th>
+                                                        <th>时间</th>
                                                         <th>课程</th>
                                                         <th>班级</th>
                                                         <th>发起人</th>
@@ -61,10 +61,10 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                        
                                                     <volist name="callList" id="item" key="key">
                                                         <tr>
                                                             <td>{$key}</td>
+                                                            <td>{$item['time']|date='Y-m-d H:i',###}</td>
                                                             <td>{$item['title']}</td>
                                                             <td>{$item['className']}</td>
                                                             <td>{$item['startUser']}</td>
@@ -72,7 +72,7 @@
                                                             <td>{$item['tcidTeacher']}</td>
                                                             <td>{$item['data']['rate']}</td>
                                                             <td>总人数:{$item['data']['total']}请假:{$item['data']['leave']}缺勤:{$item['data']['none']}出勤:{$item['data']['process']}</td>
-                                                            <td><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=nameDetail&id={$item['id']}"><span class="glyphicon glyphicon-cog"></span></a></td>
+                                                            <td><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=nameDetail&id={$item['id']}">详情</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=deleteCall&id={$item['id']}">删除</a></td>
                                                         </tr>
                                                     </volist>
                                                 </tbody>
@@ -89,9 +89,9 @@
                                                         <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=name&page={$page['page'] + 1}" class="btn btn-default">{$page['page'] + 1}</a>
                                                         <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=name&page={$page['pageCount']}" class="btn btn-default">尾页</a>
                                                     </if>
-                                                <else />
+                                                    <else />
                                                     <for start="0" end="$page['pageCount']">
-                                                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=name&page&page={$i + 1}" class="btn btn-default">{$i + 1}</a>
+                                                        <a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=name&page={$i + 1}" class="btn btn-default">{$i + 1}</a>
                                                     </for>
                                                 </if>
                                             </div>
@@ -107,15 +107,16 @@
     </div>
     <link href="./common/footerContent.html?__inline" rel="import" />
     <script>
-      $('.js-search-name').on('click', function () {
-        var keyword = $('.js-search-name-input').val();
-        if (!keyword) {
-          alert('请填写关键字');
-          return;
+    $('.js-search-name-input').on('keyup', function(e) {
+        if (e.keyCode == 13) {
+            $('.js-search-name').trigger('click');
         }
+    })
+    $('.js-search-name').on('click', function() {
+        var keyword = $('.js-search-name-input').val();
 
         window.location.href = "{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=name&keyword=" + $('.js-search-name-input').val();
-      });
+    });
     </script>
 </body>
 

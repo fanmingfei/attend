@@ -16,9 +16,27 @@ class IndexController extends BaseController {
         }
     }
     public function my () {
-        $user = session('user');
-        dump($user);
-
+        $userId = session('user.id');
+        $userType = session('user.usertype');
+        if ($userType == 1) {
+            $userDetail = D('Student') -> getStudentById($userId);
+        }else{
+            $userDetail = D('Teacher') -> getTeacherById($userId);
+            $userDetail['lead'] ? $userDetail['job'] = '班主任' : $userDetail['job'] = '代课老师';
+        }
+        $this -> userDetail = $userDetail;
         $this -> display();
+    }
+
+    public function leave()
+    {
+        $type = session('user.usertype');
+
+        if($type == 1) {
+            header('Location: /?c=Leave&a=leaveBegin');
+        } else {
+            header('Location: /?c=Leave&a=teacherList');
+        }
+        
     }
 }

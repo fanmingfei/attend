@@ -104,6 +104,7 @@ class AdminController extends BackController {
             $result = D('Call') -> getAllCalls($page, $size);
         }
 
+        $this->nameNav = 'active';
         $this->keyword = $keyword;
         $this -> assign($result);
         $this -> display();
@@ -129,6 +130,12 @@ class AdminController extends BackController {
         $status = I('status');
 
         $signModel = D('Sign');
+        
+        $call = D('Call')->where(array('id' => $callid))->find();
+        if (time() > $call['time'] + 24*60*60) {
+            ajax_return(null, -1, '超出操作时间，24小时内可操作');
+            return;
+        }
 
         $re = $signModel->setSignStatus($callid, $sid, $status);
         if ($re || $re == 0) {
@@ -144,6 +151,7 @@ class AdminController extends BackController {
 
         $class = D('Classes') -> getClassByName($className);
 
+        $this->classesNav = 'active';
         $this -> assign('classes', $class);
         $this -> display();
     }
@@ -186,5 +194,50 @@ class AdminController extends BackController {
         }else {
             $this -> error('删除失败！');
         }
+    }
+    public function deleteCall () {
+        $id = I('id');
+        if ($id) {
+            $re = D('Leave')->where(array('id'=>$id))->delete();
+        }
+        if ($re) {
+            $this->success('删除成功');
+        } else {
+            $this->error('删除失败');
+        }
+    }
+    public function leaveCreate()
+    {
+        $classes = D('Classes')->getAllClasses();
+        $headerTeachers = D('Teacher')->getAllLeaderTeacher();
+        $teachers = D('Teacher')->getAllTeachers();
+
+        $this->classes = $classes;
+        $this->headerTeachers = $headerTeachers;
+        $this->teachers = $teachers;
+        $this->display();
+    }
+    public function setting()
+    {
+        $dist = M('setting')->where(array('name'=>'distance'))->find();
+        $distance = $dist['value'];
+        $this->distance = $distance;
+        $this->settingNav = 'active';
+        $this->display();
+    }
+    public function setDistance()
+    {
+        $distance = I('distance');
+        if (!$distance) {
+            $this->error('请正确填写距离');
+        }
+        $re = M('setting')->where(array('name'=>'distance'))->data(array('value'=>$distance))->save();
+        if ($re) {
+            $this->success('保存成功');
+        } else {
+            $this->error('保存失败');
+        }
+
+
     }
 }

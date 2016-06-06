@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>考勤管理系统</title>
+    <link href="./common/headContent.html?__inline" rel="import" />
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <link href="./common/header.html?__inline" rel="import" />
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div>
+            <!-- Nav tabs -->
+            <link href="./common/nav.html?__inline" rel="import" />
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- 消息 -->
+                <div role="tabpanel" class="active panel_side tab-pane active" id="messages">
+                    <div>
+                        <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
+                            <li class="active"><a href="/?c=Admin&a=setting" >签到距离设置</a></li>
+                        </ul>
+                        <div class="tab-content col-md-11">
+                            <div role="tabpanel" class="tab-pane active" id="groupList">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">距离设置</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form action="/?c=Admin&a=setDistance" method="post">
+                                            签到距离：
+                                            <input type="text" class="form-control" style=" display: inline;width: 100px" value="{$distance}" name="distance"> 米
+                                            <button class="mt btn btn-primary btn-block">保存</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href="./common/footerContent.html?__inline" rel="import" />
+</body>
+
+</html>

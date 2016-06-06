@@ -13,8 +13,7 @@
     <div class="main">
         <div class="container begin">
             <div class="form-item">
-                <input type="text" name="title" class="form-control" placeholder="课程名称" value="{$schedule.name}" />
-                <input type="hidden" name="tid" value="{$schedule.teacherid}"/>
+                <input type="text" name="title" class="form-control" placeholder="课程名称" />
             </div>
             <div class="form-item classes-box js-classes-box">
                 <div class="weui_cell weui_cell_select form-control js-class-item">
@@ -31,7 +30,7 @@
             <center class="add-more">
                 <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary js-add-class">添加班级</a>
             </center>
-            <div class="form-item classes-box js-teachers-box">
+            <div class="form-item classes-box">
                 <div class="weui_cell weui_cell_select form-control js-class-item">
                     <div class="weui_cell_bd weui_cell_primary">
                         <select class="weui_select" name="tcid">
@@ -43,6 +42,21 @@
                     </div>
                 </div>
             </div>
+            <if condition="$user.usertype eq 1">
+                <div class="form-item classes-box">
+                    <input type="text" class="form-control js-search-teacher" placeholder="搜索任课老师" value="" />
+                    <div class="weui_cell weui_cell_select js-class-item">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <select class="form-control js-teachers-box" class="weui_select" name="tid">
+                                <option selected value="0">选择任课老师</option>
+                                <volist name="teachers1" id="vo">
+                                    <option value="{$vo.id}">{$vo.username}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </if>
             <a class="named-btn js-call-btn">点名</a>
             <div class="form-item">
                 <a href="/?c=Call&a=callList" class="named-recording">查看我的点名记录>></a>
@@ -51,7 +65,7 @@
     </div>
     <link rel="import" href="../Public/html/footerContent.html?__inline">
     <script>
-        require('js/callBegin');
+    require('js/callBegin');
     </script>
 </body>
 

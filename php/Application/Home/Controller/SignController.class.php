@@ -12,20 +12,23 @@ class SignController extends BaseController {
         }
         $callid = $callInfo['id'];
 
-        $longitude = 0; // I('longitude');
-        $latitude = 0; //I('latitude');
+        $longitude = I('longitude');
+        $latitude = I('latitude');
 
-        // if (!$longitude || !$latitude) {
-        //     $msg = '参数不完整';
-        //     ajax_return(null, -1, $msg);
-        // }
+        if (!$longitude || !$latitude) {
+            $msg = '没有获取到地理位置';
+            ajax_return(null, -1, $msg);
+        }
 
 
-        // $distance = getDistance($callInfo['latitude'], $callInfo['longitude'], $latitude, $longitude);
+        $distance = getDistance($callInfo['latitude'], $callInfo['longitude'], $latitude, $longitude);
 
-        // if ($distance > 1000) {
-        //     ajax_return(null, -1, '距离太远，或定位错误！');
-        // }
+        $dist = M('Setting')->where(array('name'=>'distance'))->find();
+        $distValue = intval($dist['value']);
+
+        if ($distance > $distValue) {
+            ajax_return(null, -1, '距离太远，或定位错误！');
+        }
 
         $signAddResult = D('Sign')->addSign($callid);
         if ($signAddResult === true) {

@@ -8,7 +8,12 @@ class TeacherModel extends RelationModel {
     }
     function regTeacher ($username, $phone, $openid) {
         $data = array('username'=>$username, 'openid'=>$openid, 'phone'=>$phone);
-        $result = $this->data($data)->add();
+        $user = $this->where(array('username'=>$username))->find();
+        if ($user) {
+            $result = $this->where(array('username'=>$username))->data($data)->save();
+        } else {
+            $result = $this->data($data)->add();
+        }
         if ($result) {
             return true;
         } else {
