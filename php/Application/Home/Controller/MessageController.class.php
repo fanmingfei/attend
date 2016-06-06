@@ -72,6 +72,9 @@ class MessageController extends BackController {
             array_push($arr, $user['id']);
         }
         $userIds = implode(',', $arr);
+        if($userIds=='') {
+            ajax_return([], -1, '选取的用户不能为空');
+        }
         //插入数据
         $data = [
             'type' => 1,
@@ -109,9 +112,6 @@ class MessageController extends BackController {
         }
         //处理输入的用户id数据
         $userIds = explode(',', $userIds);
-        if(empty($userIds)){
-            ajax_return([], -1, '选取的用户不能为空');
-        }
         $arr = array();
         foreach ($userIds as $val) {  
             if (empty($val)) {  
@@ -121,6 +121,9 @@ class MessageController extends BackController {
         }
         array_unique($arr);
         $userIds = implode(',', $arr);
+        if($userIds[0]==''){
+            ajax_return([], -1, '选取的用户不能为空');
+        }
         $map['id']  = array('in',$userIds);
         $users = D('Teacher')->where($map)->select();
         $arr = [];
@@ -128,6 +131,9 @@ class MessageController extends BackController {
             array_push($arr, $user['id']);
         }
         $userIds = implode(',', $arr);
+        if($userIds=='') {
+            ajax_return([], -1, '选取的用户不能为空');
+        }
         //插入数据
         $data = [
             'type' => 2,
@@ -153,8 +159,8 @@ class MessageController extends BackController {
         $content = I('content', '');
         $url = I('url', '');
         $remark = I('remark', '');
-        $groupType = I('group_type', 0);//默认0全体，1按班级
-        $classIds = I('class_ids', '');
+        $groupType = I('grouptype', 0);//默认0全体，1按班级
+        $classIds = I('classids', '');
 
         if($title=='') {
             ajax_return([], -1, '标题不能为空');
@@ -168,33 +174,46 @@ class MessageController extends BackController {
         if($groupType==1&&$classIds=='') {
             ajax_return([], -1, '你没有选择班级');
         }
-        //处理输入的班级id数据
-        $classIds = explode(',', $classIds);
-        if(empty($classIds)){
-            ajax_return([], -1, '你没有选择班级');
-        }
-        $arr = array();
-        foreach ($classIds as $val) {  
-            if (empty($val)) {  
-                continue;  
-            }  
-            $arr[] = $val;  
-        }
-        array_unique($arr);
-        $classIds = implode(',', $arr);
-        $map['id']  = array('in',$classIds);
-        $classes = D('Classes')->where($map)->select();
-        $arr = [];
-        $classNames = [];
-        foreach($classes as $class) {
-            array_push($classNames, $class['name']);
-            //获取某个班级的所有学生id, 并存入arr数组
-            $users = D('Student')->where(['classid'=>['in'=>$class['id']]])->select();
-            foreach($users as $user) {
+        if($groupType==1) {
+            //处理输入的班级id数据
+            $classIds = explode(',', $classIds);
+            if($classIds[0]==''){
+                ajax_return([], -1, '你没有选择班级');
+            }
+            $arr = array();
+            foreach ($classIds as $val) {  
+                if (empty($val)) {  
+                    continue;  
+                }  
+                $arr[] = $val;  
+            }
+            array_unique($arr);
+            $classIds = implode(',', $arr);
+            $map['id']  = array('in',$classIds);
+            $classes = D('Classes')->where($map)->select();
+            $arr = [];
+            $classNames = [];
+            foreach($classes as $class) {
+                array_push($classNames, $class['name']);
+                //获取某个班级的所有学生id, 并存入arr数组
+                $users = D('Student')->where(['classid'=>$class['id']])->select();
+                foreach($users as $user) {
+                    array_push($arr, $user['id']);
+                }
+            }
+            $userIds = implode(',', $arr);
+        } else {
+            $all = D('Student')->select();
+            $arr = [];
+            foreach ($all as $user) {
                 array_push($arr, $user['id']);
             }
+            $userIds = implode(',', $arr);
         }
-        $userIds = implode(',', $arr);
+
+        if($userIds=='') {
+            ajax_return([], -1, '选取的用户不能为空');
+        }
 
         if($remark == '') {
             if($groupType==0) {
@@ -223,5 +242,5 @@ class MessageController extends BackController {
         ajax_return($insertId, -1, '创建模板消息成功，正在发送中');
     }
 
-    
+
 }
