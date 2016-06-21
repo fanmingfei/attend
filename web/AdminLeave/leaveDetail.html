@@ -112,6 +112,21 @@
                                                     </if>
                                                 </div>
                                             </div>
+                                            <div class="row mt">
+                                                <div class="col-sm-2 text-right">备注</div>
+                                                <div class="col-sm-8 col-sm-offset-1">
+                                                    <div class="form-group">
+                                                        <input type="text" data-id="{$leaveDetail['id']}" class="form-control js-change-note-input"
+                                                            <if condition="$leaveDetail['note']">
+                                                                value="{$leaveDetail['note']}"
+                                                                placeholder="按回车键确定修改"
+                                                            <else />
+                                                                placeholder="还没有备注"
+                                                            </if>
+                                                         >
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="panel-footer">
                                             <php>
@@ -140,13 +155,13 @@
             </div>
         </div>
     </div>
-    <link href="../Admin/common/footerContent.html?__inline" rel="import" />
+    <link href="./common/footerContent.html?__inline" rel="import" />
     <script>
     $('.js-search-name-input').on('keyup', function (e) {
         if(e.keyCode==13){
             $('.js-search-name').trigger('click');
         }
-    })
+    });
     $('.js-search-name').on('click', function() {
         var keyword = $('.js-search-name-input').val();
         // if (!keyword) {
@@ -155,6 +170,30 @@
         // }
 
         window.location.href = "{$Think.CONFIG.DOMAIN_URL}/?c=AdminLeave&a=leave&keyword=" + $('.js-search-name-input').val();
+    });
+    // 修改备注
+    $('.js-change-note-input').on('keyup', function(e){
+        var $this = $(this);
+        if(e.keyCode === 13){
+            if($(this).val() === ''){
+                alert('不能为空！');
+                return false;
+            }
+            if(!window.confirm('确定修改吗？')){
+                return false;
+            }
+            $.ajax({
+                type: 'post',
+                url: '{$Think.config.DOMAIN_URL}/?c=AdminLeave&a=setLeaveNote',
+                data: {
+                    id: $(this).attr('data-id'),
+                    note: $(this).val()
+                },
+                success: function(data){
+                    alert(data.info);
+                }
+            });
+        }
     });
     </script>
 </body>
