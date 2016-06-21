@@ -237,7 +237,5 @@ class AdminController extends BackController {
         } else {
             $this->error('保存失败');
         }
-
-
     }
 }

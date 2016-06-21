@@ -148,6 +148,32 @@
                     <a href="{$Think.config.DOMAIN_URL}/?c=Leave&a=setStatus&id={$leave.id}&type=0" class="btn-back weui_btn weui_btn_primary" style="margin-top: 10px;margin-bottom: 10px;">设为等待状态</a>
                 </if>
             </if>
+            <div class="weui_panel weui_panel_access">
+                <if condition="$user.tzz eq 1">
+                    <div class="weui_panel_bd">
+                        <div class="weui_media_box weui_media_text">
+                            <h4 class="weui_media_title">拒绝原因</h4>
+                            <p class="weui_media_desc">
+                                同意了也能写，只不过在学生那里不显示
+                                <form action="{$Think.config.DOMAIN_URL}/?c=Leave&a=setRefusePs" method="post">
+                                    <input type="text" name="ps" class="weui_input form-control" value="{$leave['ps']}" placeholder="填写拒绝原因">
+                                    <input name="id" type="hidden" value="{$leave.id}">
+                                    <button type="submit" class="mt weui_btn weui_btn_mini weui_btn_primary">修改</button>
+                                </form>
+                            </p>
+                        </div>
+                    </div>
+                    <elseif condition="$leave.status eq 2" />
+                    <div class="weui_panel_bd">
+                        <div class="weui_media_box weui_media_text">
+                            <h4 class="weui_media_title">拒绝原因</h4>
+                            <p class="weui_media_desc">
+                                {$leave['ps']}
+                            </p>
+                        </div>
+                    </div>
+                </if>
+            </div>
         </div>
         <div class="container">
             <div class="weui_cells_title">假条二维码</div>
