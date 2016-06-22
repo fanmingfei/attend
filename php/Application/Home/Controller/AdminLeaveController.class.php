@@ -54,6 +54,7 @@ class AdminLeaveController extends BackController {
             $this->error('出现问题');
         }
     }
+    
     public function setLeaveRefuse () {
 
         $id = I('id');

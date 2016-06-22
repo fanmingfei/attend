@@ -182,4 +182,14 @@ class LeaveController extends BaseController {
         $this->display();
     }
 
+    public function setRefusePs () {
+        $ps = I('ps');
+        $id = I('id');
+        $re = m('leave')->where(array('id'=>$id))->data(array('ps'=>$ps))->save();
+        if ($re) {
+            $this->success('保存成功');
+        } else {
+            $this->error('保存失败');
+        }
+    }
 }
