@@ -11,6 +11,8 @@ class MessageController extends BackController {
         $this->httpsqs = new \httpsqs($httpConfig['host'], $httpConfig['port'], $httpConfig['auth'] , $httpConfig['charset']);
     }
 
+
+
     public function getList() {
         $page = I('page', '1');
         $size = I('size', '10');
@@ -49,7 +51,7 @@ class MessageController extends BackController {
             ajax_return([], -1, '标题不能为空');
         }
         if($content=='') {
-            ajax_return([], -1, '消息内容不能为空');
+            ajax_return([], -1, '消息简介不能为空');
         }
         if($userIds=='') {
             ajax_return([], -1, '选取的用户不能为空');
@@ -105,7 +107,7 @@ class MessageController extends BackController {
             ajax_return([], -1, '标题不能为空');
         }
         if($content=='') {
-            ajax_return([], -1, '消息内容不能为空');
+            ajax_return([], -1, '消息简介不能为空');
         }
         if($userIds=='') {
             ajax_return([], -1, '选取的用户不能为空');
@@ -167,7 +169,7 @@ class MessageController extends BackController {
             ajax_return([], -1, '标题不能为空');
         }
         if($content=='') {
-            ajax_return([], -1, '消息内容不能为空');
+            ajax_return([], -1, '消息简介不能为空');
         }
         if($groupType!=0 && $groupType!=1 && $groupType !=2) {
             ajax_return([], -1, '错误的群发类型');
@@ -225,6 +227,7 @@ class MessageController extends BackController {
                 }
                 break;
             case 2:
+                $gradeIds = explode(',', $gradeIds);
                 $all = D('Student')->where(['grade'=>['in',$gradeIds]])->select();
                 $arr = [];
                 foreach ($all as $user) {

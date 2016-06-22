@@ -31,7 +31,7 @@ class CliController extends BaseController {
                     foreach($users as $user) {
                         //发送模板消息
                         try {
-                            $this->testSendTmplMsg($user, $title, $content, $url);
+                            $this->SendTmplMsg($user, $title, $content, $url);
                         } catch (Exception $e) {
                             //ToDo: 新建任务去定时处理失败的消息
                             $data = [
@@ -53,12 +53,20 @@ class CliController extends BaseController {
         }
     }
 
-    private function testSendTmplMsg($user, $title, $content, $url) {
-        $tmpl_id = 'PT0X_93niu22Ti3CYqEL0bXPkflJ06zUK5Yt3_KCF_g';
-        $appid = 'wx54602a12c477c961';
-        $secret = 'dde1ceb8fb98cb3ec0a70e9f0849221b';
-        //$user_id = $user['openid'] ? $user['openid'] : 'oUeGNtz41L35y49a_xqXGjWeBazU';
-        $user_id = 'oUeGNtz41L35y49a_xqXGjWeBazU';
+    private function SendTmplMsg($user, $title, $content, $url) {
+        if(C('debug')) {
+            $tmpl_id = 'PT0X_93niu22Ti3CYqEL0bXPkflJ06zUK5Yt3_KCF_g';
+            $user_id = 'oUeGNtz41L35y49a_xqXGjWeBazU';
+            $appid = 'wx54602a12c477c961';
+            $secret = 'dde1ceb8fb98cb3ec0a70e9f0849221b';
+        } else {
+            $tmpl_id = 'GUYSPZTiKtBR6CTJVMXvRqzduppyHpt0Q14lDNx3Kwk';
+            $wechat = C('Wechat');
+            $appid = $wechat['appid'];
+            $secret = $wechat['appsecret'];
+            $user_id = 'oUeGNtz41L35y49a_xqXGjWeBazU';// $user['openid'] ? $user['openid'] : '';
+        }
+
         $access_url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$appid.'&secret='.$secret;
         $tmpl_url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=';
 
@@ -73,7 +81,7 @@ class CliController extends BaseController {
         }
 
         //send
-        $url = $tmpl_url . $access_token;
+        $send_url = $tmpl_url . $access_token;
         $json = '{
             "touser":"'.$user_id.'",
             "template_id":"'.$tmpl_id.'",
@@ -83,6 +91,10 @@ class CliController extends BaseController {
             "data":{
                 "first": {
                     "value":"'.$title.'",
+                    "color":"#173177"
+                },
+                "keyword1": {
+                    "value":"这是一条提醒消息，请点击查看",
                     "color":"#173177"
                 },
                 "remark":{
@@ -102,7 +114,7 @@ class CliController extends BaseController {
                 )
         );
         $context  = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
+        $result = file_get_contents($send_url, false, $context);
         return $result;
     }
 }
