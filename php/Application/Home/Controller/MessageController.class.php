@@ -259,7 +259,7 @@ class MessageController extends BackController {
         //加入到发送队列
         $httpsqs = $this->httpsqs;
         $message = $httpsqs->put('tpl_message', $insertId);
-        ajax_return($insertId, 0, '创建模板消息成功，正在发送中');
+        $this->success('正在发送中！需要几分钟才能全部发送！');
     }
 
     //获取班级列表
