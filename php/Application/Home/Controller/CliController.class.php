@@ -64,7 +64,7 @@ class CliController extends BaseController {
             $wechat = C('Wechat');
             $appid = $wechat['appid'];
             $secret = $wechat['appsecret'];
-            $user_id = 'oUeGNtz41L35y49a_xqXGjWeBazU';// $user['openid'] ? $user['openid'] : '';
+            $user_id = $user['openid'] ? $user['openid'] : '';
         }
 
         $access_url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$appid.'&secret='.$secret;
