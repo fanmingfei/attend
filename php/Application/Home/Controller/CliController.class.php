@@ -30,6 +30,7 @@ class CliController extends BaseController {
                     //循环发送
                     foreach($users as $user) {
                         //发送模板消息
+                        $user = D('Student')->getStudentById($user);
                         try {
                             $this->SendTmplMsg($user, $title, $content, $url);
                         } catch (Exception $e) {
