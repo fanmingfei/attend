@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>考勤管理系统</title>
+    <link href="./common/headContent.html?__inline" rel="import" />
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <link href="./common/header.html?__inline" rel="import" />
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div>
+            <!-- Nav tabs -->
+            <link href="./common/nav.html?__inline" rel="import" />
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- 消息 -->
+                <div role="tabpanel" class="active panel_side tab-pane active" id="messages">
+                    <div>
+                        <ul class="nav nav-pills nav-stacked col-md-1" role="tablist">
+                            <link href="./common/messageNav.html?__inline" rel="import" />
+                        </ul>
+                        <div class="tab-content col-md-11">
+                            <div role="tabpanel" class="tab-pane active" id="groupList">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">发给所有学生</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form action="{$Think.CONFIG.DOMAIN_URL}/?c=Message&a=addStuGroupMsg" method="post">
+                                            <div class="input-group mt">
+                                                <span class="input-group-addon" id="basic-addon1">标题</span>
+                                                <input type="text" name="title" class="form-control" placeholder="请输入标题" aria-describedby="basic-addon1">
+                                            </div>
+                                            <div class="input-group mt">
+                                                <span class="input-group-addon" id="basic-addon1">简介</span>
+                                                <input type="text" class="form-control" name="content" placeholder="请输入简介" aria-describedby="basic-addon1">
+                                            </div>
+                                            <div class="form-group mt">
+                                                <input class="form-control" placeholder="输入跳转网址" type="text" name="url">
+                                            </div>
+                                            <button class="btn btn-primary btn-block" id="submitBtn" onclick="submitIt()">确认并提交</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href="./common/footerContent.html?__inline" rel="import" />
+    <script>
+        function submitIt () {
+            setTimeout("submitBtn.setAttribute('disabled', true)");
+        }
+    </script>
+</body>
+
+</html>
