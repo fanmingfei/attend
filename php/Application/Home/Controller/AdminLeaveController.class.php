@@ -66,19 +66,4 @@ class AdminLeaveController extends BackController {
             $this->error('出现问题');
         }
     }
-    /**
-     * 修改请假备注
-     */
-    public function setLeaveNote(){
-        $id = I('id');
-        $note = I('note');
-
-        $re = M('Leave')->where(array('id'=>$id))->data(array('note'=>$note))->save();
-
-        if($re){
-            $this -> success('修改成功！');
-        }else {
-            $this -> error('出现问题！');
-        }
-    }
 }

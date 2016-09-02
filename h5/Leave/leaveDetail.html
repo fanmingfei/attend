@@ -78,20 +78,6 @@
                     </div>
                 </div>
             </div>
-            <div class="weui_panel weui_panel_access">
-                <div class="weui_panel_bd">
-                    <div class="weui_media_box weui_media_text">
-                        <h4 class="weui_media_title">备注</h4>
-                        <p class="weui_media_desc">
-                            <form action="{$Think.config.DOMAIN_URL}/?c=Leave&a=setLeaveNote" method="post">
-                                <textarea name="note" class="weui_input"><if condition="$leave['note']">{$leave['note']}<else />还没有备注</if></textarea>
-                                <input name="id" type="hidden" value="{$leave.id}">
-                                <button type="submit" class="mt weui_btn weui_btn_mini weui_btn_primary">修改</button>
-                            </form>
-                        </p>
-                    </div>
-                </div>
-            </div>
             <if condition="$leave.image neq null">
                 <div class="weui_cells_title">图片</div>
                 <div class="weui_cells weui_cells_form">
