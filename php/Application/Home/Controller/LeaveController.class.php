@@ -33,7 +33,7 @@ class LeaveController extends BaseController {
         $this->agree = $agree;
         $this->leave = $leave;
         $this->user = session('user');
-
+        dump($leave);
         $this->display();
     }
     public function leaveList() {
@@ -180,6 +180,20 @@ class LeaveController extends BaseController {
         $leaves = D('Leave')->getLeaveListByClassId();
         $this->assign($leaves);
         $this->display();
+    }
+    function setLeaveNote(){
+        $leaveId = I('id');
+        $leaveNote = I('note');
+        $user = session('user');
+        if($user['usertype'] != 2 && $user['tzz'] != 1){
+            $this -> error('你没有权限修改！');
+        }
+        $re = M('leave') -> where(array('id'=>$leaveId)) -> data(array('note'=>$leaveNote)) -> save();
+        if($re){
+            $this -> success('修改成功！');
+        }else {
+            $this -> error('出现问题！');
+        }
     }
 
     public function setRefusePs () {
