@@ -32,7 +32,6 @@
                             <li role="presentation" class="active"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=teacherList">老师列表</a></li>
                             <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=addTeacher">添加老师</a></li>
                             <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=importStudent">批量导入学生</a></li>
-                            <li role="presentation"><a href="{$Think.CONFIG.DOMAIN_URL}/?c=Admin&a=uploadImg">上传图片</a></li>
                         </ul>
                         <div class="tab-content col-md-11">
                             <!-- 添加课程 -->
@@ -48,6 +47,7 @@
                                                     <th>序号</th>
                                                     <th>姓名</th>
                                                     <th>班主任</th>
+                                                    <th>是否注册</th>
                                                     <th>操作</th>
                                                 </tr>
                                             </thead>
@@ -58,6 +58,9 @@
                                                         <td>{$item.username}</td>
                                                         <td>
                                                             <if condition="$item.lead eq 0">否<else/>是</if>
+                                                        </td>
+                                                        <td>
+                                                            <if condition="$item.openid eq null"><else/>是</if>
                                                         </td>
                                                         <td>
                                                             <a href="/?c=Admin&a=addTeacher&id={$item.id}">修改</a>

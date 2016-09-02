@@ -81,6 +81,11 @@
     </div>
     <link href="./common/footerContent.html?__inline" rel="import" />
     <script>
+    $('.js-search-user-input').on('keyup', function (e) {
+        if(e.keyCode==13){
+            $('.js-search-user').trigger('click');
+        }
+    })
       $('.js-search-user').on('click', function () {
         var keyword = $('.js-search-user-input').val();
         var order = $('.js-order').val();

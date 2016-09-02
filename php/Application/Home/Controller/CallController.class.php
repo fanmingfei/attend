@@ -7,10 +7,10 @@ class CallController extends BaseController {
         $title = I('title');
         $tcid = I('tcid');
         $tid = I('tid');
-        $longitude = 0; //I('longitude');
-        $latitude = 0; //I('latitude');
+        $longitude = I('longitude');
+        $latitude = I('latitude');
 
-        if (!$cid || !$title || !$tcid) { // || !$longitude || !$latitude
+        if (!$cid || !$title || !$tcid || !$longitude || !$latitude) { 
             $msg = '参数不完整';
             ajax_return(null, -1, $msg);
         }
@@ -26,6 +26,8 @@ class CallController extends BaseController {
         $result = $callModel->addCall($cid, $title, $tcid, $tid, $longitude, $latitude);
 
         if ($result) {
+            $weObj = new \Home\Controller\WechatController();
+            $weObj->postCallToTeacher($result);
             ajax_return($result, 0, '点名成功');
         } else {
             ajax_return(null, -1, '点名失败');
@@ -57,9 +59,11 @@ class CallController extends BaseController {
             exit();
         }
 
-        $this->assign('schedule', D('Schedule')->getCurrentSchedule());
+        // $this->assign('schedule', D('Schedule')->getCurrentSchedule());
 
+        $this->user = session('user');
         $this->assign('teachers', D('Teacher')->getAllLeaderTeacher());
+        $this->assign('teachers1', D('Teacher')->getAllTeachers());
         $this->assign('classes', D('Classes')->getAllClasses());
         $this->display();
     }
@@ -118,8 +122,14 @@ class CallController extends BaseController {
 
         $signModel = D('Sign');
 
-        if(session('user.usertype') != 2) {//&& session('user.special') != 1
-            ajax_return(null, -1, '您没有修改权限');
+        // if(session('user.usertype') != 2) {//&& session('user.special') != 1
+        //     ajax_return(null, -1, '您没有修改权限');
+        // }
+
+        $call = D('Call')->where(array('id' => $callid))->find();
+        if (time() > $call['time'] + 24*60*60) {
+            ajax_return(null, -1, '超出操作时间，24小时内可操作');
+            return;
         }
 
         // if ((session('user.special') == 1) && ($status == 1 || $status == 'false')) {

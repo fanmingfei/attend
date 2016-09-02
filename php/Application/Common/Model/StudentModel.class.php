@@ -29,7 +29,7 @@ class StudentModel extends RelationModel {
         return $this->where(array('classid'=>$cid))->select();
     }
     function getStudentById ($id) {
-        return $this->where(array('id'=>$id))->find();
+        return $this->where(array('id'=>$id))->relation(true)->find();
     }
 
     function saveList($people) {
@@ -96,6 +96,10 @@ class StudentModel extends RelationModel {
         }
 
         return $students;
+    }
+
+    function getStudentByNameAndClass($name, $cls) {
+        return $this->where(array('username'=>$name, 'classid'=>$cls))->find();
     }
 
 

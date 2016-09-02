@@ -59,7 +59,9 @@ function isLogin() {
 }
 
 function checkLogin () {
-    if (!cookie('user')) {
+    $user = cookie('user');
+    $id = $user['id'];
+    if (!$id) {
         $jump = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
         cookie('attend.jump', $jump);
         if(I('state') == 't') {

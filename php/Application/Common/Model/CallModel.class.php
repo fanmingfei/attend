@@ -85,14 +85,12 @@ class CallModel extends RelationModel {
 
         $allCalls = D('Call') -> getCallDetail($calls);
 
-        foreach ($allCalls as $key => $value) {
-            $pageArr = array(
-                'count' => $count,
-                'size' => $size,
-                'pageCount' => $pageCount,
-                'page' => $page
-            );
-        }
+        $pageArr = array(
+            'count' => $count,
+            'size' => $size,
+            'pageCount' => $pageCount,
+            'page' => $page
+        );
         return array(
             'callList' => $allCalls,
             'page' => $pageArr
@@ -176,7 +174,9 @@ class CallModel extends RelationModel {
         if (session('user.special') == 1) {
             $idName = 'sid';
             $where = array(
-                $idName=>$uid
+                $idName=>$uid,
+                'cid' => array('like', '%,'.session('user.classid').',%'),
+                '_logic' => 'or'
             );
         } else {
             $idName = 'tid';
@@ -258,6 +258,10 @@ class CallModel extends RelationModel {
     }
     function setCallPs ($id, $ps) {
         return $this->where(array('id'=>$id))->data(array('ps'=>$ps))->save();
+    }
+    function deleteCall($id)
+    {
+        return $this->where(array('id'=>$id))->delete();
     }
 
 }

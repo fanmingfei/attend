@@ -37,6 +37,32 @@ class SignModel extends Model {
     function getSignStatus ($callid, $sid) {
         $sid = $sid ? $sid: session('user.id');
         $condition = array('callid'=>$callid, 'sid'=>$sid);
+
+        $call = D('Call')->getCallById($callid);
+        $teacherid = $call['tid'];
+
+
+        $has = $this->where($condition)->find();
+        if (!$has) {
+
+            $time = time();
+
+            $conditionLeave['starttime'] = array('lt', $time);
+            $conditionLeave['endtime'] = array('gt', $time);
+            $conditionLeave['sid'] = $sid;
+            $conditionLeave['status'] = 1;
+
+            $leaves = D('Leave')->where($conditionLeave)->select();
+            $agreeModel = D('Agree');
+            foreach ($leaves as $key => $value) {
+                $agree = $agreeModel->where(array('teacherid' => $teacherid, 'status' => 1))->find();
+            }
+
+            if ($agree) {
+                $this->setSignStatus($callid, $sid, 2);
+            }
+
+        }
         $has = $this->where($condition)->find();
         if ($has) {
             return $has['status'];
